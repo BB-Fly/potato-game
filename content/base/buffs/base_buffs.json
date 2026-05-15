@@ -9,6 +9,9 @@
       "max_stacks": 20,
       "duration_frames": 600,
       "tick_interval_frames": 0,
+      "asset_refs": {
+        "icon": "buff.bruise.icon"
+      },
       "modifiers": [
         {
           "stat": "weapon_damage_taken_flat",
@@ -27,6 +30,9 @@
       "max_stacks": 1,
       "duration_frames": 120,
       "tick_interval_frames": 0,
+      "asset_refs": {
+        "icon": "buff.stun.icon"
+      },
       "behavior_locks": ["movement", "attack"],
       "enabled": true
     },
@@ -39,6 +45,9 @@
       "max_stacks": 1,
       "duration_frames": 600,
       "tick_interval_frames": 0,
+      "asset_refs": {
+        "icon": "buff.comprehensive_development.icon"
+      },
       "modifiers": [
         {"stat": "melee_attack", "operation": "add", "value": 10},
         {"stat": "ranged_attack", "operation": "add", "value": 5},
@@ -57,6 +66,9 @@
       "max_stacks": 999,
       "duration_frames": -1,
       "tick_interval_frames": 0,
+      "asset_refs": {
+        "icon": "buff.potato_enhancement.icon"
+      },
       "modifiers": [
         {"stat": "melee_attack", "operation": "add", "value_per_stack": 2},
         {"stat": "ranged_attack", "operation": "add", "value_per_stack": 1},
@@ -70,4 +82,3 @@
     }
   ]
 }
-

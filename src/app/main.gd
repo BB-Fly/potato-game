@@ -13,6 +13,7 @@ const EconomyService = preload("res://src/domain/economy/economy_service.gd")
 const CombatRuntime = preload("res://src/domain/combat/combat_runtime.gd")
 const AudioDirector = preload("res://src/domain/audio/audio_director.gd")
 const EffectRunner = preload("res://src/domain/effect/effect_runner.gd")
+const AssetCatalog = preload("res://src/config/asset_catalog.gd")
 
 var event_bus
 var registry
@@ -25,6 +26,7 @@ var economy_service
 var combat_runtime
 var audio_director
 var effect_runner
+var asset_catalog
 
 
 func _ready() -> void:
@@ -52,6 +54,7 @@ func _ready() -> void:
 	combat_runtime = CombatRuntime.new(registry, event_bus, run_context)
 	audio_director = AudioDirector.new(registry, event_bus)
 	effect_runner = EffectRunner.new(registry, event_bus)
+	asset_catalog = AssetCatalog.new(registry)
 
 	tick_loop = FixedTickLoop.new(event_bus)
 	tick_loop.add_system(combat_runtime)

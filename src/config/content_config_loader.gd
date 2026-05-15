@@ -16,6 +16,7 @@ const CONTENT_DIRS = {
 	"rewards": "reward_table",
 	"shops": "shop",
 	"audio": "audio",
+	"assets": "asset",
 }
 
 

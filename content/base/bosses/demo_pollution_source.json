@@ -5,6 +5,10 @@
   "school_ids": ["school.metamorph"],
   "primary_school_id": "school.metamorph",
   "enabled": true,
+  "asset_refs": {
+    "icon": "boss.demo_pollution_source.icon",
+    "sprite": "boss.demo_pollution_source.sprite"
+  },
   "stats": {
     "max_health": 300,
     "attack": 10,
@@ -21,4 +25,3 @@
   "continue_mob_spawns": true,
   "music_state_id": "music_state.combat.boss"
 }
-

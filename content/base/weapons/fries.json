@@ -60,11 +60,12 @@
   },
   "asset_refs": {
     "icon": "weapon.fries.icon",
-    "sprite": "weapon.fries.sprite"
+    "sprite": "weapon.fries.sprite",
+    "slash_vfx": "weapon.fries.slash_vfx",
+    "skill_icon": "weapon_skill.heavy_fries_slam.icon"
   },
   "audio_refs": {
     "attack_sfx": "weapon.fries.attack",
     "hit_sfx": "weapon.fries.hit"
   }
 }
-

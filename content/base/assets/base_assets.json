@@ -1,0 +1,540 @@
+{
+  "entries": [
+    {
+      "id": "bgm.boss.default",
+      "kind": "music",
+      "path": "res://assets/audio/music/boss_default.wav",
+      "tags": [
+        "music",
+        "boss"
+      ]
+    },
+    {
+      "id": "bgm.chapter_1.map",
+      "kind": "music",
+      "path": "res://assets/audio/music/chapter_1_map.wav",
+      "tags": [
+        "music",
+        "chapter_1",
+        "map"
+      ]
+    },
+    {
+      "id": "bgm.chapter_1.mob",
+      "kind": "music",
+      "path": "res://assets/audio/music/chapter_1_mob.wav",
+      "tags": [
+        "music",
+        "chapter_1",
+        "combat"
+      ]
+    },
+    {
+      "id": "bgm.menu",
+      "kind": "music",
+      "path": "res://assets/audio/music/menu.wav",
+      "tags": [
+        "music",
+        "menu"
+      ]
+    },
+    {
+      "id": "bgm.victory",
+      "kind": "music",
+      "path": "res://assets/audio/music/victory.wav",
+      "tags": [
+        "music",
+        "victory"
+      ]
+    },
+    {
+      "id": "boss.demo_pollution_source.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/boss_demo_pollution_source.png",
+      "tags": [
+        "boss",
+        "pollution_source",
+        "ui"
+      ]
+    },
+    {
+      "id": "boss.demo_pollution_source.sprite",
+      "kind": "sprite",
+      "path": "res://assets/art/sprites/bosses/demo_pollution_source.png",
+      "tags": [
+        "boss",
+        "pollution_source"
+      ]
+    },
+    {
+      "id": "buff.bruise.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/buff_bruise.png",
+      "tags": [
+        "buff",
+        "bruise",
+        "ui"
+      ]
+    },
+    {
+      "id": "buff.comprehensive_development.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/buff_comprehensive_development.png",
+      "tags": [
+        "buff",
+        "comprehensive_development",
+        "ui"
+      ]
+    },
+    {
+      "id": "buff.potato_enhancement.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/buff_potato_enhancement.png",
+      "tags": [
+        "buff",
+        "potato_enhancement",
+        "ui"
+      ]
+    },
+    {
+      "id": "buff.stun.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/buff_stun.png",
+      "tags": [
+        "buff",
+        "stun",
+        "ui"
+      ]
+    },
+    {
+      "id": "character.potato_hero.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/character_potato_hero.png",
+      "tags": [
+        "character",
+        "potato_hero",
+        "ui"
+      ]
+    },
+    {
+      "id": "character.potato_hero.sprite",
+      "kind": "sprite",
+      "path": "res://assets/art/sprites/characters/potato_hero.png",
+      "tags": [
+        "character",
+        "potato_hero"
+      ]
+    },
+    {
+      "id": "item.potato_enhancement.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/item_potato_enhancement.png",
+      "tags": [
+        "item",
+        "potato_enhancement",
+        "ui"
+      ]
+    },
+    {
+      "id": "magic.comprehensive_development.cast",
+      "kind": "sfx",
+      "path": "res://assets/audio/sfx/magic_comprehensive_development_cast.wav",
+      "tags": [
+        "magic",
+        "comprehensive_development",
+        "cast"
+      ]
+    },
+    {
+      "id": "magic.comprehensive_development.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/magic_comprehensive_development.png",
+      "tags": [
+        "magic",
+        "comprehensive_development",
+        "ui"
+      ]
+    },
+    {
+      "id": "magic.comprehensive_development.vfx",
+      "kind": "vfx",
+      "path": "res://assets/art/vfx/comprehensive_development.png",
+      "tags": [
+        "magic",
+        "comprehensive_development",
+        "effect"
+      ]
+    },
+    {
+      "id": "map.node.coin.icon",
+      "kind": "icon",
+      "path": "res://assets/art/map/nodes/coin.png",
+      "tags": [
+        "map",
+        "node",
+        "ui"
+      ]
+    },
+    {
+      "id": "map.node.combat.icon",
+      "kind": "icon",
+      "path": "res://assets/art/map/nodes/combat.png",
+      "tags": [
+        "map",
+        "node",
+        "ui"
+      ]
+    },
+    {
+      "id": "map.node.encounter.icon",
+      "kind": "icon",
+      "path": "res://assets/art/map/nodes/encounter.png",
+      "tags": [
+        "map",
+        "node",
+        "ui"
+      ]
+    },
+    {
+      "id": "map.node.free_weapon.icon",
+      "kind": "icon",
+      "path": "res://assets/art/map/nodes/free_weapon.png",
+      "tags": [
+        "map",
+        "node",
+        "ui"
+      ]
+    },
+    {
+      "id": "map.node.item_shop.icon",
+      "kind": "icon",
+      "path": "res://assets/art/map/nodes/item_shop.png",
+      "tags": [
+        "map",
+        "node",
+        "ui"
+      ]
+    },
+    {
+      "id": "map.node.magic_master.icon",
+      "kind": "icon",
+      "path": "res://assets/art/map/nodes/magic_master.png",
+      "tags": [
+        "map",
+        "node",
+        "ui"
+      ]
+    },
+    {
+      "id": "map.node.magic_shop.icon",
+      "kind": "icon",
+      "path": "res://assets/art/map/nodes/magic_shop.png",
+      "tags": [
+        "map",
+        "node",
+        "ui"
+      ]
+    },
+    {
+      "id": "map.node.random_item.icon",
+      "kind": "icon",
+      "path": "res://assets/art/map/nodes/random_item.png",
+      "tags": [
+        "map",
+        "node",
+        "ui"
+      ]
+    },
+    {
+      "id": "map.node.weapon_master.icon",
+      "kind": "icon",
+      "path": "res://assets/art/map/nodes/weapon_master.png",
+      "tags": [
+        "map",
+        "node",
+        "ui"
+      ]
+    },
+    {
+      "id": "map.node.weapon_shop.icon",
+      "kind": "icon",
+      "path": "res://assets/art/map/nodes/weapon_shop.png",
+      "tags": [
+        "map",
+        "node",
+        "ui"
+      ]
+    },
+    {
+      "id": "monster.sprouting_potato.hit",
+      "kind": "sfx",
+      "path": "res://assets/audio/sfx/monster_sprouting_potato_hit.wav",
+      "tags": [
+        "monster",
+        "sprouting_potato",
+        "hit"
+      ]
+    },
+    {
+      "id": "monster.sprouting_potato.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/monster_sprouting_potato.png",
+      "tags": [
+        "monster",
+        "sprouting_potato",
+        "ui"
+      ]
+    },
+    {
+      "id": "monster.sprouting_potato.sprite",
+      "kind": "sprite",
+      "path": "res://assets/art/sprites/monsters/sprouting_potato.png",
+      "tags": [
+        "monster",
+        "sprouting_potato"
+      ]
+    },
+    {
+      "id": "music_state.combat.boss.icon",
+      "kind": "icon",
+      "path": "res://assets/art/music_states/combat_boss.png",
+      "tags": [
+        "music_state",
+        "ui"
+      ]
+    },
+    {
+      "id": "music_state.combat.chapter_1.mob.icon",
+      "kind": "icon",
+      "path": "res://assets/art/music_states/combat_chapter_1_mob.png",
+      "tags": [
+        "music_state",
+        "ui"
+      ]
+    },
+    {
+      "id": "music_state.map.chapter_1.icon",
+      "kind": "icon",
+      "path": "res://assets/art/music_states/map_chapter_1.png",
+      "tags": [
+        "music_state",
+        "ui"
+      ]
+    },
+    {
+      "id": "music_state.menu.icon",
+      "kind": "icon",
+      "path": "res://assets/art/music_states/menu.png",
+      "tags": [
+        "music_state",
+        "ui"
+      ]
+    },
+    {
+      "id": "music_state.victory.icon",
+      "kind": "icon",
+      "path": "res://assets/art/music_states/victory.png",
+      "tags": [
+        "music_state",
+        "ui"
+      ]
+    },
+    {
+      "id": "shop.item.default.icon",
+      "kind": "ui",
+      "path": "res://assets/art/ui/shop_item.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "shop.magic_master.default.icon",
+      "kind": "ui",
+      "path": "res://assets/art/ui/shop_magic_master.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "shop.magic.default.icon",
+      "kind": "ui",
+      "path": "res://assets/art/ui/shop_magic.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "shop.weapon_master.default.icon",
+      "kind": "ui",
+      "path": "res://assets/art/ui/shop_weapon_master.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "shop.weapon.default.icon",
+      "kind": "ui",
+      "path": "res://assets/art/ui/shop_weapon.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.button.center",
+      "kind": "ui",
+      "path": "res://assets/art/ui/button_center.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.button.fusion.icon",
+      "kind": "ui",
+      "path": "res://assets/art/ui/button_fusion.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.button.left",
+      "kind": "ui",
+      "path": "res://assets/art/ui/button_left.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.button.refresh.icon",
+      "kind": "ui",
+      "path": "res://assets/art/ui/button_refresh.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.button.right",
+      "kind": "ui",
+      "path": "res://assets/art/ui/button_right.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.button.upgrade.icon",
+      "kind": "ui",
+      "path": "res://assets/art/ui/button_upgrade.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.currency.gold.icon",
+      "kind": "ui",
+      "path": "res://assets/art/ui/currency_gold.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.health.icon",
+      "kind": "ui",
+      "path": "res://assets/art/ui/health_badge.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.mana.icon",
+      "kind": "ui",
+      "path": "res://assets/art/ui/mana_badge.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.slot.disabled.icon",
+      "kind": "ui",
+      "path": "res://assets/art/ui/slot_disabled.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.slot.magic.icon",
+      "kind": "ui",
+      "path": "res://assets/art/ui/slot_magic.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.slot.weapon.icon",
+      "kind": "ui",
+      "path": "res://assets/art/ui/slot_weapon.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "weapon_skill.heavy_fries_slam.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/weapon_skill_heavy_fries_slam.png",
+      "tags": [
+        "weapon",
+        "skill",
+        "fries",
+        "ui"
+      ]
+    },
+    {
+      "id": "weapon.fries.attack",
+      "kind": "sfx",
+      "path": "res://assets/audio/sfx/weapon_fries_attack.wav",
+      "tags": [
+        "weapon",
+        "fries",
+        "attack"
+      ]
+    },
+    {
+      "id": "weapon.fries.hit",
+      "kind": "sfx",
+      "path": "res://assets/audio/sfx/weapon_fries_hit.wav",
+      "tags": [
+        "weapon",
+        "fries",
+        "hit"
+      ]
+    },
+    {
+      "id": "weapon.fries.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/weapon_fries.png",
+      "tags": [
+        "weapon",
+        "fries",
+        "ui"
+      ]
+    },
+    {
+      "id": "weapon.fries.slash_vfx",
+      "kind": "vfx",
+      "path": "res://assets/art/vfx/weapon_fries_slash.png",
+      "tags": [
+        "weapon",
+        "fries",
+        "slash",
+        "effect"
+      ]
+    },
+    {
+      "id": "weapon.fries.sprite",
+      "kind": "sprite",
+      "path": "res://assets/art/sprites/weapons/fries.png",
+      "tags": [
+        "weapon",
+        "fries"
+      ]
+    }
+  ]
+}
