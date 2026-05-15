@@ -1,0 +1,38 @@
+{
+  "id": "character.potato_hero",
+  "display_name_key": "character.potato_hero.name",
+  "description_key": "character.potato_hero.desc",
+  "primary_school_id": "school.metamorph",
+  "school_ids": ["school.metamorph"],
+  "enabled": true,
+  "base_stats": {
+    "max_health": 20,
+    "max_mana": 15,
+    "max_energy": 0,
+    "melee_attack": 0,
+    "ranged_attack": 0,
+    "attack_range": 0,
+    "move_speed": 100,
+    "defense": 0,
+    "attack_speed": 0,
+    "crit_damage": 0,
+    "execute_damage": 0,
+    "attack_multiplier": 0,
+    "damage_reduction": 0,
+    "health_regen": 2,
+    "mana_regen": 1
+  },
+  "passives": [
+    {
+      "id": "passive.chivalrous_discount",
+      "trigger": "shop_first_purchase",
+      "actions": [
+        {
+          "type": "discount_price",
+          "multiplier": 0.5
+        }
+      ]
+    }
+  ]
+}
+

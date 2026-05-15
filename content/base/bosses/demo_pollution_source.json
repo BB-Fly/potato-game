@@ -1,0 +1,24 @@
+{
+  "id": "boss.demo_pollution_source",
+  "display_name_key": "boss.demo_pollution_source.name",
+  "description_key": "boss.demo_pollution_source.desc",
+  "school_ids": ["school.metamorph"],
+  "primary_school_id": "school.metamorph",
+  "enabled": true,
+  "stats": {
+    "max_health": 300,
+    "attack": 10,
+    "move_speed": 80,
+    "toughness": 100
+  },
+  "phases": [
+    {
+      "id": "phase_1",
+      "health_ratio_min": 0.0,
+      "timeline": []
+    }
+  ],
+  "continue_mob_spawns": true,
+  "music_state_id": "music_state.combat.boss"
+}
+

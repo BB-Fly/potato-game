@@ -1,0 +1,98 @@
+{
+  "entries": [
+    {
+      "id": "reward.free_weapon.start",
+      "enabled": true,
+      "gold_base": 0,
+      "offers": [
+        {
+          "content_type": "weapon",
+          "count": 3,
+          "duplicate_policy": "avoid_same_offer",
+          "guarantees": [
+            {
+              "slot": 0,
+              "school": "character_primary"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reward.random_item.chapter_1",
+      "enabled": true,
+      "gold_base": 0,
+      "offers": [
+        {
+          "content_type": "item",
+          "count": 3,
+          "duplicate_policy": "avoid_same_offer",
+          "guarantees": [
+            {
+              "slot": 0,
+              "school": "character_primary"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reward.random_item.chapter_2",
+      "enabled": true,
+      "gold_base": 0,
+      "offers": [
+        {
+          "content_type": "item",
+          "count": 3,
+          "duplicate_policy": "avoid_same_offer",
+          "guarantees": [
+            {
+              "slot": 0,
+              "school": "character_primary"
+            }
+          ]
+        },
+        {
+          "content_type": "item",
+          "count": 3,
+          "duplicate_policy": "avoid_same_offer",
+          "guarantees": [
+            {
+              "slot": 0,
+              "school": "character_primary"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reward.combat.default",
+      "enabled": true,
+      "gold_by_floor": {
+        "1": 150,
+        "2": 225,
+        "3": 300,
+        "4": 375,
+        "5": 450,
+        "6": 525
+      },
+      "gold_base": 150,
+      "gold_per_floor": 75,
+      "offers": [
+        {
+          "content_type": "item",
+          "count": 3,
+          "rarity": "legendary",
+          "duplicate_policy": "avoid_same_offer",
+          "guarantees": [
+            {
+              "slot": 0,
+              "school": "character_primary"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+

@@ -1,0 +1,73 @@
+{
+  "entries": [
+    {
+      "id": "buff.bruise",
+      "display_name_key": "buff.bruise.name",
+      "target_types": ["monster", "boss"],
+      "tags": ["debuff", "injury"],
+      "stacking_mode": "stack_refresh_duration",
+      "max_stacks": 20,
+      "duration_frames": 600,
+      "tick_interval_frames": 0,
+      "modifiers": [
+        {
+          "stat": "weapon_damage_taken_flat",
+          "operation": "add",
+          "value_per_stack": 1
+        }
+      ],
+      "enabled": true
+    },
+    {
+      "id": "buff.stun",
+      "display_name_key": "buff.stun.name",
+      "target_types": ["monster", "boss"],
+      "tags": ["debuff", "control"],
+      "stacking_mode": "refresh_duration",
+      "max_stacks": 1,
+      "duration_frames": 120,
+      "tick_interval_frames": 0,
+      "behavior_locks": ["movement", "attack"],
+      "enabled": true
+    },
+    {
+      "id": "buff.comprehensive_development",
+      "display_name_key": "buff.comprehensive_development.name",
+      "target_types": ["player"],
+      "tags": ["buff", "stat"],
+      "stacking_mode": "refresh_duration",
+      "max_stacks": 1,
+      "duration_frames": 600,
+      "tick_interval_frames": 0,
+      "modifiers": [
+        {"stat": "melee_attack", "operation": "add", "value": 10},
+        {"stat": "ranged_attack", "operation": "add", "value": 5},
+        {"stat": "health_regen", "operation": "add", "value": 5},
+        {"stat": "mana_regen", "operation": "add", "value": 3},
+        {"stat": "defense", "operation": "add", "value": 5}
+      ],
+      "enabled": true
+    },
+    {
+      "id": "buff.potato_enhancement",
+      "display_name_key": "buff.potato_enhancement.name",
+      "target_types": ["player"],
+      "tags": ["buff", "item", "stat"],
+      "stacking_mode": "independent_timers",
+      "max_stacks": 999,
+      "duration_frames": -1,
+      "tick_interval_frames": 0,
+      "modifiers": [
+        {"stat": "melee_attack", "operation": "add", "value_per_stack": 2},
+        {"stat": "ranged_attack", "operation": "add", "value_per_stack": 1},
+        {"stat": "health_regen", "operation": "add", "value_per_stack": 2},
+        {"stat": "mana_regen", "operation": "add", "value_per_stack": 1},
+        {"stat": "defense", "operation": "add", "value_per_stack": 1},
+        {"stat": "max_health", "operation": "add", "value_per_stack": 5},
+        {"stat": "max_mana", "operation": "add", "value_per_stack": 5}
+      ],
+      "enabled": true
+    }
+  ]
+}
+

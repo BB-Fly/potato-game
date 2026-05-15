@@ -1,0 +1,68 @@
+{
+  "entries": [
+    {
+      "id": "school.metamorph",
+      "display_name_key": "school.metamorph.name",
+      "description_key": "school.metamorph.desc",
+      "tags": ["school", "generalist"],
+      "enabled": true
+    },
+    {
+      "id": "school.combat",
+      "display_name_key": "school.combat.name",
+      "description_key": "school.combat.desc",
+      "tags": ["school", "melee", "defense"],
+      "enabled": true
+    },
+    {
+      "id": "school.infection",
+      "display_name_key": "school.infection.name",
+      "description_key": "school.infection.desc",
+      "tags": ["school", "poison", "forbidden_magic"],
+      "enabled": true
+    },
+    {
+      "id": "school.demolition",
+      "display_name_key": "school.demolition.name",
+      "description_key": "school.demolition.desc",
+      "tags": ["school", "bomb", "fire", "trap"],
+      "enabled": true
+    },
+    {
+      "id": "school.alchemy",
+      "display_name_key": "school.alchemy.name",
+      "description_key": "school.alchemy.desc",
+      "tags": ["school", "heal", "buff"],
+      "enabled": true
+    },
+    {
+      "id": "school.assassination",
+      "display_name_key": "school.assassination.name",
+      "description_key": "school.assassination.desc",
+      "tags": ["school", "crit", "execute", "stealth"],
+      "enabled": true
+    },
+    {
+      "id": "school.divination",
+      "display_name_key": "school.divination.name",
+      "description_key": "school.divination.desc",
+      "tags": ["school", "illusion", "fortune"],
+      "enabled": true
+    },
+    {
+      "id": "school.atmosphere",
+      "display_name_key": "school.atmosphere.name",
+      "description_key": "school.atmosphere.desc",
+      "tags": ["school", "weather"],
+      "enabled": true
+    },
+    {
+      "id": "school.natural_science",
+      "display_name_key": "school.natural_science.name",
+      "description_key": "school.natural_science.desc",
+      "tags": ["school", "scaling_cap"],
+      "enabled": true
+    }
+  ]
+}
+

@@ -1,0 +1,70 @@
+{
+  "id": "weapon.metamorph.fries",
+  "display_name_key": "weapon.fries.name",
+  "description_key": "weapon.fries.desc",
+  "school_ids": ["school.metamorph"],
+  "primary_school_id": "school.metamorph",
+  "rarity": "common",
+  "acquire_limit": 0,
+  "enabled": true,
+  "tags": ["weapon", "melee"],
+  "slot_cost": 1,
+  "weapon_type": "melee",
+  "damage": {
+    "base": 10,
+    "scales": [
+      {
+        "stat": "melee_attack",
+        "ratio": 1.0
+      }
+    ]
+  },
+  "attack_interval_frames": 120,
+  "range": 40,
+  "crit_chance": 0.0,
+  "crit_multiplier": 2.0,
+  "toughness_damage": 4,
+  "execute_damage_multiplier": 2.0,
+  "knockback": 15,
+  "action_module": "slash",
+  "passive_effects": [
+    {
+      "trigger": "on_hit",
+      "actions": [
+        {
+          "type": "apply_buff",
+          "buff_id": "buff.bruise",
+          "target": "hit_target",
+          "stacks": 1
+        }
+      ]
+    }
+  ],
+  "weapon_skill": {
+    "id": "weapon_skill.heavy_fries_slam",
+    "charge": {
+      "type": "time",
+      "frames": 900
+    },
+    "effects": [
+      {
+        "type": "deal_damage",
+        "amount": 40
+      },
+      {
+        "type": "apply_buff",
+        "buff_id": "buff.stun",
+        "duration_frames": 120
+      }
+    ]
+  },
+  "asset_refs": {
+    "icon": "weapon.fries.icon",
+    "sprite": "weapon.fries.sprite"
+  },
+  "audio_refs": {
+    "attack_sfx": "weapon.fries.attack",
+    "hit_sfx": "weapon.fries.hit"
+  }
+}
+

@@ -1,0 +1,36 @@
+{
+  "id": "monster.metamorph.sprouting_potato",
+  "display_name_key": "monster.sprouting_potato.name",
+  "description_key": "monster.sprouting_potato.desc",
+  "school_ids": ["school.metamorph"],
+  "primary_school_id": "school.metamorph",
+  "type": "mob",
+  "enabled": true,
+  "stats": {
+    "max_health": 10,
+    "attack": 4,
+    "move_speed": 100,
+    "knockback_resistance": 0.2,
+    "toughness": 10
+  },
+  "growth": {
+    "max_health_per_floor": 5,
+    "attack_per_floor": 2
+  },
+  "behavior": {
+    "movement": "move_toward_player",
+    "attack": "contact_damage",
+    "contact_damage_multiplier": 1.0
+  },
+  "spawn": {
+    "chapters": ["chapter_1", "chapter_2"],
+    "weight": 1.0
+  },
+  "asset_refs": {
+    "sprite": "monster.sprouting_potato.sprite"
+  },
+  "audio_refs": {
+    "hit_sfx": "monster.sprouting_potato.hit"
+  }
+}
+

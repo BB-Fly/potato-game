@@ -1,0 +1,34 @@
+{
+  "id": "magic.metamorph.comprehensive_development",
+  "display_name_key": "magic.comprehensive_development.name",
+  "description_key": "magic.comprehensive_development.desc",
+  "school_ids": ["school.metamorph"],
+  "primary_school_id": "school.metamorph",
+  "rarity": "common",
+  "acquire_limit": 0,
+  "enabled": true,
+  "tags": ["magic", "buff"],
+  "occupies_magic_slot": true,
+  "slot_type": "active",
+  "mana_cost": 10,
+  "energy_cost": 15,
+  "cooldown_frames": 600,
+  "auto_cast_interval_frames": 900,
+  "auto_cast_is_free": true,
+  "effects": [
+    {
+      "type": "apply_buff",
+      "buff_id": "buff.comprehensive_development",
+      "target": "self",
+      "duration_frames": 600
+    }
+  ],
+  "asset_refs": {
+    "icon": "magic.comprehensive_development.icon",
+    "vfx": "magic.comprehensive_development.vfx"
+  },
+  "audio_refs": {
+    "cast_sfx": "magic.comprehensive_development.cast"
+  }
+}
+

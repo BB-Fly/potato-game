@@ -1,0 +1,149 @@
+{
+  "id": "map.demo",
+  "display_name_key": "map.demo.name",
+  "enabled": true,
+  "areas": [
+    {
+      "id": "chapter_1_area_1",
+      "chapter_id": "chapter_1",
+      "floor": 1,
+      "routes": [
+        {
+          "id": "start",
+          "nodes": [
+            {"type": "free_weapon", "reward_table_id": "reward.free_weapon.start"},
+            {"type": "random_item", "reward_table_id": "reward.random_item.chapter_1"},
+            {"type": "combat", "reward_table_id": "reward.combat.default"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chapter_1_area_2",
+      "chapter_id": "chapter_1",
+      "floor": 2,
+      "routes": [
+        {
+          "id": "left",
+          "nodes": [
+            {"type": "weapon_shop", "shop_id": "shop.weapon.default"},
+            {"type": "item_shop", "shop_id": "shop.item.default"},
+            {"type": "coin", "gold": 225},
+            {"type": "combat", "reward_table_id": "reward.combat.default"}
+          ]
+        },
+        {
+          "id": "right",
+          "nodes": [
+            {"type": "weapon_shop", "shop_id": "shop.weapon.default"},
+            {"type": "magic_shop", "shop_id": "shop.magic.default"},
+            {"type": "coin", "gold": 225},
+            {"type": "combat", "reward_table_id": "reward.combat.default"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chapter_1_area_3",
+      "chapter_id": "chapter_1",
+      "floor": 3,
+      "routes": [
+        {
+          "id": "left",
+          "nodes": [
+            {"type": "weapon_shop", "shop_id": "shop.weapon.default"},
+            {"type": "item_shop", "shop_id": "shop.item.default"},
+            {"type": "random_item", "reward_table_id": "reward.random_item.chapter_1"},
+            {"type": "combat", "reward_table_id": "reward.combat.default"}
+          ]
+        },
+        {
+          "id": "right",
+          "nodes": [
+            {"type": "magic_shop", "shop_id": "shop.magic.default"},
+            {"type": "item_shop", "shop_id": "shop.item.default"},
+            {"type": "encounter", "encounter_pool_id": "encounter_pool.default"},
+            {"type": "combat", "reward_table_id": "reward.combat.default"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chapter_2_area_1",
+      "chapter_id": "chapter_2",
+      "floor": 4,
+      "routes": [
+        {
+          "id": "left",
+          "nodes": [
+            {"type": "coin", "gold": 375},
+            {"type": "encounter", "encounter_pool_id": "encounter_pool.default"},
+            {"type": "weapon_shop", "shop_id": "shop.weapon.default"},
+            {"type": "combat", "reward_table_id": "reward.combat.default"}
+          ]
+        },
+        {
+          "id": "right",
+          "nodes": [
+            {"type": "encounter", "encounter_pool_id": "encounter_pool.default"},
+            {"type": "random_item", "reward_table_id": "reward.random_item.chapter_2"},
+            {"type": "magic_shop", "shop_id": "shop.magic.default"},
+            {"type": "combat", "reward_table_id": "reward.combat.default"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chapter_2_area_2",
+      "chapter_id": "chapter_2",
+      "floor": 5,
+      "routes": [
+        {
+          "id": "left",
+          "nodes": [
+            {"type": "weapon_shop", "shop_id": "shop.weapon.default"},
+            {"type": "encounter", "encounter_pool_id": "encounter_pool.default"},
+            {"type": "weapon_master", "shop_id": "shop.weapon_master.default"},
+            {"type": "combat", "reward_table_id": "reward.combat.default"}
+          ]
+        },
+        {
+          "id": "right",
+          "nodes": [
+            {"type": "magic_shop", "shop_id": "shop.magic.default"},
+            {"type": "random_item", "reward_table_id": "reward.random_item.chapter_2"},
+            {"type": "magic_master", "shop_id": "shop.magic_master.default"},
+            {"type": "combat", "reward_table_id": "reward.combat.default"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chapter_2_area_3",
+      "chapter_id": "chapter_2",
+      "floor": 6,
+      "routes": [
+        {
+          "id": "left",
+          "nodes": [
+            {"type": "coin", "gold": 525},
+            {"type": "encounter", "encounter_pool_id": "encounter_pool.default"},
+            {"type": "item_shop", "shop_id": "shop.item.default"},
+            {"type": "combat", "reward_table_id": "reward.combat.default"}
+          ]
+        },
+        {
+          "id": "right",
+          "nodes": [
+            {"type": "encounter", "encounter_pool_id": "encounter_pool.default"},
+            {"type": "random_item", "reward_table_id": "reward.random_item.chapter_2"},
+            {"type": "weapon_shop", "shop_id": "shop.weapon.default"},
+            {"type": "combat", "reward_table_id": "reward.combat.default"}
+          ]
+        }
+      ],
+      "run_victory_on_clear": true
+    }
+  ]
+}
+

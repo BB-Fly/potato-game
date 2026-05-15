@@ -1,0 +1,71 @@
+{
+  "entries": [
+    {
+      "id": "shop.weapon.default",
+      "enabled": true,
+      "content_type": "weapon",
+      "stock_count": 3,
+      "first_offer_guarantee": "character_primary",
+      "price_by_rarity": {
+        "common": [65, 80],
+        "rare": [95, 100],
+        "legendary": [120, 135]
+      },
+      "floor_price_increase": 10,
+      "service_price": 75,
+      "services": ["weapon_fusion", "weapon_upgrade", "refresh"],
+      "service_purchase_limit": 1
+    },
+    {
+      "id": "shop.magic.default",
+      "enabled": true,
+      "content_type": "magic",
+      "stock_count": 3,
+      "first_offer_guarantee": "character_primary",
+      "price_by_rarity": {
+        "common": [40, 55],
+        "rare": [65, 75],
+        "legendary": [100, 120]
+      },
+      "floor_price_increase": 10,
+      "service_price": 75,
+      "services": ["magic_upgrade", "magic_fusion", "refresh"],
+      "service_purchase_limit": 1
+    },
+    {
+      "id": "shop.item.default",
+      "enabled": true,
+      "content_type": "item",
+      "stock_count": 5,
+      "first_offer_guarantee": "character_primary",
+      "price_by_rarity": {
+        "common": [75, 90],
+        "rare": [100, 115],
+        "legendary": [130, 150]
+      },
+      "floor_price_increase": 10,
+      "service_price": 75,
+      "services": ["refresh"],
+      "service_purchase_limit": 1
+    },
+    {
+      "id": "shop.weapon_master.default",
+      "enabled": true,
+      "content_type": "weapon_upgrade",
+      "stock_count": 3,
+      "service_price": 40,
+      "service_floor_price_increase": 5,
+      "services": ["weapon_upgrade", "free_weapon", "free_weapon_fusion"]
+    },
+    {
+      "id": "shop.magic_master.default",
+      "enabled": true,
+      "content_type": "magic_upgrade",
+      "stock_count": 3,
+      "service_price": 40,
+      "service_floor_price_increase": 5,
+      "services": ["magic_upgrade", "free_magic", "free_magic_fusion"]
+    }
+  ]
+}
+

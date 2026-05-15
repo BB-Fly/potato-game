@@ -1,0 +1,50 @@
+{
+  "entries": [
+    {
+      "id": "music_state.menu",
+      "track_ref": "bgm.menu",
+      "loop": true,
+      "fade_in_ms": 800,
+      "fade_out_ms": 600,
+      "priority": 1,
+      "enabled": true
+    },
+    {
+      "id": "music_state.map.chapter_1",
+      "track_ref": "bgm.chapter_1.map",
+      "loop": true,
+      "fade_in_ms": 800,
+      "fade_out_ms": 600,
+      "priority": 2,
+      "enabled": true
+    },
+    {
+      "id": "music_state.combat.chapter_1.mob",
+      "track_ref": "bgm.chapter_1.mob",
+      "loop": true,
+      "fade_in_ms": 400,
+      "fade_out_ms": 400,
+      "priority": 10,
+      "enabled": true
+    },
+    {
+      "id": "music_state.combat.boss",
+      "track_ref": "bgm.boss.default",
+      "loop": true,
+      "fade_in_ms": 200,
+      "fade_out_ms": 500,
+      "priority": 20,
+      "enabled": true
+    },
+    {
+      "id": "music_state.victory",
+      "track_ref": "bgm.victory",
+      "loop": false,
+      "fade_in_ms": 200,
+      "fade_out_ms": 600,
+      "priority": 30,
+      "enabled": true
+    }
+  ]
+}
+
