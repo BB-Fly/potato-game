@@ -61,8 +61,13 @@ Current config: `content/base/monsters/sprouting_potato.json`, `content/base/bos
 | Asset ID | Type | Suggested path | Status |
 | --- | --- | --- | --- |
 | `monster.sprouting_potato.sprite` | mob sprite | `res://assets/art/sprites/monsters/sprouting_potato.png` | referenced by config and asset registry |
+| `monster.mushroom_spore.sprite` | mob sprite | `res://assets/art/sprites/monsters/mushroom_spore.png` | generated in `enemy_pack_01`, not yet referenced in config |
+| `monster.mushroom_spore.icon` | mob icon | `res://assets/art/icons/monster_mushroom_spore.png` | generated in `enemy_pack_01`, not yet referenced in config |
+| `monster.bomb_fruitling.sprite` | mob sprite | `res://assets/art/sprites/monsters/bomb_fruitling.png` | generated in `enemy_pack_01`, not yet referenced in config |
+| `monster.bomb_fruitling.icon` | mob icon | `res://assets/art/icons/monster_bomb_fruitling.png` | generated in `enemy_pack_01`, not yet referenced in config |
 | `boss.demo_pollution_source.sprite` | boss sprite | `res://assets/art/sprites/bosses/demo_pollution_source.png` | needed, not yet referenced in config |
 | `boss.demo_pollution_source.icon` | map / boss warning icon | `res://assets/art/icons/boss_demo_pollution_source.png` | needed, not yet referenced in config |
+| `boss.pollution_source.warning_icon` | boss warning portrait | `res://assets/art/icons/boss_pollution_source_warning.png` | generated in `enemy_pack_01`, not yet referenced in config |
 
 ### Weapon
 
@@ -167,3 +172,55 @@ Current config: weapon, magic, monster files under `content/base`.
 - Add pickup/drop icons if coins, rewards, or temporary combat drops become physical objects.
 - Add rarity frames and card backgrounds after UI wireframes settle.
 - Add animation breakdowns only after the runtime decides between spritesheets, atlases, or skeletal animation.
+
+## UI Node Pack 01
+
+Source pack: `assets/art/source/ui_node_pack_01/`
+
+Generated as an original 3x4 clean pixel UI pack with built-in image generation, then processed with `generate2dsprite.py process`.
+
+Runtime exports:
+
+| Asset | Path |
+| --- | --- |
+| `node_elite_combat` | `assets/art/map/nodes/node_elite_combat.png` |
+| `node_boss` | `assets/art/map/nodes/node_boss.png` |
+| `node_rest` | `assets/art/map/nodes/node_rest.png` |
+| `node_locked` | `assets/art/map/nodes/node_locked.png` |
+| `node_selected_marker` | `assets/art/map/nodes/node_selected_marker.png` |
+| `node_route_arrow` | `assets/art/map/nodes/node_route_arrow.png` |
+| `card_common_frame` | `assets/art/ui/card_common_frame.png`, `assets/art/icons/ui_card_common_frame.png` |
+| `card_rare_frame` | `assets/art/ui/card_rare_frame.png`, `assets/art/icons/ui_card_rare_frame.png` |
+| `card_legendary_frame` | `assets/art/ui/card_legendary_frame.png`, `assets/art/icons/ui_card_legendary_frame.png` |
+| `panel_wood_small` | `assets/art/ui/panel_wood_small.png`, `assets/art/icons/ui_panel_wood_small.png` |
+| `panel_wood_wide` | `assets/art/ui/panel_wood_wide.png`, `assets/art/icons/ui_panel_wood_wide.png` |
+| `cursor_select` | `assets/art/ui/cursor_select.png`, `assets/art/icons/ui_cursor_select.png` |
+
+QC: final processed source uses `component_mode=largest`, `threshold=180`, `edge_threshold=220`, `fit_scale=0.88`, `shared_scale=true`; `edge_touch_frames` is empty in `assets/art/source/ui_node_pack_01/pipeline-meta/pipeline-meta.json`.
+
+## Reward Icon Pack 01
+
+Generated source: `assets/art/source/reward_icon_pack_01/`
+
+Runtime icon outputs:
+
+| Asset ID | Suggested path | Notes |
+| --- | --- | --- |
+| `item.battle_bamboo.icon` | `res://assets/art/icons/item_battle_bamboo.png` | 64 px transparent item icon |
+| `item.alchemy_flower.icon` | `res://assets/art/icons/item_alchemy_flower.png` | 64 px transparent item icon |
+| `item.assassin_garlic.icon` | `res://assets/art/icons/item_assassin_garlic.png` | 64 px transparent item icon |
+| `item.thorn_potato_charm.icon` | `res://assets/art/icons/item_thorn_potato_charm.png` | 64 px transparent item icon |
+| `buff.poison.icon` | `res://assets/art/icons/buff_poison.png` | 64 px transparent buff icon |
+| `buff.burning.icon` | `res://assets/art/icons/buff_burning.png` | 64 px transparent buff icon |
+| `buff.shield.icon` | `res://assets/art/icons/buff_shield.png` | 64 px transparent buff icon |
+| `buff.haste.icon` | `res://assets/art/icons/buff_haste.png` | 64 px transparent buff icon |
+| `buff.healing_sprout.icon` | `res://assets/art/icons/buff_healing_sprout.png` | 64 px transparent buff icon |
+| `buff.frost.icon` | `res://assets/art/icons/buff_frost.png` | 64 px transparent buff icon |
+| `reward.legendary_choice.icon` | `res://assets/art/icons/reward_legendary_choice.png` | also copied to `assets/art/ui/reward_legendary_choice.png` |
+| `reward.gold_bonus.icon` | `res://assets/art/icons/reward_gold_bonus.png` | also copied to `assets/art/ui/reward_gold_bonus.png` |
+| `reward.free_fusion.icon` | `res://assets/art/icons/reward_free_fusion.png` | also copied to `assets/art/ui/reward_free_fusion.png` |
+| `reward.free_upgrade.icon` | `res://assets/art/icons/reward_free_upgrade.png` | also copied to `assets/art/ui/reward_free_upgrade.png` |
+| `reward.reroll.icon` | `res://assets/art/icons/reward_reroll.png` | also copied to `assets/art/ui/reward_reroll.png` |
+| `reward.luck_clover.icon` | `res://assets/art/icons/reward_luck_clover.png` | also copied to `assets/art/ui/reward_luck_clover.png` |
+
+QC: processed through `generate2dsprite.py process` from built-in `image_gen` raw art. Script metadata reports source-cell `edge_touch_frames` at `[1,1]`, `[1,2]`, `[1,3]`, `[2,3]`, `[3,2]`, and `[3,3]` using a 2 px source margin. Final 64 px transparent icon files have no non-transparent edge pixels and remain usable for item, buff, and reward UI.

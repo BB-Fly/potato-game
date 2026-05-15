@@ -1,0 +1,21 @@
+Create an ORIGINAL clean pixel-art UI asset sheet for an indie potato-themed roguelite map and inventory UI. The result MUST be an exact 3 columns x 4 rows sprite sheet with 12 separate centered assets, one asset per cell, on a perfectly solid #FF00FF magenta background. No text, no labels, no numbers, no watermarks.
+
+CRITICAL LAYOUT: each asset must be small enough to occupy only the central 45% to 55% of its cell. Leave very large empty magenta gutters between all rows and columns. No glow, shadow, spark, outline, leaf, corner, arrow tip, panel edge, or ornament may enter another cell or touch any cell boundary. Keep every asset centered in its own invisible cell, consistent pixel scale, easy to split into transparent PNGs.
+
+Pixel art style: crisp chunky outlines, readable at 32-64 px, cheerful but combat-ready, soft highlights, limited palette with earthy wood, teal, gold, red warning, cool blue shadows. Original designs only; do not copy Brotato or any existing game UI.
+
+Cell order left-to-right, top-to-bottom:
+1 node_elite_combat: elite combat map node icon, compact shield-like potato arena badge with crossed tiny forks and red-orange danger rim.
+2 node_boss: boss map node icon, compact crowned spud skull silhouette, dark red crest and gold crown shards, original design.
+3 node_rest: rest map node icon, compact cozy pillow and tiny sprout mug, calm green-blue rim.
+4 node_locked: locked node icon, compact chunky padlock over small map pin base, slate metal and amber keyhole.
+5 node_selected_marker: selected node marker, compact hollow targeting ring with tiny sprout ticks, yellow-green glow kept inside the icon.
+6 node_route_arrow: route arrow, compact curved pixel arrow segment with dotted path sparkle, teal arrowhead.
+7 card_common_frame: small card frame, simple gray-green border with tiny sprout corners, magenta inner opening.
+8 card_rare_frame: small card frame, blue steel border with gem studs and crisp bevel, magenta inner opening.
+9 card_legendary_frame: small card frame, gold-orange ornate border with tiny crown notch and warm shine, magenta inner opening.
+10 panel_wood_small: compact wooden UI panel plaque, rounded pixel board with nails, leafy accent.
+11 panel_wood_wide: wide wooden UI panel banner, but still within central 55% of its cell with lots of magenta padding on all sides, plank seams, potato-leaf corner caps.
+12 cursor_select: selection cursor pointer, chunky white potato-sprout arrow cursor with teal outline and small click sparkle kept close.
+
+Make it look like hand-authored pixel art: clean silhouettes, minimal dithering, strong outline, no anti-aliased vector smoothness, no photorealism.

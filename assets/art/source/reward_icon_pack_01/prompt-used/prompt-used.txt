@@ -1,0 +1,21 @@
+Create one original 4x4 pixel art icon sprite sheet for a roguelite potato-themed survivor game. Style: crisp readable modern pixel art game icons, strong dark outlines, high contrast, compact silhouettes, clean color clusters, broadly ergonomic like small action roguelite icons but completely original and not copying any existing game's exact shapes, compositions, proportions, or palette. Background must be 100% solid flat magenta #FF00FF, no gradients. Exactly 16 equal-size cells arranged in a 4x4 grid, no visible borders, no grid lines, no frames, no UI, no text, no letters, no numbers, no arrows. Each icon centered in its invisible cell, fills about 65% of the cell, leaves magenta margin on all four sides, nothing touches or crosses cell edges. All icons are standalone transparent-background-ready symbols, not cards, not badges.
+
+Cell contents left-to-right, top-to-bottom:
+1 battle bamboo item: crossed green bamboo shoot batons with tiny impact sparkle, bold outline.
+2 alchemy flower item: strange teal-purple flower in a tiny potion-glass bulb, glowing pollen dots close to flower.
+3 assassin garlic item: angular garlic bulb with tiny dark cloak fold and small dagger glint, readable but cute-dark.
+4 thorn potato charm item: small potato-shaped charm with two leaf spikes and blue cord loop.
+5 poison buff: green toxic droplet with skull-like negative-space face shape, bubbles kept close.
+6 burning buff: orange-red flame wrapped around a tiny potato ember core, strong outline.
+7 shield buff: chunky blue shield with warm golden rim and small white highlight, no letters.
+8 haste buff: mint-green boot wing/speed swirl compact icon, no arrows.
+9 legendary choice reward: faceted golden star-crystal crown with purple rim glow, no text.
+10 gold bonus reward: stacked shiny coin cluster with small sparkle, no numbers.
+11 free fusion reward: two small colored gems merging into one bright center gem, circular energy knot, no plus sign.
+12 free upgrade reward: small anvil with upward glow and hammer spark, no arrow symbol.
+13 reroll reward: two curved seed-like droplets chasing each other in a circle, no arrowheads.
+14 healing sprout buff: red berry-heart shaped sprout leaf over small green stem, no medical cross.
+15 frost buff: cyan ice shard with snowflake-like silhouette but no text.
+16 luck clover reward: four-leaf clover made of potato leaves with tiny gold sparkle.
+
+Pixel-art constraints: hard pixel edges, no soft painted background, minimal antialiasing, no realistic rendering, no shadows outside icons except tiny self-contained pixel highlights. The sheet must contain only these 16 icons on solid magenta.

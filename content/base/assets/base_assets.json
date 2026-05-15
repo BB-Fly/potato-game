@@ -67,12 +67,32 @@
       ]
     },
     {
+      "id": "boss.demo_pollution_source.warning_icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/boss_pollution_source_warning.png",
+      "tags": [
+        "boss",
+        "pollution_source",
+        "warning",
+        "ui"
+      ]
+    },
+    {
       "id": "buff.bruise.icon",
       "kind": "icon",
       "path": "res://assets/art/icons/buff_bruise.png",
       "tags": [
         "buff",
         "bruise",
+        "ui"
+      ]
+    },
+    {
+      "id": "buff.burning.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/buff_burning.png",
+      "tags": [
+        "buff",
         "ui"
       ]
     },
@@ -87,12 +107,57 @@
       ]
     },
     {
+      "id": "buff.frost.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/buff_frost.png",
+      "tags": [
+        "buff",
+        "ui"
+      ]
+    },
+    {
+      "id": "buff.haste.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/buff_haste.png",
+      "tags": [
+        "buff",
+        "ui"
+      ]
+    },
+    {
+      "id": "buff.healing_sprout.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/buff_healing_sprout.png",
+      "tags": [
+        "buff",
+        "ui"
+      ]
+    },
+    {
+      "id": "buff.poison.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/buff_poison.png",
+      "tags": [
+        "buff",
+        "ui"
+      ]
+    },
+    {
       "id": "buff.potato_enhancement.icon",
       "kind": "icon",
       "path": "res://assets/art/icons/buff_potato_enhancement.png",
       "tags": [
         "buff",
         "potato_enhancement",
+        "ui"
+      ]
+    },
+    {
+      "id": "buff.shield.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/buff_shield.png",
+      "tags": [
+        "buff",
         "ui"
       ]
     },
@@ -104,6 +169,17 @@
         "buff",
         "stun",
         "ui"
+      ]
+    },
+    {
+      "id": "character.potato_hero.attack_fries_sprite",
+      "kind": "sprite",
+      "path": "res://assets/art/sprites/characters/potato_hero_attack_fries.png",
+      "tags": [
+        "character",
+        "potato_hero",
+        "attack",
+        "fries"
       ]
     },
     {
@@ -126,12 +202,58 @@
       ]
     },
     {
+      "id": "character.potato_hero.walk_sprite",
+      "kind": "sprite",
+      "path": "res://assets/art/sprites/characters/potato_hero_walk.png",
+      "tags": [
+        "character",
+        "potato_hero",
+        "walk"
+      ]
+    },
+    {
+      "id": "item.alchemy_flower.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/item_alchemy_flower.png",
+      "tags": [
+        "item",
+        "ui"
+      ]
+    },
+    {
+      "id": "item.assassin_garlic.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/item_assassin_garlic.png",
+      "tags": [
+        "item",
+        "ui"
+      ]
+    },
+    {
+      "id": "item.battle_bamboo.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/item_battle_bamboo.png",
+      "tags": [
+        "item",
+        "ui"
+      ]
+    },
+    {
       "id": "item.potato_enhancement.icon",
       "kind": "icon",
       "path": "res://assets/art/icons/item_potato_enhancement.png",
       "tags": [
         "item",
         "potato_enhancement",
+        "ui"
+      ]
+    },
+    {
+      "id": "item.thorn_potato_charm.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/item_thorn_potato_charm.png",
+      "tags": [
+        "item",
         "ui"
       ]
     },
@@ -166,6 +288,16 @@
       ]
     },
     {
+      "id": "map.node.boss.icon",
+      "kind": "icon",
+      "path": "res://assets/art/map/nodes/node_boss.png",
+      "tags": [
+        "map",
+        "node",
+        "ui"
+      ]
+    },
+    {
       "id": "map.node.coin.icon",
       "kind": "icon",
       "path": "res://assets/art/map/nodes/coin.png",
@@ -179,6 +311,16 @@
       "id": "map.node.combat.icon",
       "kind": "icon",
       "path": "res://assets/art/map/nodes/combat.png",
+      "tags": [
+        "map",
+        "node",
+        "ui"
+      ]
+    },
+    {
+      "id": "map.node.elite_combat.icon",
+      "kind": "icon",
+      "path": "res://assets/art/map/nodes/node_elite_combat.png",
       "tags": [
         "map",
         "node",
@@ -216,6 +358,16 @@
       ]
     },
     {
+      "id": "map.node.locked.icon",
+      "kind": "icon",
+      "path": "res://assets/art/map/nodes/node_locked.png",
+      "tags": [
+        "map",
+        "node",
+        "ui"
+      ]
+    },
+    {
       "id": "map.node.magic_master.icon",
       "kind": "icon",
       "path": "res://assets/art/map/nodes/magic_master.png",
@@ -246,6 +398,36 @@
       ]
     },
     {
+      "id": "map.node.rest.icon",
+      "kind": "icon",
+      "path": "res://assets/art/map/nodes/node_rest.png",
+      "tags": [
+        "map",
+        "node",
+        "ui"
+      ]
+    },
+    {
+      "id": "map.node.route_arrow",
+      "kind": "icon",
+      "path": "res://assets/art/map/nodes/node_route_arrow.png",
+      "tags": [
+        "map",
+        "node",
+        "ui"
+      ]
+    },
+    {
+      "id": "map.node.selected_marker",
+      "kind": "icon",
+      "path": "res://assets/art/map/nodes/node_selected_marker.png",
+      "tags": [
+        "map",
+        "node",
+        "ui"
+      ]
+    },
+    {
       "id": "map.node.weapon_master.icon",
       "kind": "icon",
       "path": "res://assets/art/map/nodes/weapon_master.png",
@@ -263,6 +445,44 @@
         "map",
         "node",
         "ui"
+      ]
+    },
+    {
+      "id": "monster.bomb_fruitling.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/monster_bomb_fruitling.png",
+      "tags": [
+        "monster",
+        "bomb_fruitling",
+        "ui"
+      ]
+    },
+    {
+      "id": "monster.bomb_fruitling.sprite",
+      "kind": "sprite",
+      "path": "res://assets/art/sprites/monsters/bomb_fruitling.png",
+      "tags": [
+        "monster",
+        "bomb_fruitling"
+      ]
+    },
+    {
+      "id": "monster.mushroom_spore.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/monster_mushroom_spore.png",
+      "tags": [
+        "monster",
+        "mushroom_spore",
+        "ui"
+      ]
+    },
+    {
+      "id": "monster.mushroom_spore.sprite",
+      "kind": "sprite",
+      "path": "res://assets/art/sprites/monsters/mushroom_spore.png",
+      "tags": [
+        "monster",
+        "mushroom_spore"
       ]
     },
     {
@@ -336,6 +556,60 @@
       "path": "res://assets/art/music_states/victory.png",
       "tags": [
         "music_state",
+        "ui"
+      ]
+    },
+    {
+      "id": "reward.free_fusion.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/reward_free_fusion.png",
+      "tags": [
+        "reward",
+        "ui"
+      ]
+    },
+    {
+      "id": "reward.free_upgrade.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/reward_free_upgrade.png",
+      "tags": [
+        "reward",
+        "ui"
+      ]
+    },
+    {
+      "id": "reward.gold_bonus.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/reward_gold_bonus.png",
+      "tags": [
+        "reward",
+        "ui"
+      ]
+    },
+    {
+      "id": "reward.legendary_choice.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/reward_legendary_choice.png",
+      "tags": [
+        "reward",
+        "ui"
+      ]
+    },
+    {
+      "id": "reward.luck_clover.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/reward_luck_clover.png",
+      "tags": [
+        "reward",
+        "ui"
+      ]
+    },
+    {
+      "id": "reward.reroll.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/reward_reroll.png",
+      "tags": [
+        "reward",
         "ui"
       ]
     },
@@ -428,9 +702,73 @@
       ]
     },
     {
+      "id": "ui.card.common_frame",
+      "kind": "ui",
+      "path": "res://assets/art/ui/card_common_frame.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.card.common_frame.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/ui_card_common_frame.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.card.legendary_frame",
+      "kind": "ui",
+      "path": "res://assets/art/ui/card_legendary_frame.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.card.legendary_frame.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/ui_card_legendary_frame.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.card.rare_frame",
+      "kind": "ui",
+      "path": "res://assets/art/ui/card_rare_frame.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.card.rare_frame.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/ui_card_rare_frame.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
       "id": "ui.currency.gold.icon",
       "kind": "ui",
       "path": "res://assets/art/ui/currency_gold.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.cursor.select",
+      "kind": "ui",
+      "path": "res://assets/art/ui/cursor_select.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.cursor.select.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/ui_cursor_select.png",
       "tags": [
         "ui"
       ]
@@ -448,6 +786,92 @@
       "kind": "ui",
       "path": "res://assets/art/ui/mana_badge.png",
       "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.panel.wood_small",
+      "kind": "ui",
+      "path": "res://assets/art/ui/panel_wood_small.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.panel.wood_small.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/ui_panel_wood_small.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.panel.wood_wide",
+      "kind": "ui",
+      "path": "res://assets/art/ui/panel_wood_wide.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.panel.wood_wide.icon",
+      "kind": "icon",
+      "path": "res://assets/art/icons/ui_panel_wood_wide.png",
+      "tags": [
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.reward.free_fusion.icon",
+      "kind": "ui",
+      "path": "res://assets/art/ui/reward_free_fusion.png",
+      "tags": [
+        "reward",
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.reward.free_upgrade.icon",
+      "kind": "ui",
+      "path": "res://assets/art/ui/reward_free_upgrade.png",
+      "tags": [
+        "reward",
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.reward.gold_bonus.icon",
+      "kind": "ui",
+      "path": "res://assets/art/ui/reward_gold_bonus.png",
+      "tags": [
+        "reward",
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.reward.legendary_choice.icon",
+      "kind": "ui",
+      "path": "res://assets/art/ui/reward_legendary_choice.png",
+      "tags": [
+        "reward",
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.reward.luck_clover.icon",
+      "kind": "ui",
+      "path": "res://assets/art/ui/reward_luck_clover.png",
+      "tags": [
+        "reward",
+        "ui"
+      ]
+    },
+    {
+      "id": "ui.reward.reroll.icon",
+      "kind": "ui",
+      "path": "res://assets/art/ui/reward_reroll.png",
+      "tags": [
+        "reward",
         "ui"
       ]
     },
