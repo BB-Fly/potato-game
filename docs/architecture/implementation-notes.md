@@ -1,190 +1,190 @@
-# Current Implementation Notes
+# 当前实现说明
 
-This document describes the current playable Godot prototype, not the final target architecture. Use it as a handoff guide for new work sessions and future agents.
+本文档描述的是当前可运行的 Godot 原型，而不是长期目标架构。新窗口或后续 Agent 接手时，可以先读这份文档，再决定是否下钻到代码。
 
-## Snapshot
+## 快照
 
-- Current stable checkpoint: `d6ea0ca Restore playable Godot prototype`.
-- Godot version used locally: `4.6.2 stable Mono`.
-- Main scene: `scenes/main.tscn`.
-- Main runtime script: `src/app/main.gd`.
-- The prototype intentionally keeps presentation and gameplay in `main.gd` for speed. The domain folders under `src/domain/` are still the intended long-term architecture, but many combat and UI behaviors are currently implemented directly in the playable slice.
+- 当前稳定恢复点：`d6ea0ca Restore playable Godot prototype`。
+- 本机使用的 Godot 版本：`4.6.2 stable Mono`。
+- 主场景：`scenes/main.tscn`。
+- 运行入口脚本：`src/app/main.gd`。
+- 当前原型为了快速形成可玩闭环，把大量表现层和战斗逻辑集中在 `main.gd`。`src/domain/` 下的模块仍然代表长期架构方向，但当前很多战斗、UI、地图交互行为还没有完全迁移进去。
 
-## Startup Flow
+## 启动流程
 
-`scenes/main.tscn` contains one `Node` with `src/app/main.gd` attached.
+`scenes/main.tscn` 里只有一个挂载了 `src/app/main.gd` 的 `Node`。
 
-On `_ready()`, `main.gd` must:
+`main.gd` 的 `_ready()` 必须完成这些事：
 
-1. Set fixed physics tick rate.
-2. Register input actions.
-3. Bootstrap domain services and load `content/base`.
-4. Create `ui_root`.
-5. Call `_show_starter_screen()`.
+1. 设置固定物理 tick。
+2. 注册输入 action。
+3. 初始化领域服务并加载 `content/base`。
+4. 创建 `ui_root`。
+5. 调用 `_show_starter_screen()`。
 
-Healthy startup prints:
+健康启动日志应该包含：
 
 ```text
 Puritato playable slice ready. Registered types: [...]
 ```
 
-If startup prints only architecture bootstrap text, or if `_show_starter_screen()` is not called, the game may launch to an empty gray window. That was the cause of the May 16 gray-screen regression.
+如果启动时只打印旧的 architecture bootstrap 文本，或者 `_show_starter_screen()` 没有被调用，游戏可能会启动成空白灰屏。2026-05-16 的灰屏问题就是因为 `main.gd` 被覆盖回了旧的架构初始化脚本。
 
-## Runtime Screens
+## 运行时界面
 
-The active screen is tracked by `screen` in `src/app/main.gd`.
+当前界面状态由 `src/app/main.gd` 中的 `screen` 字符串记录。
 
-- `starter`: starting equipment choice.
-- `map`: route selection and reward nodes.
-- `reward`: reward choice overlay.
-- `shop`: shop choice overlay.
-- `combat`: survivor-style combat.
-- `defeat`: retry screen.
-- `victory`: run clear screen.
+- `starter`：初始装备选择。
+- `map`：路线选择和奖励节点。
+- `reward`：奖励选择界面。
+- `shop`：商店购买界面。
+- `combat`：生存战斗。
+- `defeat`：失败重试界面。
+- `victory`：通关界面。
 
-`_clear_screen()` removes children from `ui_root` and clears transient combat arrays. New screens rebuild their UI from scratch.
+`_clear_screen()` 会清空 `ui_root` 的子节点，并清理临时战斗数组。每个界面切换时都会重新构建 UI。
 
-## Scaling Model
+## 缩放模型
 
-The prototype uses a logical canvas:
+当前原型使用固定逻辑画布：
 
 ```gdscript
 const LOGICAL_VIEWPORT_SIZE = Vector2(1280, 720)
 ```
 
-`_update_ui_root_transform()` scales and centers `ui_root` inside the actual Godot viewport. Gameplay coordinates, click hotspots, reward nodes, and combat bounds all use logical 1280x720 coordinates. Do not place interactive UI directly under the scene root unless it also follows this scaling model.
+`_update_ui_root_transform()` 会把 `ui_root` 等比缩放并居中放进真实 Godot viewport。玩法坐标、点击热点、奖励节点、战斗区域都使用 1280x720 的逻辑坐标。新增交互 UI 时应放在 `ui_root` 下，避免全屏或窗口缩放后点击判定错位。
 
-## Current Gameplay Loop
+## 当前玩法闭环
 
-1. Start at `starter`.
-2. Pick one starting weapon by clicking its card/icon.
-3. Enter `map`.
-4. Click left or right route.
-5. Reward nodes become interactable only on the selected route.
-6. Claim all selected-route rewards.
-7. Click the combat node.
-8. Survive the mob phase.
-9. Fight the boss.
-10. On boss defeat, advance to the next map area.
+1. 从 `starter` 开始。
+2. 点击卡片/图标选择一把初始武器。
+3. 进入 `map`。
+4. 点击左路线或右路线。
+5. 只有已选择路线上的奖励节点可交互，另一侧只做预览。
+6. 领取当前路线全部奖励。
+7. 点击战斗节点。
+8. 进入小怪阶段。
+9. Boss 出现并进入 Boss 阶段。
+10. 击败 Boss 后推进到下一层地图。
 
-Route data comes from `content/base/maps/demo_map.json` through `MapFlow`.
+路线数据来自 `content/base/maps/demo_map.json`，通过 `MapFlow` 读取。
 
-## Equipment Rules
+## 装备规则
 
-`RunContext` currently has:
+`RunContext` 当前初始化为：
 
 ```gdscript
 equipped_weapons.resize(4)
 equipped_magics.resize(4)
 ```
 
-Important rule: weapons are capped at 4 equipped slots. `RunContext.add_weapon()` appends every acquired weapon to `inventory["weapons"]`, then `_auto_equip()` fills only empty equipment slots. Once the 4 slots are full, later weapons remain in inventory and should not affect combat until a backpack/equip UI is implemented.
+重要规则：武器最多 4 个自动装备槽。`RunContext.add_weapon()` 会把所有获得的武器加入 `inventory["weapons"]`，然后 `_auto_equip()` 只填充空的装备槽。4 个槽满后，后续武器只留在库存里，在背包和装备 UI 做出来之前，不应该参与战斗生效。
 
-`main.gd` also counts only equipped weapon slots through `_equipped_weapon_count()`.
+`main.gd` 中也必须通过 `_equipped_weapon_count()` 统计已装备武器，而不是直接使用库存数量。
 
-## Combat Implementation
+## 战斗实现
 
-Combat is currently implemented in `main.gd`, not in `CombatRuntime`.
+当前战斗主要在 `main.gd` 中实现，还没有完全使用 `CombatRuntime`。
 
-Main state:
+主要状态包括：
 
-- `player_pos`, `player_hp`, `player_mana`
+- `player_pos`、`player_hp`、`player_mana`
 - `enemies`
 - `boss_enemy`
 - `boss_projectiles`
 - `combat_weapon_sprites`
 - `magic_cooldowns`
 
-Combat update order in `_update_combat(delta)`:
+`_update_combat(delta)` 的更新顺序：
 
-1. Update timers, mana, and movement.
-2. Update automatic weapon attacks.
-3. Process magic input.
-4. Update magic cooldowns.
-5. Spawn mobs or boss.
-6. Update enemies.
-7. Update boss ability.
-8. Update boss projectiles.
-9. Update visuals and HUD.
+1. 更新计时器、法力和移动。
+2. 更新武器自动攻击。
+3. 处理魔法输入。
+4. 更新魔法冷却。
+5. 刷小怪或 Boss。
+6. 更新敌人。
+7. 更新 Boss 技能。
+8. 更新 Boss 子弹。
+9. 更新角色、武器、HUD 表现。
 
-Collisions are simple shapes:
+碰撞都使用简单图形：
 
-- Enemy contact uses distance checks against `ENEMY_TOUCH_RADIUS`.
-- Player projectile/boss projectile contact uses circle distance checks.
-- Combat bounds use `COMBAT_ARENA_RECT`.
+- 敌人接触伤害使用 `ENEMY_TOUCH_RADIUS` 做距离判定。
+- 玩家和 Boss 子弹使用圆形距离判定。
+- 战斗边界使用 `COMBAT_ARENA_RECT`。
 
-No runtime collision is expected to match texture silhouettes.
+运行时碰撞不需要和贴图轮廓一致。
 
-## Player, Weapon, And Magic Controls
+## 玩家、武器和魔法输入
 
-Movement:
+移动：
 
 - `WASD`
-- Arrow keys
+- 方向键
 
-Magic slots:
+魔法槽：
 
-- Slot 1: `Q`
-- Slot 2: `E`
-- Slot 3: `R`
-- Slot 4: `F`
+- 1 号槽：`Q`
+- 2 号槽：`E`
+- 3 号槽：`R`
+- 4 号槽：`F`
 
-Weapons auto-target the nearest enemy and attack on a timer. The current fries weapon is represented by up to 4 floating weapon sprites around the player. Weapon visuals are capped to equipped weapon count, not inventory count.
+武器会自动锁定最近敌人并按冷却攻击。当前薯条武器通过最多 4 个漂浮武器 sprite 围绕玩家展示。武器数量表现必须对应已装备数量，而不是库存数量。
 
-## Boss Ability
+## Boss 技能
 
-The demo boss spawns after the mob phase.
+Demo Boss 在小怪阶段结束后出现。
 
-Current boss special:
+当前 Boss 特殊技能：
 
-- Cooldown: 8 seconds.
-- Telegraph/cast duration: roughly 0.65 seconds.
-- Projectile count: 16.
-- Shape: radial circle.
-- Projectile damage: same as boss contact damage.
-- Projectile art: `res://assets/art/source/magic_vfx/magic_vfx-2.png`.
-- Cast warning art: `res://assets/art/source/enemy_pack_01/boss_pollution_source_warning/boss_pollution_source_warning-1.png`.
+- 冷却：8 秒。
+- 施法/预警时长：约 0.65 秒。
+- 子弹数量：16 个。
+- 形态：圆形扩散弹幕。
+- 子弹伤害：等于 Boss 接触伤害。
+- 子弹资源：`res://assets/art/source/magic_vfx/magic_vfx-2.png`。
+- 施法预警资源：`res://assets/art/source/enemy_pack_01/boss_pollution_source_warning/boss_pollution_source_warning-1.png`。
 
-Implementation entry points:
+相关函数：
 
 - `_update_boss_ability(delta)`
 - `_play_boss_cast_motion()`
 - `_spawn_boss_radial_projectiles()`
 - `_update_boss_projectiles(delta)`
 
-## Animation Notes
+## 动画说明
 
-The current runtime uses existing frame folders directly:
+当前运行时直接使用已有帧目录：
 
-- Player idle: `assets/art/source/potato_hero_idle_handless/`
-- Player walk: `assets/art/source/potato_hero_walk_handless/`
-- Sprouting potato: `assets/art/source/sprouting_potato/`
-- Mushroom spore: `assets/art/source/enemy_pack_01/mushroom_spore/`
-- Bomb fruitling: `assets/art/source/enemy_pack_01/bomb_fruitling/`
-- Boss: `assets/art/source/boss_pollution_source/`
+- 玩家 idle：`assets/art/source/potato_hero_idle_handless/`
+- 玩家 walk：`assets/art/source/potato_hero_walk_handless/`
+- 发芽土豆：`assets/art/source/sprouting_potato/`
+- 蘑菇孢子：`assets/art/source/enemy_pack_01/mushroom_spore/`
+- 炸弹果苗：`assets/art/source/enemy_pack_01/bomb_fruitling/`
+- Boss：`assets/art/source/boss_pollution_source/`
 
-Character and monster movement should use frame cycling and squash/stretch. Avoid rotating characters for idle motion; rotation made the sprites feel unstable.
+角色和怪物动态优先使用换帧、上下伸缩和左右伸缩。不要用旋转来做 idle 动态，之前的旋转表现显得不稳定。
 
-## Asset Fallbacks
+## 资源兜底
 
-The current playable slice uses route backgrounds directly:
+当前可运行切片直接使用路线背景：
 
 - `res://assets/art/map/backgrounds/chapter_1_route_background.png`
 - `res://assets/art/map/backgrounds/chapter_2_route_background.png`
 
-Some documented future screen assets are missing, including:
+部分规划中的界面资源目前缺失：
 
 - `assets/art/screens/main_menu_background.png`
 - `assets/art/map/arenas/chapter_1_arena.png`
 - `assets/art/map/arenas/chapter_2_arena.png`
 
-Do not assume those missing files are fatal. The restored prototype deliberately avoids depending on them at startup.
+不要默认认为这些缺失资源一定会导致启动失败。恢复后的原型已经避免在启动阶段强依赖它们。
 
-## Content Loading
+## 内容加载
 
-Content is loaded by `ContentConfigLoader` into `ContentRegistry`.
+内容由 `ContentConfigLoader` 加载进 `ContentRegistry`。
 
-Current registered content types on healthy startup:
+健康启动时当前注册的内容类型：
 
 - `school`
 - `character`
@@ -200,67 +200,67 @@ Current registered content types on healthy startup:
 - `audio`
 - `asset`
 
-`scene_art` files exist in `content/base/scene_art`, but the current restored playable slice does not require a `scene_art` registry entry to start.
+`content/base/scene_art` 目录存在，但当前恢复后的可玩切片不依赖 `scene_art` 注册类型启动。
 
-## Common Failure Modes
+## 常见问题
 
-### Gray Screen On Startup
+### 启动灰屏
 
-Likely cause: `src/app/main.gd` was replaced with the old architecture-only bootstrap.
+最可能原因：`src/app/main.gd` 被覆盖回旧的 architecture-only bootstrap。
 
-Check:
+检查：
 
 ```powershell
 rg -n "playable slice ready|_show_starter_screen|LOGICAL_VIEWPORT_SIZE" src\app\main.gd
 ```
 
-Expected:
+期望结果：
 
-- `LOGICAL_VIEWPORT_SIZE` exists.
-- `_ready()` calls `_show_starter_screen()`.
-- startup prints `Puritato playable slice ready`.
+- 存在 `LOGICAL_VIEWPORT_SIZE`。
+- `_ready()` 调用了 `_show_starter_screen()`。
+- 启动日志打印 `Puritato playable slice ready`。
 
-### Weapon Count Looks Wrong
+### 武器数量显示不对
 
-Check whether UI/combat is counting inventory instead of equipped slots. Gameplay should use `_equipped_weapon_count()` and `run_context.equipped_weapons`, capped at 4.
+检查 UI 或战斗逻辑是否错误地使用了库存数量。玩法应使用 `_equipped_weapon_count()` 和 `run_context.equipped_weapons`，最多 4 个。
 
-### Fullscreen Clicks Are Offset
+### 全屏后点击错位
 
-Check whether new UI was added outside `ui_root`. Anything interactive in the playable slice should be positioned in logical coordinates under `ui_root`.
+检查新 UI 是否被加到了 `ui_root` 外面。当前可运行切片的交互元素都应该放在 `ui_root` 下，并使用逻辑坐标。
 
-### Missing Background Looks Like Gray Screen
+### 缺背景导致疑似灰屏
 
-Missing optional screen art should fall back to existing route backgrounds. Do not reintroduce a hard dependency on `assets/art/screens/main_menu_background.png` unless that file is committed.
+缺失规划中的屏幕背景时，应优先使用已有路线背景兜底。除非对应文件已经提交，不要重新引入对 `assets/art/screens/main_menu_background.png` 的硬依赖。
 
-## Validation Checklist
+## 验证清单
 
-Before committing gameplay changes:
+提交玩法改动前建议运行：
 
 ```powershell
 git -c safe.directory=C:/Users/LYZ/Desktop/work/potato-game diff --check
 & 'C:\Program Files\Godot\Godot_v4.6.2-stable_mono_win64_console.exe' --headless --path 'C:\Users\LYZ\Desktop\work\potato-game' --quit
 ```
 
-Expected Godot output includes:
+Godot 输出中应包含：
 
 ```text
 Puritato playable slice ready.
 ```
 
-Launching a visible window:
+启动可见窗口：
 
 ```powershell
 Start-Process -FilePath 'C:\Program Files\Godot\Godot_v4.6.2-stable_mono_win64.exe' -ArgumentList @('--path','C:\Users\LYZ\Desktop\work\potato-game') -WindowStyle Normal
 ```
 
-## Git Hygiene
+## Git 注意事项
 
-The repository may contain many untracked Godot `.import` files after launching the editor or game. Do not commit them blindly. Prefer committing only the files directly required by the task.
+打开 Godot 后，仓库里可能出现大量未跟踪的 `.import` 文件。不要盲目提交它们。优先只提交当前任务真正需要的文件。
 
-If saving a known-good runtime state, commit at least:
+保存一个已知可运行状态时，至少关注：
 
 - `src/app/main.gd`
 - `src/domain/run/run_context.gd`
-- any content or asset registry files that the runtime now requires
+- 当前运行所需的内容配置或资源注册文件
 
-Use the known stable checkpoint `d6ea0ca` as a recovery reference.
+遇到严重回退时，可以把稳定提交 `d6ea0ca` 作为恢复参考。
