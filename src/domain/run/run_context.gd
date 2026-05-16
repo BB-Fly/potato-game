@@ -38,7 +38,7 @@ func initialize(p_character_id: String, p_difficulty_id: String, p_mode_id: Stri
 	rng = DeterministicRng.new(seed)
 	run_id = "%s:%s:%s" % [character_id, mode_id, seed]
 	equipped_weapons.resize(4)
-	equipped_magics.resize(3)
+	equipped_magics.resize(4)
 
 
 func grant_gold(amount: int) -> void:
