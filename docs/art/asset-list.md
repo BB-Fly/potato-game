@@ -18,6 +18,9 @@ Current implementation note:
 - Inspiration boundary: may share the broad genre ergonomics of Brotato, but must be original. Do not copy its character shapes, enemy designs, UI frames, icon compositions, palettes, or exact proportions.
 - Potato theme: use playful vegetable/fried-food motifs, but keep outlines, facial details, weapons, and effects unique to Puritato.
 - Combat readability: player, mob, boss, weapon hit area, magic VFX, and pickups must stay distinguishable under motion and overlapping effects.
+- Combat character rig: the potato body can be handless in combat. Use small round floating hands / weapon sockets around the potato to hold equipped weapons; weapon attacks animate the floating hand, weapon sprite, projectile, hit area, and VFX instead of requiring a body attack animation.
+- Concept-art boundary: portraits, concept sheets, story art, and marketing-style illustrations may still show the potato hero with hands. Runtime combat sprites should treat those hands as reference-only and keep the body silhouette simple.
+- Route map direction: route selection art should use an original vertical rail/track-board composition inspired by roguelike route maps: player entrance at the bottom, two readable branching lanes, reward pads on both sides of each lane, one shared combat gate at the top, and visual room for camera scrolling between floors.
 - UI readability: icons should remain legible at 32 px and 64 px. Prefer strong silhouettes over fine texture.
 
 ## Path Conventions
@@ -52,7 +55,9 @@ Current config: `content/base/characters/potato_hero.json`
 | Asset ID | Type | Suggested path | Status |
 | --- | --- | --- | --- |
 | `character.potato_hero.icon` | character select / HUD icon | `res://assets/art/icons/character_potato_hero.png` | needed, not yet referenced in config |
-| `character.potato_hero.sprite` | player sprite / animation source | `res://assets/art/sprites/characters/potato_hero.png` | needed, not yet referenced in config |
+| `character.potato_hero.sprite` | combat body idle sheet | `res://assets/art/sprites/characters/potato_hero.png` | runtime 2x2 handless potato body idle sheet; combat body should not need weapon attack frames |
+| `character.potato_hero.walk_sprite` | combat walk sprite | `res://assets/art/sprites/characters/potato_hero_walk.png` | runtime 4x4 handless potato body walk sheet |
+| `concept.character.potato_hero.attack_fries` | concept/reference body attack sheet | `res://assets/art/sprites/characters/potato_hero_attack_fries.png` | legacy concept reference only; do not use for runtime weapon attacks |
 
 ### Monster And Boss
 
@@ -76,7 +81,7 @@ Current config: `content/base/weapons/fries.json`
 | Asset ID | Type | Suggested path | Status |
 | --- | --- | --- | --- |
 | `weapon.fries.icon` | inventory/shop icon | `res://assets/art/icons/weapon_fries.png` | referenced by config and asset registry |
-| `weapon.fries.sprite` | held / attack sprite | `res://assets/art/sprites/weapons/fries.png` | referenced by config and asset registry |
+| `weapon.fries.sprite` | held / socket-mounted staff sprite | `res://assets/art/sprites/weapons/fries.png` | referenced by config and asset registry; a single oversized french-fry cudgel/staff, animates with floating hand/socket |
 | `weapon_skill.heavy_fries_slam.icon` | active/charged skill icon | `res://assets/art/icons/weapon_skill_heavy_fries_slam.png` | needed for UI clarity |
 | `weapon.fries.slash_vfx` | melee swing VFX | `res://assets/art/vfx/weapon_fries_slash.png` | needed for combat feedback |
 
@@ -117,6 +122,26 @@ Current config: `content/base/maps/demo_map.json`
 | `map.node.magic_master.icon` | map node icon | `res://assets/art/map/nodes/magic_master.png` | needed |
 | `map.node.coin.icon` | map node icon / reward | `res://assets/art/map/nodes/coin.png` | needed |
 | `map.node.encounter.icon` | map node icon | `res://assets/art/map/nodes/encounter.png` | needed |
+
+### Screen Backgrounds
+
+Current target config: `content/base/scene_art/screen_scene_art.json`
+
+| Asset ID | Type | Suggested path | Status |
+| --- | --- | --- | --- |
+| `screen.main_menu.background` | main menu full-screen backdrop | `res://assets/art/screens/main_menu_background.png` | planned for this art pass; image file not generated here |
+| `screen.settings.background` | settings/options full-screen backdrop | `res://assets/art/screens/settings_background.png` | planned for this art pass; image file not generated here |
+
+### Map Scene Backgrounds
+
+Current target config: `content/base/scene_art/screen_scene_art.json`
+
+| Asset ID | Type | Suggested path | Status |
+| --- | --- | --- | --- |
+| `map.chapter_1_route.background` | chapter 1 vertical route-select backdrop | `res://assets/art/map/backgrounds/chapter_1_route_background.png` | runtime backdrop; should show bottom entrance, two lanes, side reward pads, shared combat gate |
+| `map.chapter_2_route.background` | chapter 2 vertical route-select backdrop | `res://assets/art/map/backgrounds/chapter_2_route_background.png` | runtime backdrop; same layout language with chapter 2 biome variation |
+| `arena.chapter_1.background` | chapter 1 combat arena backdrop | `res://assets/art/map/arenas/chapter_1_arena.png` | planned for this art pass; image file not generated here |
+| `arena.chapter_2.background` | chapter 2 combat arena backdrop | `res://assets/art/map/arenas/chapter_2_arena.png` | planned for this art pass; image file not generated here |
 
 ### Shops And UI
 
@@ -167,6 +192,7 @@ Current config: weapon, magic, monster files under `content/base`.
 ## Later Asset Work
 
 - Add explicit `asset_refs` for character and boss configs once the presentation resolver contract is finalized.
+- Add a reusable combat hand/socket sprite or shader-tintable primitive if the first playable combat scene needs visible round hands. Keep it separate from the potato body sprite so weapon counts and positions can scale independently.
 - Add encounter art when `encounter_pool.default` receives concrete encounter entries.
 - Add background arena art per chapter and floor once combat scene sizing is known.
 - Add pickup/drop icons if coins, rewards, or temporary combat drops become physical objects.
@@ -198,6 +224,20 @@ Runtime exports:
 
 QC: final processed source uses `component_mode=largest`, `threshold=180`, `edge_threshold=220`, `fit_scale=0.88`, `shared_scale=true`; `edge_touch_frames` is empty in `assets/art/source/ui_node_pack_01/pipeline-meta/pipeline-meta.json`.
 
+## Potato Hero Combat Body Redesign
+
+Runtime source folders:
+
+- `assets/art/source/potato_hero_idle_handless/`
+- `assets/art/source/potato_hero_walk_handless/`
+
+The combat runtime potato body is handless. It keeps the readable potato shape, green sprout, green scarf/sash, determined face, and small feet, while weapon handling is delegated to floating hand/socket presentation. Runtime exports:
+
+| Asset ID | Path | Notes |
+| --- | --- | --- |
+| `character.potato_hero.sprite` | `assets/art/sprites/characters/potato_hero.png` | 256 px 2x2 idle sheet |
+| `character.potato_hero.walk_sprite` | `assets/art/sprites/characters/potato_hero_walk.png` | 384 px 4x4 directional walk sheet |
+
 ## Reward Icon Pack 01
 
 Generated source: `assets/art/source/reward_icon_pack_01/`
@@ -224,3 +264,16 @@ Runtime icon outputs:
 | `reward.luck_clover.icon` | `res://assets/art/icons/reward_luck_clover.png` | also copied to `assets/art/ui/reward_luck_clover.png` |
 
 QC: processed through `generate2dsprite.py process` from built-in `image_gen` raw art. Script metadata reports source-cell `edge_touch_frames` at `[1,1]`, `[1,2]`, `[1,3]`, `[2,3]`, `[3,2]`, and `[3,3]` using a 2 px source margin. Final 64 px transparent icon files have no non-transparent edge pixels and remain usable for item, buff, and reward UI.
+
+## Fries Staff Redesign
+
+Source folder: `assets/art/source/fries_staff/`
+
+The fries weapon is a staff/cudgel weapon with the silhouette of a single oversized french fry, closer in combat role to a magical monkey-king staff than to a blade or bundle of fries. Runtime exports:
+
+| Asset ID | Path | Notes |
+| --- | --- | --- |
+| `weapon.fries.sprite` | `assets/art/sprites/weapons/fries.png` | 96 px transparent held staff sprite |
+| `weapon.fries.icon` | `assets/art/icons/weapon_fries.png` | 96 px transparent inventory/shop icon |
+
+Design note: keep future fries weapon art as one long golden potato staff with toasted ridges and optional small metal bands; avoid fan-shaped fry bundles, swords, or cutting blades.

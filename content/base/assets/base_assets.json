@@ -172,14 +172,16 @@
       ]
     },
     {
-      "id": "character.potato_hero.attack_fries_sprite",
-      "kind": "sprite",
+      "id": "concept.character.potato_hero.attack_fries",
+      "kind": "concept_art",
       "path": "res://assets/art/sprites/characters/potato_hero_attack_fries.png",
       "tags": [
+        "concept",
         "character",
         "potato_hero",
         "attack",
-        "fries"
+        "fries",
+        "reference_only"
       ]
     },
     {
@@ -285,6 +287,28 @@
         "magic",
         "comprehensive_development",
         "effect"
+      ]
+    },
+    {
+      "id": "map.chapter_1_route.background",
+      "kind": "background",
+      "path": "res://assets/art/map/backgrounds/chapter_1_route_background.png",
+      "tags": [
+        "map",
+        "route",
+        "chapter_1",
+        "background"
+      ]
+    },
+    {
+      "id": "map.chapter_2_route.background",
+      "kind": "background",
+      "path": "res://assets/art/map/backgrounds/chapter_2_route_background.png",
+      "tags": [
+        "map",
+        "route",
+        "chapter_2",
+        "background"
       ]
     },
     {
@@ -937,6 +961,7 @@
       "tags": [
         "weapon",
         "fries",
+        "staff",
         "ui"
       ]
     },
@@ -948,6 +973,8 @@
         "weapon",
         "fries",
         "slash",
+        "staff",
+        "swing",
         "effect"
       ]
     },
@@ -957,7 +984,8 @@
       "path": "res://assets/art/sprites/weapons/fries.png",
       "tags": [
         "weapon",
-        "fries"
+        "fries",
+        "staff"
       ]
     }
   ]

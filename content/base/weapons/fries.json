@@ -7,7 +7,7 @@
   "rarity": "common",
   "acquire_limit": 0,
   "enabled": true,
-  "tags": ["weapon", "melee"],
+  "tags": ["weapon", "melee", "staff"],
   "slot_cost": 1,
   "weapon_type": "melee",
   "damage": {
@@ -26,7 +26,7 @@
   "toughness_damage": 4,
   "execute_damage_multiplier": 2.0,
   "knockback": 15,
-  "action_module": "slash",
+  "action_module": "staff_swing",
   "passive_effects": [
     {
       "trigger": "on_hit",

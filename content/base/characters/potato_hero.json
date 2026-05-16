@@ -8,8 +8,7 @@
   "asset_refs": {
     "icon": "character.potato_hero.icon",
     "sprite": "character.potato_hero.sprite",
-    "walk_sprite": "character.potato_hero.walk_sprite",
-    "attack_fries_sprite": "character.potato_hero.attack_fries_sprite"
+    "walk_sprite": "character.potato_hero.walk_sprite"
   },
   "base_stats": {
     "max_health": 20,

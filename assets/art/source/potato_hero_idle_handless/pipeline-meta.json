@@ -1,0 +1,175 @@
+{
+  "target": "asset",
+  "mode": "idle",
+  "prompt": "2x2 pixel art idle sheet for handless potato hero combat body, no arms, no hands, green sprout and scarf, solid #FF00FF background.",
+  "role": "",
+  "input": "C:\\Users\\LYZ\\.codex\\generated_images\\019e2f3c-495c-7353-8c1a-476e67e49ade\\ig_0444f234fee5325d016a0815ad264c819890b7d7a1fdb4f0d7.png",
+  "threshold": 100,
+  "edge_threshold": 170,
+  "duration": 200,
+  "rows": 2,
+  "cols": 2,
+  "cell_size": 128,
+  "fit_scale": 0.86,
+  "trim_border": 4,
+  "edge_clean_depth": 3,
+  "align": "center",
+  "shared_scale": true,
+  "component_mode": "largest",
+  "component_padding": 4,
+  "min_component_area": 64,
+  "edge_touch_margin": 0,
+  "frame_labels": [
+    "idle-1",
+    "idle-2",
+    "idle-3",
+    "idle-4"
+  ],
+  "frames": [
+    {
+      "grid": [
+        0,
+        0
+      ],
+      "source_box": [
+        0,
+        0,
+        627,
+        627
+      ],
+      "component_mode": "largest",
+      "component_count": 1,
+      "selected_component_area": 108373,
+      "selected_component_bbox": [
+        184,
+        105,
+        555,
+        557
+      ],
+      "crop_bbox": [
+        180,
+        101,
+        559,
+        561
+      ],
+      "edge_touch": false,
+      "output_size": [
+        90,
+        109
+      ],
+      "paste_position": [
+        19,
+        9
+      ]
+    },
+    {
+      "grid": [
+        0,
+        1
+      ],
+      "source_box": [
+        627,
+        0,
+        1254,
+        627
+      ],
+      "component_mode": "largest",
+      "component_count": 1,
+      "selected_component_area": 98672,
+      "selected_component_bbox": [
+        65,
+        169,
+        470,
+        557
+      ],
+      "crop_bbox": [
+        61,
+        165,
+        474,
+        561
+      ],
+      "edge_touch": false,
+      "output_size": [
+        98,
+        94
+      ],
+      "paste_position": [
+        15,
+        17
+      ]
+    },
+    {
+      "grid": [
+        1,
+        0
+      ],
+      "source_box": [
+        0,
+        627,
+        627,
+        1254
+      ],
+      "component_mode": "largest",
+      "component_count": 2,
+      "selected_component_area": 104111,
+      "selected_component_bbox": [
+        187,
+        33,
+        557,
+        486
+      ],
+      "crop_bbox": [
+        183,
+        29,
+        561,
+        490
+      ],
+      "edge_touch": false,
+      "output_size": [
+        90,
+        110
+      ],
+      "paste_position": [
+        19,
+        9
+      ]
+    },
+    {
+      "grid": [
+        1,
+        1
+      ],
+      "source_box": [
+        627,
+        627,
+        1254,
+        1254
+      ],
+      "component_mode": "largest",
+      "component_count": 1,
+      "selected_component_area": 104097,
+      "selected_component_bbox": [
+        91,
+        47,
+        459,
+        488
+      ],
+      "crop_bbox": [
+        87,
+        43,
+        463,
+        492
+      ],
+      "edge_touch": false,
+      "output_size": [
+        89,
+        107
+      ],
+      "paste_position": [
+        19,
+        10
+      ]
+    }
+  ],
+  "edge_touch_frames": []
+}
