@@ -15,6 +15,9 @@ func price_for_entry(run_context, shop_id: String, entry: Dictionary) -> int:
 
 	var rarity = String(entry.get("rarity", "common"))
 	var ranges = shop.get("price_by_rarity", {})
+	if typeof(ranges) != TYPE_DICTIONARY or not ranges.has(rarity):
+		var service_floor_increase = int(shop.get("service_floor_price_increase", shop.get("floor_price_increase", 0)))
+		return max(0, int(shop.get("service_price", 0)) + service_floor_increase * max(0, run_context.floor - 1))
 	var price_range: Array = ranges.get(rarity, [0, 0])
 	var base_price = int(round((float(price_range[0]) + float(price_range[1])) / 2.0))
 	var floor_increase = int(shop.get("floor_price_increase", 0)) * max(0, run_context.floor - 1)

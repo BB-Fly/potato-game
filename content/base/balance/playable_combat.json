@@ -1,0 +1,74 @@
+{
+  "id": "balance.playable_combat",
+  "enabled": true,
+  "scene": {
+    "background_path": "res://assets/art/map/backgrounds/chapter_1_route_background.png",
+    "overlay_color": [0.06, 0.05, 0.035, 0.18]
+  },
+  "arena": {
+    "x": 48,
+    "y": 118,
+    "width": 1184,
+    "height": 560
+  },
+  "player": {
+    "start_position": {"x": 640, "y": 410},
+    "touch_radius": 24,
+    "max_health_per_item": 10,
+    "max_mana_per_magic": 25,
+    "initial_attack_delay_seconds": 0.35
+  },
+  "weapon": {
+    "damage_per_extra_weapon": 10,
+    "sprite_size": {"x": 92, "y": 92},
+    "layout_offsets": [
+      {"x": 72, "y": 2},
+      {"x": -72, "y": 2},
+      {"x": 48, "y": -48},
+      {"x": -48, "y": -48}
+    ]
+  },
+  "magic": {
+    "slot_count": 4,
+    "default_damage": 52,
+    "default_range": 240
+  },
+  "enemies": {
+    "touch_radius": 28,
+    "touch_cooldown_seconds": 0.85,
+    "default_stats": {
+      "max_health": 40,
+      "attack": 5,
+      "move_speed": 65
+    },
+    "mob_frame_seconds": 0.16,
+    "boss_frame_seconds": 0.11
+  },
+  "spawning": {
+    "mob_phase_seconds": 11,
+    "mob_spawn_seconds": 0.85,
+    "initial_mob_spawn_seconds": 0.05,
+    "max_mobs": 14,
+    "fallback_mob_ids": [
+      "monster.metamorph.sprouting_potato",
+      "monster.metamorph.mushroom_spore",
+      "monster.metamorph.bomb_fruitling"
+    ]
+  },
+  "boss": {
+    "id": "boss.demo_pollution_source",
+    "spawn_position": {"x": 640, "y": 176}
+  },
+  "vfx": {
+    "slash_size": {"x": 132, "y": 132},
+    "magic_size": {"x": 96, "y": 96},
+    "boss_warning_size": {"x": 96, "y": 96},
+    "boss_warning_offset": {"x": 0, "y": -88},
+    "boss_projectile_size": {"x": 34, "y": 34},
+    "boss_projectile_color": [0.85, 0.58, 1.0, 0.95],
+    "attack_fade_seconds": 0.22,
+    "magic_fade_seconds": 0.22,
+    "floating_text_life_seconds": 0.8,
+    "floating_text_velocity": {"x": 0, "y": -42}
+  }
+}

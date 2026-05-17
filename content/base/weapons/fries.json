@@ -11,7 +11,7 @@
   "slot_cost": 1,
   "weapon_type": "melee",
   "damage": {
-    "base": 10,
+    "base": 22,
     "scales": [
       {
         "stat": "melee_attack",
@@ -19,8 +19,8 @@
       }
     ]
   },
-  "attack_interval_frames": 120,
-  "range": 40,
+  "attack_interval_frames": 25,
+  "range": 188,
   "crit_chance": 0.0,
   "crit_multiplier": 2.0,
   "toughness_damage": 4,

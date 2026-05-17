@@ -41,6 +41,10 @@ var screen = "boot"
 var route_controller: PlayableMapController
 var reward_controller: PlayableRewardController
 var pending_continue: Callable = Callable()
+var active_shop_node_data: Dictionary = {}
+var active_shop_stock: Array = []
+var active_shop_sold: Dictionary = {}
+var active_shop_on_done: Callable = Callable()
 
 var toast_label: Label
 var combat_scene: Control
@@ -309,23 +313,65 @@ func _show_reward_choices(reward_id: String, on_done: Callable) -> void:
 
 func _show_shop_screen(node_data: Dictionary, on_done: Callable) -> void:
 	screen = "shop"
+	active_shop_node_data = node_data.duplicate(true)
+	active_shop_on_done = on_done
+	active_shop_sold.clear()
+	var shop_id = _shop_id_for_node(active_shop_node_data)
+	var shop_entry = registry.get_entry("shop", shop_id)
+	var stock_count = int(shop_entry.get("stock_count", 3))
+	var node_type = String(active_shop_node_data.get("type", ""))
+	active_shop_stock = reward_controller.build_shop_offer(item_pool, run_context, node_type, stock_count)
+	_render_shop_screen()
+
+
+func _render_shop_screen() -> void:
 	_clear_screen()
 	_add_background_for_area(map_flow.get_current_area())
 	_add_overlay(Color(0.03, 0.025, 0.02, 0.72))
-	_add_top_bar(_node_type_name(String(node_data.get("type", ""))), "Gold %d - click icon to buy" % run_context.gold)
-
-	var node_type = String(node_data.get("type", ""))
-	var offer = reward_controller.build_shop_offer(item_pool, run_context, node_type)
-	_add_choice_grid(offer, Vector2(270, 190), func(content_id): _buy_content(content_id))
+	_add_top_bar(_node_type_name(String(active_shop_node_data.get("type", ""))), "Gold %d - click goods to buy" % run_context.gold)
+	_add_shop_grid()
 
 	var leave = _make_pixel_button("Leave Shop", Vector2(520, 590), Vector2(240, 56))
-	leave.pressed.connect(on_done)
+	leave.pressed.connect(_leave_active_shop)
 	ui_root.add_child(leave)
+	_add_toast_anchor()
 
 
-func _buy_content(content_id: String) -> void:
-	var result = reward_controller.buy_content(run_context, content_id)
+func _leave_active_shop() -> void:
+	var on_done = active_shop_on_done
+	active_shop_node_data.clear()
+	active_shop_stock.clear()
+	active_shop_sold.clear()
+	active_shop_on_done = Callable()
+	if on_done.is_valid():
+		on_done.call()
+
+
+func _buy_shop_stock(stock_index: int) -> void:
+	if stock_index < 0 or stock_index >= active_shop_stock.size():
+		return
+	if active_shop_sold.has(stock_index):
+		return
+	var entry: Dictionary = active_shop_stock[stock_index]
+	var shop_id = _shop_id_for_node(active_shop_node_data)
+	var price = economy_service.price_for_entry(run_context, shop_id, entry)
+	var result = reward_controller.buy_content(run_context, String(entry.get("id", "")), price, shop_id)
+	if bool(result.get("success", false)):
+		active_shop_sold[stock_index] = true
+		_render_shop_screen()
 	_show_toast(String(result.get("message", "")))
+
+
+func _shop_id_for_node(node_data: Dictionary) -> String:
+	var shop_id = String(node_data.get("shop_id", ""))
+	if not shop_id.is_empty():
+		return shop_id
+	var node_type = String(node_data.get("type", ""))
+	if node_type.contains("weapon"):
+		return "shop.weapon.default"
+	if node_type.contains("magic"):
+		return "shop.magic.default"
+	return "shop.item.default"
 
 
 func _add_choice_grid(entries: Array, pos: Vector2, on_pick: Callable) -> void:
@@ -336,6 +382,81 @@ func _add_choice_grid(entries: Array, pos: Vector2, on_pick: Callable) -> void:
 	ui_root.add_child(grid)
 	for entry in entries:
 		grid.add_child(_make_choice_card(entry, on_pick))
+
+
+func _add_shop_grid() -> void:
+	var visible_indices: Array = []
+	for i in range(active_shop_stock.size()):
+		if not active_shop_sold.has(i):
+			visible_indices.append(i)
+
+	if visible_indices.is_empty():
+		var sold_out = _make_label("Sold Out", 38, Color(1.0, 0.84, 0.42), HORIZONTAL_ALIGNMENT_CENTER)
+		sold_out.position = Vector2(0, 310)
+		sold_out.size = Vector2(1280, 70)
+		ui_root.add_child(sold_out)
+		return
+
+	var grid = GridContainer.new()
+	grid.position = Vector2(92, 152)
+	grid.size = Vector2(1096, 360)
+	grid.columns = min(5, visible_indices.size())
+	grid.add_theme_constant_override("h_separation", 18)
+	grid.add_theme_constant_override("v_separation", 18)
+	ui_root.add_child(grid)
+	for stock_index in visible_indices:
+		grid.add_child(_make_shop_card(stock_index, active_shop_stock[stock_index]))
+
+
+func _make_shop_card(stock_index: int, entry: Dictionary) -> Control:
+	var price = economy_service.price_for_entry(run_context, _shop_id_for_node(active_shop_node_data), entry)
+	var affordable = run_context.can_spend_gold(price)
+	var card = Button.new()
+	card.custom_minimum_size = Vector2(204, 306)
+	card.text = ""
+	card.tooltip_text = "%s - %d gold" % [_content_name(String(entry.get("id", ""))), price]
+	card.modulate = Color(1, 1, 1, 1) if affordable else Color(0.72, 0.72, 0.72, 0.86)
+	card.add_theme_stylebox_override("normal", _style_box(Color(0.055, 0.045, 0.035, 0.88), _rarity_color(entry), 2, 8))
+	card.add_theme_stylebox_override("hover", _style_box(Color(0.18, 0.12, 0.06, 0.96), _rarity_color(entry).lightened(0.16), 3, 8))
+	card.add_theme_stylebox_override("pressed", _style_box(Color(0.26, 0.16, 0.07, 0.98), _rarity_color(entry).lightened(0.22), 3, 8))
+	card.pressed.connect(_buy_shop_stock.bind(stock_index))
+
+	var layout = VBoxContainer.new()
+	layout.size = Vector2(204, 306)
+	layout.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	layout.alignment = BoxContainer.ALIGNMENT_CENTER
+	layout.add_theme_constant_override("separation", 8)
+	card.add_child(layout)
+
+	var icon = TextureRect.new()
+	icon.custom_minimum_size = Vector2(156, 118)
+	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	icon.texture = _load_texture(_content_icon_path(entry))
+	layout.add_child(icon)
+
+	var name_label = _make_label(_content_name(String(entry.get("id", ""))), 18, Color.WHITE, HORIZONTAL_ALIGNMENT_CENTER)
+	name_label.custom_minimum_size = Vector2(184, 58)
+	name_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	layout.add_child(name_label)
+
+	var price_badge = HBoxContainer.new()
+	price_badge.custom_minimum_size = Vector2(166, 44)
+	price_badge.alignment = BoxContainer.ALIGNMENT_CENTER
+	price_badge.add_theme_constant_override("separation", 6)
+	layout.add_child(price_badge)
+
+	var coin = TextureRect.new()
+	coin.custom_minimum_size = Vector2(32, 32)
+	coin.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	coin.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	coin.texture = _load_texture(asset_catalog.resolve_asset_path("ui.currency.gold.icon", "res://assets/art/ui/currency_gold.png"))
+	price_badge.add_child(coin)
+
+	var price_label = _make_label(str(price), 22, Color(1.0, 0.86, 0.42) if affordable else Color(1.0, 0.42, 0.34), HORIZONTAL_ALIGNMENT_LEFT)
+	price_label.custom_minimum_size = Vector2(92, 38)
+	price_badge.add_child(price_label)
+	return card
 
 
 func _make_choice_card(entry: Dictionary, on_pick: Callable) -> Control:

@@ -10,9 +10,13 @@
   "tags": ["magic", "buff"],
   "occupies_magic_slot": true,
   "slot_type": "active",
-  "mana_cost": 10,
+  "mana_cost": 28,
   "energy_cost": 15,
-  "cooldown_frames": 600,
+  "cooldown_frames": 300,
+  "combat_effect": {
+    "damage": 52,
+    "range": 240
+  },
   "auto_cast_interval_frames": 900,
   "auto_cast_is_free": true,
   "effects": [

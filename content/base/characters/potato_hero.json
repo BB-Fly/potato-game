@@ -11,13 +11,13 @@
     "walk_sprite": "character.potato_hero.walk_sprite"
   },
   "base_stats": {
-    "max_health": 20,
-    "max_mana": 15,
+    "max_health": 110,
+    "max_mana": 80,
     "max_energy": 0,
     "melee_attack": 0,
     "ranged_attack": 0,
     "attack_range": 0,
-    "move_speed": 100,
+    "move_speed": 220,
     "defense": 0,
     "attack_speed": 0,
     "crit_damage": 0,
@@ -25,7 +25,7 @@
     "attack_multiplier": 0,
     "damage_reduction": 0,
     "health_regen": 2,
-    "mana_regen": 1
+    "mana_regen": 12
   },
   "passives": [
     {

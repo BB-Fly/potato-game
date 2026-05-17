@@ -17,6 +17,7 @@ const CONTENT_DIRS = {
 	"shops": "shop",
 	"audio": "audio",
 	"assets": "asset",
+	"balance": "balance",
 }
 
 

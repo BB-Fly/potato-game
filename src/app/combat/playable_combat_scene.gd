@@ -6,18 +6,20 @@ signal combat_finished(result: Dictionary)
 const PlayableUiFactory = preload("res://src/app/playable/playable_ui_factory.gd")
 const PlayableContentPresenter = preload("res://src/app/playable/playable_content_presenter.gd")
 
-const COMBAT_ARENA_RECT = Rect2(Vector2(48, 118), Vector2(1184, 560))
-const PLAYER_SPEED = 220.0
-const PLAYER_TOUCH_RADIUS = 24.0
-const ENEMY_TOUCH_RADIUS = 28.0
-const MOB_PHASE_SECONDS = 22.0
-const MOB_SPAWN_SECONDS = 1.7
-const WEAPON_ATTACK_SECONDS = 0.42
-const WEAPON_RANGE = 188.0
-
 var registry
 var run_context
 var asset_catalog
+var balance: Dictionary = {}
+var arena_rect = Rect2(Vector2(48, 118), Vector2(1184, 560))
+var player_speed = 220.0
+var player_touch_radius = 24.0
+var enemy_touch_radius = 28.0
+var mob_phase_seconds = 22.0
+var mob_spawn_seconds = 1.7
+var max_mobs = 14
+var current_weapon_entry: Dictionary = {}
+var boss_entry: Dictionary = {}
+var boss_ability: Dictionary = {}
 
 var combat_layer: Control
 var combat_fx_layer: Control
@@ -61,6 +63,7 @@ func setup(p_registry, p_run_context, p_asset_catalog) -> void:
 	registry = p_registry
 	run_context = p_run_context
 	asset_catalog = p_asset_catalog
+	balance = registry.get_entry("balance", "balance.playable_combat")
 	name = "PlayableCombatScene"
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	set_process(true)
@@ -93,8 +96,9 @@ func _start_combat() -> void:
 	combat_session_id += 1
 	is_finished = false
 	_clear_local_state()
-	_add_background_path("res://assets/art/map/backgrounds/chapter_1_route_background.png")
-	_add_overlay(Color(0.06, 0.05, 0.035, 0.18))
+	_load_runtime_balance()
+	_add_background_path(_string_from(_section("scene"), "background_path", "res://assets/art/map/backgrounds/chapter_1_route_background.png"))
+	_add_overlay(_color_from(_section("scene"), "overlay_color", Color(0.06, 0.05, 0.035, 0.18)))
 
 	combat_layer = Control.new()
 	combat_layer.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -104,20 +108,26 @@ func _start_combat() -> void:
 	combat_fx_layer.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(combat_fx_layer)
 
-	player_max_hp = 110.0 + run_context.inventory["items"].size() * 10.0
+	var character = registry.get_entry("character", run_context.character_id)
+	var base_stats: Dictionary = character.get("base_stats", {})
+	var player_cfg = _section("player")
+	player_max_hp = float(base_stats.get("max_health", 110.0)) + run_context.inventory["items"].size() * _float_from(player_cfg, "max_health_per_item", 10.0)
 	player_hp = player_max_hp
-	player_max_mana = 80.0 + run_context.inventory["magics"].size() * 25.0
+	player_max_mana = float(base_stats.get("max_mana", 80.0)) + run_context.inventory["magics"].size() * _float_from(player_cfg, "max_mana_per_magic", 25.0)
 	player_mana = player_max_mana
-	player_mana_regen = 12.0
-	player_pos = Vector2(640, 410)
-	player_attack_timer = 0.35
-	mob_spawn_timer = 0.1
+	player_mana_regen = float(base_stats.get("mana_regen", 12.0))
+	player_speed = float(base_stats.get("move_speed", player_speed))
+	player_pos = _vector_from(player_cfg, "start_position", Vector2(640, 410))
+	player_attack_timer = _float_from(player_cfg, "initial_attack_delay_seconds", 0.35)
+	mob_spawn_timer = _float_from(_section("spawning"), "initial_mob_spawn_seconds", 0.1)
 	combat_elapsed = 0.0
 	boss_spawned = false
 	boss_enemy = {}
-	boss_ability_timer = 8.0
+	boss_ability_timer = _float_from(boss_ability, "cooldown_seconds", 8.0)
 	boss_cast_timer = 0.0
-	magic_cooldowns = [0.0, 0.0, 0.0, 0.0]
+	magic_cooldowns.clear()
+	magic_cooldowns.resize(_int_from(_section("magic"), "slot_count", 4))
+	magic_cooldowns.fill(0.0)
 
 	combat_player_sprite = _make_sprite("res://assets/art/source/potato_hero_idle_handless/idle-1.png", Vector2(86, 86))
 	combat_layer.add_child(combat_player_sprite)
@@ -157,6 +167,76 @@ func _is_combat_fx_ready() -> bool:
 func _queue_free_if_valid(node) -> void:
 	if node != null and is_instance_valid(node):
 		node.queue_free()
+
+
+func _load_runtime_balance() -> void:
+	var arena = _section("arena")
+	arena_rect = Rect2(
+		Vector2(_float_from(arena, "x", 48.0), _float_from(arena, "y", 118.0)),
+		Vector2(_float_from(arena, "width", 1184.0), _float_from(arena, "height", 560.0))
+	)
+	player_touch_radius = _float_from(_section("player"), "touch_radius", 24.0)
+	enemy_touch_radius = _float_from(_section("enemies"), "touch_radius", 28.0)
+	var spawning = _section("spawning")
+	mob_phase_seconds = _float_from(spawning, "mob_phase_seconds", 22.0)
+	mob_spawn_seconds = _float_from(spawning, "mob_spawn_seconds", 1.7)
+	max_mobs = _int_from(spawning, "max_mobs", 14)
+	current_weapon_entry = _first_equipped_entry("weapon")
+	boss_entry = registry.get_entry("boss", _string_from(_section("boss"), "id", "boss.demo_pollution_source"))
+	boss_ability = _first_entry(boss_entry.get("abilities", []), "radial_projectiles")
+
+
+func _section(key: String) -> Dictionary:
+	var value = balance.get(key, {})
+	return value if typeof(value) == TYPE_DICTIONARY else {}
+
+
+func _float_from(source: Dictionary, key: String, default_value: float) -> float:
+	return float(source.get(key, default_value))
+
+
+func _int_from(source: Dictionary, key: String, default_value: int) -> int:
+	return int(source.get(key, default_value))
+
+
+func _string_from(source: Dictionary, key: String, default_value: String) -> String:
+	return String(source.get(key, default_value))
+
+
+func _vector_from(source: Dictionary, key: String, default_value: Vector2) -> Vector2:
+	var value = source.get(key, {})
+	if typeof(value) != TYPE_DICTIONARY:
+		return default_value
+	return Vector2(float(value.get("x", default_value.x)), float(value.get("y", default_value.y)))
+
+
+func _color_from(source: Dictionary, key: String, default_value: Color) -> Color:
+	var value = source.get(key, [])
+	if typeof(value) != TYPE_ARRAY or value.size() < 4:
+		return default_value
+	return Color(float(value[0]), float(value[1]), float(value[2]), float(value[3]))
+
+
+func _first_entry(entries: Array, id: String) -> Dictionary:
+	for entry in entries:
+		if typeof(entry) == TYPE_DICTIONARY and String(entry.get("id", "")) == id:
+			return entry
+	return entries[0] if not entries.is_empty() and typeof(entries[0]) == TYPE_DICTIONARY else {}
+
+
+func _first_equipped_entry(content_type: String) -> Dictionary:
+	var slots: Array = []
+	if content_type == "weapon":
+		slots = run_context.equipped_weapons
+	elif content_type == "magic":
+		slots = run_context.equipped_magics
+	for content_id in slots:
+		if content_id == null:
+			continue
+		var entry = registry.get_entry(content_type, String(content_id))
+		if not entry.is_empty():
+			return entry
+	return {}
 
 
 func _end_combat(victory: bool) -> void:
@@ -239,9 +319,9 @@ func _update_player_movement(delta: float) -> void:
 		input_vector = input_vector.normalized()
 		if abs(input_vector.x) > 0.05:
 			facing_direction = -1 if input_vector.x > 0.0 else 1
-		player_pos += input_vector * PLAYER_SPEED * delta
-		player_pos.x = clamp(player_pos.x, COMBAT_ARENA_RECT.position.x, COMBAT_ARENA_RECT.position.x + COMBAT_ARENA_RECT.size.x)
-		player_pos.y = clamp(player_pos.y, COMBAT_ARENA_RECT.position.y, COMBAT_ARENA_RECT.position.y + COMBAT_ARENA_RECT.size.y)
+		player_pos += input_vector * player_speed * delta
+		player_pos.x = clamp(player_pos.x, arena_rect.position.x, arena_rect.position.x + arena_rect.size.x)
+		player_pos.y = clamp(player_pos.y, arena_rect.position.y, arena_rect.position.y + arena_rect.size.y)
 
 
 func _update_player_visual() -> void:
@@ -264,8 +344,10 @@ func _build_weapon_sprites() -> void:
 		_queue_free_if_valid(weapon)
 	combat_weapon_sprites.clear()
 	var count = _equipped_weapon_count()
+	var weapon_cfg = _section("weapon")
+	var sprite_size = _vector_from(weapon_cfg, "sprite_size", Vector2(92, 92))
 	for i in range(count):
-		var weapon = _make_sprite("res://assets/art/sprites/weapons/fries.png", Vector2(92, 92))
+		var weapon = _make_sprite("res://assets/art/sprites/weapons/fries.png", sprite_size)
 		combat_layer.add_child(weapon)
 		combat_weapon_sprites.append(weapon)
 
@@ -282,7 +364,12 @@ func _update_weapon_visuals() -> void:
 
 
 func _weapon_layout_offsets(count: int) -> Array:
-	var base = [Vector2(72, 2), Vector2(-72, 2), Vector2(48, -48), Vector2(-48, -48)]
+	var base: Array = []
+	for item in _section("weapon").get("layout_offsets", []):
+		if typeof(item) == TYPE_DICTIONARY:
+			base.append(Vector2(float(item.get("x", 0.0)), float(item.get("y", 0.0))))
+	if base.is_empty():
+		base = [Vector2(72, 2), Vector2(-72, 2), Vector2(48, -48), Vector2(-48, -48)]
 	return base.slice(0, clamp(count, 0, base.size()))
 
 
@@ -290,18 +377,36 @@ func _update_player_attack(delta: float) -> void:
 	player_attack_timer -= delta
 	if player_attack_timer > 0.0:
 		return
-	player_attack_timer = WEAPON_ATTACK_SECONDS
+	player_attack_timer = _weapon_attack_seconds()
 	var target = _nearest_enemy()
 	if target.is_empty():
 		return
 	var attack_vector: Vector2 = target["pos"] - player_pos
-	if attack_vector.length() > WEAPON_RANGE:
+	if attack_vector.length() > _weapon_range():
 		return
-	var damage = 22.0 + max(0, _equipped_weapon_count() - 1) * 10.0
+	var damage = _weapon_damage()
 	target["hp"] = float(target.get("hp", 1.0)) - damage
 	_flash_attack(target["pos"], attack_vector)
 	if float(target["hp"]) <= 0.0:
 		_kill_enemy(target)
+
+
+func _weapon_attack_seconds() -> float:
+	var frames = int(current_weapon_entry.get("attack_interval_frames", 25))
+	return max(1.0, float(frames)) / 60.0
+
+
+func _weapon_range() -> float:
+	return float(current_weapon_entry.get("range", _float_from(_section("weapon"), "default_range", 188.0)))
+
+
+func _weapon_damage() -> float:
+	var damage_entry = current_weapon_entry.get("damage", {})
+	var base = 22.0
+	if typeof(damage_entry) == TYPE_DICTIONARY:
+		base = float(damage_entry.get("base", base))
+	var extra_weapon_bonus = _float_from(_section("weapon"), "damage_per_extra_weapon", 10.0)
+	return base + max(0, _equipped_weapon_count() - 1) * extra_weapon_bonus
 
 
 func _update_magic_input() -> void:
@@ -313,20 +418,27 @@ func _update_magic_input() -> void:
 func _try_cast_magic(slot_index: int) -> void:
 	if slot_index < 0 or slot_index >= run_context.equipped_magics.size():
 		return
+	if slot_index >= magic_cooldowns.size():
+		return
 	if run_context.equipped_magics[slot_index] == null:
 		_show_toast("No magic in slot %d" % (slot_index + 1))
 		return
 	if magic_cooldowns[slot_index] > 0.0:
 		return
-	var cost = 28.0
+	var magic_entry = registry.get_entry("magic", String(run_context.equipped_magics[slot_index]))
+	var effect: Dictionary = magic_entry.get("combat_effect", {})
+	var magic_cfg = _section("magic")
+	var cost = float(magic_entry.get("mana_cost", _float_from(magic_cfg, "default_mana_cost", 28.0)))
 	if player_mana < cost:
 		_show_toast("Not enough mana")
 		return
 	player_mana -= cost
-	magic_cooldowns[slot_index] = 5.0
+	magic_cooldowns[slot_index] = max(0.1, float(magic_entry.get("cooldown_frames", 300)) / 60.0)
+	var range = _float_from(effect, "range", _float_from(magic_cfg, "default_range", 240.0))
+	var damage = _float_from(effect, "damage", _float_from(magic_cfg, "default_damage", 52.0))
 	for enemy in enemies.duplicate():
-		if player_pos.distance_to(enemy["pos"]) <= 240.0:
-			enemy["hp"] = float(enemy.get("hp", 1.0)) - 52.0
+		if player_pos.distance_to(enemy["pos"]) <= range:
+			enemy["hp"] = float(enemy.get("hp", 1.0)) - damage
 			_flash_magic(enemy["pos"])
 			if float(enemy["hp"]) <= 0.0:
 				_kill_enemy(enemy)
@@ -340,21 +452,24 @@ func _update_magic_cooldowns(delta: float) -> void:
 func _update_spawning(delta: float) -> void:
 	if not _is_combat_ready():
 		return
-	if not boss_spawned and combat_elapsed >= MOB_PHASE_SECONDS:
+	if not boss_spawned and combat_elapsed >= mob_phase_seconds:
 		_spawn_boss()
 	mob_spawn_timer -= delta
-	if mob_spawn_timer <= 0.0 and enemies.size() < 14:
-		mob_spawn_timer = MOB_SPAWN_SECONDS
+	if mob_spawn_timer <= 0.0 and enemies.size() < max_mobs:
+		mob_spawn_timer = mob_spawn_seconds
 		_spawn_mob()
 
 
 func _spawn_mob() -> void:
 	if not _is_combat_ready():
 		return
-	var ids = ["monster.metamorph.sprouting_potato", "monster.metamorph.mushroom_spore", "monster.metamorph.bomb_fruitling"]
-	var id = ids[randi_range(0, ids.size() - 1)]
+	var ids: Array = _section("spawning").get("fallback_mob_ids", [])
+	if ids.is_empty():
+		ids = ["monster.metamorph.sprouting_potato", "monster.metamorph.mushroom_spore", "monster.metamorph.bomb_fruitling"]
+	var id = String(ids[randi_range(0, ids.size() - 1)])
 	var entry = registry.get_entry("monster", id)
-	var stats: Dictionary = entry.get("stats", {})
+	var default_stats: Dictionary = _section("enemies").get("default_stats", {})
+	var stats: Dictionary = entry.get("stats", default_stats)
 	var node = _make_sprite(_content_sprite_path(entry), Vector2(58, 58))
 	combat_layer.add_child(node)
 	var pos = _random_edge_position()
@@ -380,21 +495,21 @@ func _spawn_mob() -> void:
 func _spawn_boss() -> void:
 	if not _is_combat_ready():
 		return
-	var entry = registry.get_entry("boss", "boss.demo_pollution_source")
+	var entry = boss_entry if not boss_entry.is_empty() else registry.get_entry("boss", "boss.demo_pollution_source")
 	var stats: Dictionary = entry.get("stats", {})
 	var node = _make_sprite("res://assets/art/source/boss_pollution_source/boss_pollution_source-1.png", Vector2(132, 132))
 	combat_layer.add_child(node)
 	boss_spawned = true
 	boss_enemy = {
-		"id": "boss.demo_pollution_source",
+		"id": String(entry.get("id", "boss.demo_pollution_source")),
 		"node": node,
-		"pos": Vector2(640, 176),
+		"pos": _vector_from(_section("boss"), "spawn_position", Vector2(640, 176)),
 		"hp": float(stats.get("max_health", 300)),
 		"max_hp": float(stats.get("max_health", 300)),
 		"attack": float(stats.get("attack", 10)),
 		"speed": float(stats.get("move_speed", 80)),
 		"touch_timer": 0.0,
-		"frames": _enemy_frame_paths("boss.demo_pollution_source"),
+		"frames": _enemy_frame_paths(String(entry.get("id", "boss.demo_pollution_source"))),
 		"frame_index": 0,
 		"frame_timer": 0.0,
 		"anim_time": 0.0,
@@ -424,10 +539,10 @@ func _update_enemies(delta: float) -> void:
 		_update_sprite_position(enemy["node"], pos)
 		_update_enemy_animation(enemy, delta)
 		enemy["touch_timer"] = max(0.0, float(enemy.get("touch_timer", 0.0)) - delta)
-		if distance <= ENEMY_TOUCH_RADIUS and float(enemy["touch_timer"]) <= 0.0:
+		if distance <= enemy_touch_radius and float(enemy["touch_timer"]) <= 0.0:
 			var damage = float(enemy.get("attack", 3.0))
 			player_hp -= damage
-			enemy["touch_timer"] = 0.85
+			enemy["touch_timer"] = _float_from(_section("enemies"), "touch_cooldown_seconds", 0.85)
 			_float_text("-%d" % int(damage), player_pos + Vector2(0, -52), Color(1.0, 0.36, 0.28))
 
 
@@ -453,7 +568,8 @@ func _update_enemy_animation(enemy: Dictionary, delta: float) -> void:
 	if not frames.is_empty():
 		enemy["frame_timer"] = float(enemy.get("frame_timer", 0.0)) - delta
 		if float(enemy["frame_timer"]) <= 0.0:
-			enemy["frame_timer"] = 0.16 if not bool(enemy.get("is_boss", false)) else 0.11
+			var enemies_cfg = _section("enemies")
+			enemy["frame_timer"] = _float_from(enemies_cfg, "mob_frame_seconds", 0.16) if not bool(enemy.get("is_boss", false)) else _float_from(enemies_cfg, "boss_frame_seconds", 0.11)
 			enemy["frame_index"] = (int(enemy.get("frame_index", 0)) + 1) % frames.size()
 			node.texture = _load_texture(String(frames[int(enemy["frame_index"])]))
 	var pulse = sin(float(enemy["anim_time"]) * (5.0 if not bool(enemy.get("is_boss", false)) else 3.0))
@@ -467,18 +583,19 @@ func _update_boss_ability(delta: float) -> void:
 	boss_ability_timer -= delta
 	boss_cast_timer = max(0.0, boss_cast_timer - delta)
 	if boss_ability_timer <= 0.0:
-		boss_ability_timer = 8.0
-		boss_cast_timer = 0.65
+		boss_ability_timer = _float_from(boss_ability, "cooldown_seconds", 8.0)
+		boss_cast_timer = _float_from(boss_ability, "cast_duration_seconds", 0.65)
 		_play_boss_cast_motion()
-		get_tree().create_timer(0.32).timeout.connect(_spawn_boss_radial_projectiles.bind(combat_session_id))
+		get_tree().create_timer(_float_from(boss_ability, "spawn_delay_seconds", 0.32)).timeout.connect(_spawn_boss_radial_projectiles.bind(combat_session_id))
 
 
 func _play_boss_cast_motion() -> void:
 	if combat_boss_sprite == null or not is_instance_valid(combat_boss_sprite) or not _is_combat_fx_ready():
 		return
 	combat_boss_sprite.texture = _load_texture("res://assets/art/source/boss_pollution_source/boss_pollution_source-7.png")
-	var warning = _make_sprite("res://assets/art/source/enemy_pack_01/boss_pollution_source_warning/boss_pollution_source_warning-1.png", Vector2(96, 96))
-	_update_sprite_position(warning, boss_enemy.get("pos", Vector2.ZERO) + Vector2(0, -88))
+	var vfx_cfg = _section("vfx")
+	var warning = _make_sprite("res://assets/art/source/enemy_pack_01/boss_pollution_source_warning/boss_pollution_source_warning-1.png", _vector_from(vfx_cfg, "boss_warning_size", Vector2(96, 96)))
+	_update_sprite_position(warning, boss_enemy.get("pos", Vector2.ZERO) + _vector_from(vfx_cfg, "boss_warning_offset", Vector2(0, -88)))
 	combat_fx_layer.add_child(warning)
 	var tween = create_tween()
 	tween.bind_node(warning)
@@ -493,20 +610,26 @@ func _spawn_boss_radial_projectiles(session_id: int) -> void:
 		return
 	var center: Vector2 = boss_enemy.get("pos", Vector2.ZERO)
 	var damage = float(boss_enemy.get("attack", 10.0))
-	for i in range(16):
-		var angle = TAU * float(i) / 16.0
+	var projectile_count = max(1, _int_from(boss_ability, "projectile_count", 16))
+	var projectile_speed = _float_from(boss_ability, "projectile_speed", 225.0)
+	var projectile_radius = _float_from(boss_ability, "projectile_radius", 18.0)
+	var projectile_life = _float_from(boss_ability, "projectile_life_seconds", 5.0)
+	var projectile_offset = _float_from(boss_ability, "projectile_spawn_offset", 72.0)
+	var vfx_cfg = _section("vfx")
+	for i in range(projectile_count):
+		var angle = TAU * float(i) / float(projectile_count)
 		var direction = Vector2(cos(angle), sin(angle))
-		var node = _make_sprite("res://assets/art/source/magic_vfx/magic_vfx-2.png", Vector2(34, 34))
-		node.modulate = Color(0.85, 0.58, 1.0, 0.95)
-		_update_sprite_position(node, center + direction * 72.0)
+		var node = _make_sprite("res://assets/art/source/magic_vfx/magic_vfx-2.png", _vector_from(vfx_cfg, "boss_projectile_size", Vector2(34, 34)))
+		node.modulate = _color_from(vfx_cfg, "boss_projectile_color", Color(0.85, 0.58, 1.0, 0.95))
+		_update_sprite_position(node, center + direction * projectile_offset)
 		combat_layer.add_child(node)
 		boss_projectiles.append({
 			"node": node,
-			"pos": center + direction * 72.0,
-			"velocity": direction * 225.0,
+			"pos": center + direction * projectile_offset,
+			"velocity": direction * projectile_speed,
 			"damage": damage,
-			"radius": 18.0,
-			"life": 5.0,
+			"radius": projectile_radius,
+			"life": projectile_life,
 			"anim_time": 0.0,
 			"session_id": session_id,
 		})
@@ -529,8 +652,8 @@ func _update_boss_projectiles(delta: float) -> void:
 		var pulse = sin(float(projectile["anim_time"]) * 9.0)
 		node.scale = Vector2(1.0 + pulse * 0.08, 1.0 + pulse * 0.08)
 		_update_sprite_position(node, projectile["pos"])
-		var expired = float(projectile["life"]) <= 0.0 or not COMBAT_ARENA_RECT.grow(96.0).has_point(projectile["pos"])
-		if not expired and player_pos.distance_to(projectile["pos"]) <= float(projectile["radius"]) + PLAYER_TOUCH_RADIUS:
+		var expired = float(projectile["life"]) <= 0.0 or not arena_rect.grow(96.0).has_point(projectile["pos"])
+		if not expired and player_pos.distance_to(projectile["pos"]) <= float(projectile["radius"]) + player_touch_radius:
 			player_hp -= float(projectile["damage"])
 			_float_text("-%d" % int(projectile["damage"]), player_pos + Vector2(0, -52), Color(1.0, 0.36, 0.28))
 			expired = true
@@ -663,7 +786,7 @@ func _style_box(fill: Color, border: Color, border_width: int, corner_radius: in
 
 func _random_edge_position() -> Vector2:
 	var side = randi_range(0, 3)
-	var rect = COMBAT_ARENA_RECT
+	var rect = arena_rect
 	match side:
 		0:
 			return Vector2(randf_range(rect.position.x, rect.position.x + rect.size.x), rect.position.y)
@@ -678,27 +801,30 @@ func _random_edge_position() -> Vector2:
 func _flash_attack(target_pos: Vector2, attack_vector: Vector2) -> void:
 	if not _is_combat_fx_ready():
 		return
-	var fx = _make_sprite("res://assets/art/source/fries_slash/fries_slash-1.png", Vector2(132, 132))
+	var vfx_cfg = _section("vfx")
+	var fx = _make_sprite("res://assets/art/source/fries_slash/fries_slash-1.png", _vector_from(vfx_cfg, "slash_size", Vector2(132, 132)))
 	fx.position = target_pos - fx.size * 0.5
 	if attack_vector.length() > 0.01:
 		fx.rotation = attack_vector.angle() + PI
 	combat_fx_layer.add_child(fx)
 	var tween = create_tween()
 	tween.bind_node(fx)
-	tween.tween_property(fx, "modulate:a", 0.0, 0.22)
+	tween.tween_property(fx, "modulate:a", 0.0, _float_from(vfx_cfg, "attack_fade_seconds", 0.22))
 	tween.finished.connect(_queue_free_if_valid.bind(fx))
 
 
 func _flash_magic(target_pos: Vector2) -> void:
 	if not _is_combat_fx_ready():
 		return
-	var fx = _make_sprite("res://assets/art/source/magic_vfx/magic_vfx-1.png", Vector2(96, 96))
+	var vfx_cfg = _section("vfx")
+	var fade_seconds = _float_from(vfx_cfg, "magic_fade_seconds", 0.22)
+	var fx = _make_sprite("res://assets/art/source/magic_vfx/magic_vfx-1.png", _vector_from(vfx_cfg, "magic_size", Vector2(96, 96)))
 	fx.position = target_pos - fx.size * 0.5
 	combat_fx_layer.add_child(fx)
 	var tween = create_tween()
 	tween.bind_node(fx)
-	tween.tween_property(fx, "scale", Vector2(1.45, 1.45), 0.22)
-	tween.parallel().tween_property(fx, "modulate:a", 0.0, 0.22)
+	tween.tween_property(fx, "scale", Vector2(1.45, 1.45), fade_seconds)
+	tween.parallel().tween_property(fx, "modulate:a", 0.0, fade_seconds)
 	tween.finished.connect(_queue_free_if_valid.bind(fx))
 
 
@@ -709,7 +835,14 @@ func _float_text(text: String, pos: Vector2, color: Color) -> void:
 	label.position = pos - Vector2(70, 20)
 	label.size = Vector2(140, 36)
 	add_child(label)
-	floating_texts.append({"node": label, "life": 0.8, "velocity": Vector2(0, -42), "session_id": combat_session_id})
+	var vfx_cfg = _section("vfx")
+	floating_texts.append({
+		"node": label,
+		"life": _float_from(vfx_cfg, "floating_text_life_seconds", 0.8),
+		"max_life": _float_from(vfx_cfg, "floating_text_life_seconds", 0.8),
+		"velocity": _vector_from(vfx_cfg, "floating_text_velocity", Vector2(0, -42)),
+		"session_id": combat_session_id,
+	})
 
 
 func _update_floating_texts(delta: float) -> void:
@@ -723,7 +856,7 @@ func _update_floating_texts(delta: float) -> void:
 			continue
 		item["life"] = float(item["life"]) - delta
 		item["node"].position += item["velocity"] * delta
-		item["node"].modulate.a = clamp(float(item["life"]) / 0.8, 0.0, 1.0)
+		item["node"].modulate.a = clamp(float(item["life"]) / max(0.01, float(item.get("max_life", 0.8))), 0.0, 1.0)
 		if float(item["life"]) <= 0.0:
 			_queue_free_if_valid(item["node"])
 			floating_texts.erase(item)

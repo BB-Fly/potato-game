@@ -22,6 +22,19 @@
       "timeline": []
     }
   ],
+  "abilities": [
+    {
+      "id": "radial_projectiles",
+      "cooldown_seconds": 8.0,
+      "cast_duration_seconds": 0.65,
+      "spawn_delay_seconds": 0.32,
+      "projectile_count": 16,
+      "projectile_speed": 225,
+      "projectile_radius": 18,
+      "projectile_life_seconds": 5,
+      "projectile_spawn_offset": 72
+    }
+  ],
   "continue_mob_spawns": true,
   "music_state_id": "music_state.combat.boss"
 }

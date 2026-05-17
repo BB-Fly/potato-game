@@ -31,18 +31,18 @@ func build_reward_offer(item_pool, run_context, reward_id: String) -> Array:
 	)
 
 
-func build_shop_offer(item_pool, run_context, node_type: String) -> Array:
+func build_shop_offer(item_pool, run_context, node_type: String, count: int = 3) -> Array:
 	var content_type = content_type_for_node(node_type)
 	return _filled_offer(
 		item_pool,
 		run_context,
 		content_type,
 		{
-			"count": 3,
+			"count": count,
 			"duplicate_policy": "avoid_same_offer",
 			"guarantees": [{"slot": 0, "school": "character_primary"}],
 		},
-		3
+		count
 	)
 
 
@@ -69,18 +69,20 @@ func grant_content(run_context, content_id: String) -> void:
 		run_context.add_item(content_id)
 
 
-func buy_content(run_context, content_id: String) -> Dictionary:
-	var price = shop_price(run_context)
+func buy_content(run_context, content_id: String, price: int = -1, shop_id: String = "") -> Dictionary:
+	if price < 0:
+		price = shop_price(run_context)
 	if not run_context.spend_gold(price):
 		return {
 			"success": false,
-			"message": "Not enough gold",
+			"message": "Gold is not enough",
 			"price": price,
 		}
 	grant_content(run_context, content_id)
+	run_context.record_shop_purchase(shop_id)
 	return {
 		"success": true,
-		"message": "Purchased",
+		"message": "Purchased for %d gold" % price,
 		"price": price,
 	}
 

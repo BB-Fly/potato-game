@@ -1,0 +1,35 @@
+{
+  "id": "monster.metamorph.bomb_fruitling",
+  "display_name_key": "monster.bomb_fruitling.name",
+  "description_key": "monster.bomb_fruitling.desc",
+  "school_ids": ["school.metamorph"],
+  "primary_school_id": "school.metamorph",
+  "type": "mob",
+  "enabled": true,
+  "stats": {
+    "max_health": 40,
+    "attack": 5,
+    "move_speed": 65,
+    "knockback_resistance": 0.05,
+    "toughness": 6
+  },
+  "growth": {
+    "max_health_per_floor": 4,
+    "attack_per_floor": 1
+  },
+  "behavior": {
+    "movement": "move_toward_player",
+    "attack": "contact_damage",
+    "contact_damage_multiplier": 1.0
+  },
+  "spawn": {
+    "chapters": ["chapter_1", "chapter_2"],
+    "weight": 1.0
+  },
+  "asset_refs": {
+    "sprite": "monster.bomb_fruitling.sprite"
+  },
+  "audio_refs": {
+    "hit_sfx": "monster.bomb_fruitling.hit"
+  }
+}

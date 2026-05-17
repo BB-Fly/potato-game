@@ -92,7 +92,13 @@
           ]
         }
       ]
+    },
+    {
+      "id": "reward.encounter.default",
+      "enabled": true,
+      "gold_base": 80,
+      "gold_per_floor": 20,
+      "offers": []
     }
   ]
 }
-

@@ -56,6 +56,12 @@ func spend_gold(amount: int) -> bool:
 	return true
 
 
+func record_shop_purchase(shop_id: String) -> void:
+	if shop_id.is_empty():
+		return
+	shop_purchase_counts[shop_id] = int(shop_purchase_counts.get(shop_id, 0)) + 1
+
+
 func record_acquired(content_id: String) -> void:
 	acquire_counts[content_id] = get_acquire_count(content_id) + 1
 
