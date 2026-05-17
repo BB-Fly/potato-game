@@ -1,0 +1,551 @@
+[gd_scene format=3 uid="uid://syptgtouyj6a"]
+
+[ext_resource type="Script" uid="uid://dhvtey1llbg1q" path="res://src/app/combat/combat_hud.gd" id="1_hud_script"]
+[ext_resource type="Texture2D" uid="uid://ksb6yuprpmd0" path="res://assets/art/ui/panel_wood_wide.png" id="2_panel_wood"]
+[ext_resource type="Texture2D" uid="uid://smgc8ygbnmux" path="res://assets/art/ui/combat_magic_slot_disabled.png" id="3_magic_slot"]
+[ext_resource type="Texture2D" uid="uid://csclbhhtkvasr" path="res://assets/art/ui/combat_hp_frame_slim.png" id="4_hp_frame"]
+[ext_resource type="Texture2D" uid="uid://bij42cl0p2opr" path="res://assets/art/ui/combat_mana_frame.png" id="5_mana_frame"]
+[ext_resource type="Texture2D" uid="uid://db510o42cqmp5" path="res://assets/art/ui/combat_boss_hp_frame.png" id="6_boss_frame"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_boss_left"]
+atlas = ExtResource("6_boss_frame")
+region = Rect2(0, 0, 72, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_boss_middle"]
+atlas = ExtResource("6_boss_frame")
+region = Rect2(72, 0, 11, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_boss_right"]
+atlas = ExtResource("6_boss_frame")
+region = Rect2(83, 0, 31, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hp_left"]
+atlas = ExtResource("4_hp_frame")
+region = Rect2(0, 0, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hp_middle"]
+atlas = ExtResource("4_hp_frame")
+region = Rect2(32, 0, 54, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hp_right"]
+atlas = ExtResource("4_hp_frame")
+region = Rect2(86, 0, 18, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mana_left"]
+atlas = ExtResource("5_mana_frame")
+region = Rect2(0, 0, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mana_middle"]
+atlas = ExtResource("5_mana_frame")
+region = Rect2(32, 0, 54, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mana_right"]
+atlas = ExtResource("5_mana_frame")
+region = Rect2(86, 0, 18, 45)
+
+[node name="CombatHud" type="Control" unique_id=1689590954]
+z_index = 3000
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hud_script")
+
+[node name="TopHud" type="Control" parent="." unique_id=1799938574]
+anchors_preset = 0
+offset_right = 1280.0
+offset_bottom = 96.0
+
+[node name="TopStatusLabel" type="Label" parent="TopHud" unique_id=762831667]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 18.0
+offset_right = 392.0
+offset_bottom = 50.0
+text = "Mobs  Floor 1  Weapons 1/4"
+vertical_alignment = 1
+
+[node name="HintLabel" type="Label" parent="TopHud" unique_id=577905909]
+layout_mode = 0
+offset_left = 742.0
+offset_top = 18.0
+offset_right = 1242.0
+offset_bottom = 48.0
+text = "Move: WASD / Arrows    Magic: Q E R F"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="BossHpBar" type="Control" parent="TopHud" unique_id=103930892]
+anchors_preset = 0
+offset_left = 285.5
+offset_top = 26.0
+offset_right = 994.5
+offset_bottom = 80.0
+
+[node name="Backing" type="ColorRect" parent="TopHud/BossHpBar" unique_id=474821104]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 8.0
+offset_right = 707.5
+offset_bottom = 48.0
+color = Color(0.04, 0.024, 0.02, 0.72)
+
+[node name="BarBackground" type="ColorRect" parent="TopHud/BossHpBar" unique_id=566533288]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 6.0
+offset_right = 672.0
+offset_bottom = 24.0
+color = Color(0.05, 0.035, 0.025, 0.92)
+
+[node name="LagFill" type="ColorRect" parent="TopHud/BossHpBar" unique_id=1707608384]
+layout_mode = 0
+offset_left = 24.5
+offset_top = 19.0
+offset_right = 696.5
+offset_bottom = 37.0
+color = Color(1, 0.84, 0.22, 1)
+
+[node name="Fill" type="ColorRect" parent="TopHud/BossHpBar" unique_id=831237434]
+layout_mode = 0
+offset_left = 19.5
+offset_top = 19.0
+offset_right = 697.5
+offset_bottom = 37.0
+color = Color(0.86, 0.12, 0.16, 1)
+
+[node name="FrameLeft" type="TextureRect" parent="TopHud/BossHpBar" unique_id=611984704]
+layout_mode = 0
+offset_right = 72.0
+offset_bottom = 46.0
+texture = SubResource("AtlasTexture_boss_left")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="FrameMiddle" type="TextureRect" parent="TopHud/BossHpBar" unique_id=1659992646]
+layout_mode = 0
+offset_left = 72.0
+offset_right = 678.0
+offset_bottom = 46.0
+texture = SubResource("AtlasTexture_boss_middle")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="FrameRight" type="TextureRect" parent="TopHud/BossHpBar" unique_id=1546417303]
+layout_mode = 0
+offset_left = 678.0
+offset_right = 709.0
+offset_bottom = 46.0
+texture = SubResource("AtlasTexture_boss_right")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="ValueLabel" type="Label" parent="TopHud/BossHpBar" unique_id=941693632]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 10.0
+offset_right = 678.0
+offset_bottom = 42.0
+text = "BOSS 300/300"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayerHud" type="Control" parent="." unique_id=1979209702]
+anchors_preset = 0
+offset_left = 14.0
+offset_top = 500.0
+offset_right = 352.0
+offset_bottom = 722.0
+
+[node name="PlayerPanel" type="Control" parent="PlayerHud" unique_id=1192013706]
+anchors_preset = 0
+offset_right = 338.0
+offset_bottom = 222.0
+
+[node name="Shadow" type="ColorRect" parent="PlayerHud/PlayerPanel" unique_id=1311294934]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 6.0
+offset_right = 343.0
+offset_bottom = 228.0
+color = Color(0, 0, 0, 0.26)
+
+[node name="Background" type="ColorRect" parent="PlayerHud/PlayerPanel" unique_id=634249507]
+layout_mode = 0
+offset_right = 338.0
+offset_bottom = 222.0
+color = Color(0.055, 0.035, 0.026, 0.66)
+
+[node name="Texture" type="TextureRect" parent="PlayerHud/PlayerPanel" unique_id=1907377720]
+modulate = Color(1, 1, 1, 0.52)
+layout_mode = 0
+offset_right = 338.0
+offset_bottom = 222.0
+texture = ExtResource("2_panel_wood")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="PlayerHpBar" type="Control" parent="PlayerHud" unique_id=1629727596]
+anchors_preset = 0
+offset_left = 12.0
+offset_top = 24.0
+offset_right = 315.6
+offset_bottom = 78.0
+
+[node name="Backing" type="ColorRect" parent="PlayerHud/PlayerHpBar" unique_id=1595164465]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 8.0
+offset_right = 301.6
+offset_bottom = 48.0
+color = Color(0.035, 0.026, 0.02, 0.62)
+
+[node name="BarBackground" type="ColorRect" parent="PlayerHud/PlayerHpBar" unique_id=466325583]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 12.0
+offset_right = 285.6
+offset_bottom = 34.0
+color = Color(0.05, 0.035, 0.025, 0.92)
+
+[node name="LagFill" type="ColorRect" parent="PlayerHud/PlayerHpBar" unique_id=1018335940]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 15.0
+offset_right = 294.0
+offset_bottom = 34.0
+color = Color(0.78, 1, 0.54, 1)
+
+[node name="Fill" type="ColorRect" parent="PlayerHud/PlayerHpBar" unique_id=1950643389]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 16.0
+offset_right = 293.0
+offset_bottom = 34.0
+color = Color(0.48, 0.92, 0.28, 1)
+
+[node name="FrameLeft" type="TextureRect" parent="PlayerHud/PlayerHpBar" unique_id=51452155]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 45.0
+texture = SubResource("AtlasTexture_hp_left")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="FrameMiddle" type="TextureRect" parent="PlayerHud/PlayerHpBar" unique_id=1113052066]
+layout_mode = 0
+offset_left = 32.0
+offset_right = 285.6
+offset_bottom = 45.0
+texture = SubResource("AtlasTexture_hp_middle")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="FrameRight" type="TextureRect" parent="PlayerHud/PlayerHpBar" unique_id=1674473989]
+layout_mode = 0
+offset_left = 285.0
+offset_right = 303.0
+offset_bottom = 45.0
+texture = SubResource("AtlasTexture_hp_right")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="ValueLabel" type="Label" parent="PlayerHud/PlayerHpBar" unique_id=1568138083]
+visible = false
+layout_mode = 0
+offset_left = 32.0
+offset_top = 10.0
+offset_right = 285.6
+offset_bottom = 42.0
+text = "HP 110/110"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayerManaBar" type="Control" parent="PlayerHud" unique_id=232013101]
+anchors_preset = 0
+offset_left = 12.0
+offset_top = 64.0
+offset_right = 297.0
+offset_bottom = 118.0
+
+[node name="Backing" type="ColorRect" parent="PlayerHud/PlayerManaBar" unique_id=705316153]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 8.0
+offset_right = 283.0
+offset_bottom = 48.0
+color = Color(0.035, 0.026, 0.02, 0.62)
+
+[node name="BarBackground" type="ColorRect" parent="PlayerHud/PlayerManaBar" unique_id=277546418]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 12.0
+offset_right = 271.0
+offset_bottom = 34.0
+color = Color(0.05, 0.035, 0.025, 0.92)
+
+[node name="LagFill" type="ColorRect" parent="PlayerHud/PlayerManaBar" unique_id=1581001115]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 15.0
+offset_right = 275.0
+offset_bottom = 34.0
+color = Color(0.62, 0.88, 1, 1)
+
+[node name="Fill" type="ColorRect" parent="PlayerHud/PlayerManaBar" unique_id=915709731]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 15.0
+offset_right = 276.0
+offset_bottom = 34.0
+color = Color(0.28, 0.54, 1, 1)
+
+[node name="FrameLeft" type="TextureRect" parent="PlayerHud/PlayerManaBar" unique_id=2032897233]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 45.0
+texture = SubResource("AtlasTexture_mana_left")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="FrameMiddle" type="TextureRect" parent="PlayerHud/PlayerManaBar" unique_id=648603228]
+layout_mode = 0
+offset_left = 32.0
+offset_right = 267.0
+offset_bottom = 45.0
+texture = SubResource("AtlasTexture_mana_middle")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="FrameRight" type="TextureRect" parent="PlayerHud/PlayerManaBar" unique_id=1937963173]
+layout_mode = 0
+offset_left = 267.0
+offset_right = 285.0
+offset_bottom = 45.0
+texture = SubResource("AtlasTexture_mana_right")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="ValueLabel" type="Label" parent="PlayerHud/PlayerManaBar" unique_id=576152894]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 10.0
+offset_right = 267.0
+offset_bottom = 42.0
+text = "MP 80/80"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MagicSlots" type="Control" parent="PlayerHud" unique_id=2032852029]
+anchors_preset = 0
+offset_left = 12.0
+offset_top = 124.0
+offset_right = 326.0
+offset_bottom = 215.0
+
+[node name="Slot0" type="Control" parent="PlayerHud/MagicSlots" unique_id=1752080617]
+anchors_preset = 0
+offset_right = 86.0
+offset_bottom = 91.0
+
+[node name="Frame" type="TextureRect" parent="PlayerHud/MagicSlots/Slot0" unique_id=275974534]
+layout_mode = 0
+offset_top = 4.0
+offset_right = 86.0
+offset_bottom = 87.0
+texture = ExtResource("3_magic_slot")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="Icon" type="TextureRect" parent="PlayerHud/MagicSlots/Slot0" unique_id=213616610]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 23.0
+offset_right = 65.0
+offset_bottom = 67.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Mask" type="ColorRect" parent="PlayerHud/MagicSlots/Slot0" unique_id=706017697]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 21.0
+offset_right = 67.0
+offset_bottom = 69.0
+color = Color(0, 0, 0, 0.42)
+
+[node name="KeyLabel" type="Label" parent="PlayerHud/MagicSlots/Slot0" unique_id=2124051385]
+layout_mode = 0
+offset_right = 86.0
+offset_bottom = 18.0
+text = "Q"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CooldownLabel" type="Label" parent="PlayerHud/MagicSlots/Slot0" unique_id=272000895]
+layout_mode = 0
+offset_top = 31.0
+offset_right = 86.0
+offset_bottom = 61.0
+text = "-"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot1" type="Control" parent="PlayerHud/MagicSlots" unique_id=1301027195]
+anchors_preset = 0
+offset_left = 76.0
+offset_right = 162.0
+offset_bottom = 91.0
+
+[node name="Frame" type="TextureRect" parent="PlayerHud/MagicSlots/Slot1" unique_id=1066120506]
+layout_mode = 0
+offset_top = 4.0
+offset_right = 86.0
+offset_bottom = 87.0
+texture = ExtResource("3_magic_slot")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="Icon" type="TextureRect" parent="PlayerHud/MagicSlots/Slot1" unique_id=354095975]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 23.0
+offset_right = 65.0
+offset_bottom = 67.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Mask" type="ColorRect" parent="PlayerHud/MagicSlots/Slot1" unique_id=1894556322]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 21.0
+offset_right = 67.0
+offset_bottom = 69.0
+color = Color(0, 0, 0, 0.42)
+
+[node name="KeyLabel" type="Label" parent="PlayerHud/MagicSlots/Slot1" unique_id=386685148]
+layout_mode = 0
+offset_right = 86.0
+offset_bottom = 18.0
+text = "E"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CooldownLabel" type="Label" parent="PlayerHud/MagicSlots/Slot1" unique_id=63868009]
+layout_mode = 0
+offset_top = 31.0
+offset_right = 86.0
+offset_bottom = 61.0
+text = "-"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot2" type="Control" parent="PlayerHud/MagicSlots" unique_id=1638182448]
+anchors_preset = 0
+offset_left = 152.0
+offset_right = 238.0
+offset_bottom = 91.0
+
+[node name="Frame" type="TextureRect" parent="PlayerHud/MagicSlots/Slot2" unique_id=1462159043]
+layout_mode = 0
+offset_top = 4.0
+offset_right = 86.0
+offset_bottom = 87.0
+texture = ExtResource("3_magic_slot")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="Icon" type="TextureRect" parent="PlayerHud/MagicSlots/Slot2" unique_id=1650208504]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 23.0
+offset_right = 65.0
+offset_bottom = 67.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Mask" type="ColorRect" parent="PlayerHud/MagicSlots/Slot2" unique_id=1300843201]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 21.0
+offset_right = 67.0
+offset_bottom = 69.0
+color = Color(0, 0, 0, 0.42)
+
+[node name="KeyLabel" type="Label" parent="PlayerHud/MagicSlots/Slot2" unique_id=139322941]
+layout_mode = 0
+offset_right = 86.0
+offset_bottom = 18.0
+text = "R"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CooldownLabel" type="Label" parent="PlayerHud/MagicSlots/Slot2" unique_id=379551297]
+layout_mode = 0
+offset_top = 31.0
+offset_right = 86.0
+offset_bottom = 61.0
+text = "-"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot3" type="Control" parent="PlayerHud/MagicSlots" unique_id=2069322360]
+anchors_preset = 0
+offset_left = 228.0
+offset_right = 314.0
+offset_bottom = 91.0
+
+[node name="Frame" type="TextureRect" parent="PlayerHud/MagicSlots/Slot3" unique_id=408668461]
+layout_mode = 0
+offset_top = 4.0
+offset_right = 86.0
+offset_bottom = 87.0
+texture = ExtResource("3_magic_slot")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="Icon" type="TextureRect" parent="PlayerHud/MagicSlots/Slot3" unique_id=553696702]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 23.0
+offset_right = 65.0
+offset_bottom = 67.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Mask" type="ColorRect" parent="PlayerHud/MagicSlots/Slot3" unique_id=1844070212]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 21.0
+offset_right = 67.0
+offset_bottom = 69.0
+color = Color(0, 0, 0, 0.42)
+
+[node name="KeyLabel" type="Label" parent="PlayerHud/MagicSlots/Slot3" unique_id=1233804823]
+layout_mode = 0
+offset_right = 86.0
+offset_bottom = 18.0
+text = "F"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CooldownLabel" type="Label" parent="PlayerHud/MagicSlots/Slot3" unique_id=242004120]
+layout_mode = 0
+offset_top = 31.0
+offset_right = 86.0
+offset_bottom = 61.0
+text = "-"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ToastLabel" type="Label" parent="." unique_id=1800844601]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 220.0
+offset_top = 120.0
+offset_right = 1060.0
+offset_bottom = 154.0
+horizontal_alignment = 1
+vertical_alignment = 1

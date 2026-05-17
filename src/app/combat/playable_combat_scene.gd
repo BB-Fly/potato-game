@@ -24,18 +24,9 @@ var boss_ability: Dictionary = {}
 var combat_layer: Control
 var combat_fx_layer: Control
 var combat_hud_layer: Control
-var combat_hud_label: Label
-var combat_hint_label: Label
-var combat_player_hp_bar: ProgressBar
-var combat_mana_bar: ProgressBar
-var combat_boss_hp_bar: ProgressBar
 var combat_player_sprite: TextureRect
 var combat_boss_sprite: TextureRect
 var combat_weapon_sprites: Array = []
-var magic_slot_nodes: Array = []
-var player_hp_bar_ui: Dictionary = {}
-var player_mana_bar_ui: Dictionary = {}
-var boss_hp_bar_ui: Dictionary = {}
 
 var player_pos = Vector2.ZERO
 var player_hp = 100.0
@@ -60,7 +51,6 @@ var combat_session_id = 0
 var magic_cooldowns: Array = []
 var magic_total_cooldowns: Array = []
 var floating_texts: Array = []
-var toast_label: Label
 var is_finished = false
 
 
@@ -83,10 +73,8 @@ func cleanup() -> void:
 	boss_projectiles.clear()
 	floating_texts.clear()
 	combat_weapon_sprites.clear()
-	magic_slot_nodes.clear()
-	player_hp_bar_ui.clear()
-	player_mana_bar_ui.clear()
-	boss_hp_bar_ui.clear()
+	if combat_hud_layer != null and is_instance_valid(combat_hud_layer) and combat_hud_layer.has_method("reset"):
+		combat_hud_layer.reset()
 
 
 func _exit_tree() -> void:
@@ -115,11 +103,6 @@ func _start_combat() -> void:
 	combat_fx_layer = Control.new()
 	combat_fx_layer.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(combat_fx_layer)
-
-	combat_hud_layer = Control.new()
-	combat_hud_layer.set_anchors_preset(Control.PRESET_FULL_RECT)
-	combat_hud_layer.z_index = 3000
-	add_child(combat_hud_layer)
 
 	var character = registry.get_entry("character", run_context.character_id)
 	var base_stats: Dictionary = character.get("base_stats", {})
@@ -154,22 +137,21 @@ func _start_combat() -> void:
 
 func _clear_local_state() -> void:
 	for child in get_children():
+		if child.name == "CombatHud":
+			combat_hud_layer = child
+			continue
 		remove_child(child)
 		_queue_free_if_valid(child)
 	enemies.clear()
 	boss_projectiles.clear()
 	floating_texts.clear()
 	combat_weapon_sprites.clear()
-	magic_slot_nodes.clear()
-	player_hp_bar_ui.clear()
-	player_mana_bar_ui.clear()
-	boss_hp_bar_ui.clear()
 	combat_layer = null
 	combat_fx_layer = null
-	combat_hud_layer = null
 	combat_player_sprite = null
 	combat_boss_sprite = null
-	toast_label = null
+	if combat_hud_layer != null and is_instance_valid(combat_hud_layer) and combat_hud_layer.has_method("reset"):
+		combat_hud_layer.reset()
 
 
 func _is_combat_ready() -> bool:
@@ -273,57 +255,23 @@ func _end_combat(victory: bool) -> void:
 
 
 func _add_combat_hud() -> void:
-	combat_hud_label = _make_label("", 20, Color(1.0, 0.92, 0.68), HORIZONTAL_ALIGNMENT_LEFT)
-	combat_hud_label.position = Vector2(32, 18)
-	combat_hud_label.size = Vector2(360, 32)
-	_add_hud_child(combat_hud_label)
-
-	combat_hint_label = _make_label("Move: WASD / Arrows    Magic: Q E R F", 18, Color(1.0, 0.92, 0.68), HORIZONTAL_ALIGNMENT_RIGHT)
-	combat_hint_label.position = Vector2(742, 18)
-	combat_hint_label.size = Vector2(500, 30)
-	_add_hud_child(combat_hint_label)
-
-	_add_hud_panel(Vector2(14, 526), Vector2(338, 186), Color(0.055, 0.035, 0.026, 0.66))
-
-	player_hp_bar_ui = _make_combat_stat_bar(
-		Vector2(26, 552),
-		player_max_hp,
-		Color(0.48, 0.92, 0.28),
-		Color(0.78, 1.0, 0.54),
-		Color(1.0, 0.2, 0.18),
-		"res://assets/art/ui/combat_hp_frame_slim.png",
-		"HP",
-		false
-	)
-	player_mana_bar_ui = _make_combat_stat_bar(
-		Vector2(26, 592),
-		player_max_mana,
-		Color(0.28, 0.54, 1.0),
-		Color(0.62, 0.88, 1.0),
-		Color(0.62, 0.88, 1.0),
-		"res://assets/art/ui/combat_mana_frame.png",
-		"MP",
-		false
-	)
-	boss_hp_bar_ui = _make_combat_stat_bar(
-		Vector2(0, 26),
-		300.0,
-		Color(0.86, 0.12, 0.16),
-		Color(1.0, 0.84, 0.22),
-		Color(1.0, 0.84, 0.22),
-		"res://assets/art/ui/combat_boss_hp_frame.png",
-		"BOSS",
-		true
-	)
-	var boss_root: Control = boss_hp_bar_ui.get("root", null)
-	if boss_root != null:
-		boss_root.visible = false
-
-	var keys = ["Q", "E", "R", "F"]
-	for i in range(4):
-		magic_slot_nodes.append(_make_magic_slot(i, keys[i]))
-
-	_add_toast_anchor()
+	if combat_hud_layer == null or not is_instance_valid(combat_hud_layer):
+		combat_hud_layer = get_node_or_null("CombatHud") as Control
+	if combat_hud_layer == null:
+		push_error("Combat HUD scene is missing from combat_scene.tscn.")
+		return
+	combat_hud_layer.visible = true
+	combat_hud_layer.z_index = 3000
+	if combat_hud_layer.has_method("setup"):
+		combat_hud_layer.setup(
+			registry,
+			run_context,
+			asset_catalog,
+			balance,
+			player_max_hp,
+			player_max_mana,
+			_int_from(_section("magic"), "slot_count", 4)
+		)
 
 
 func _update_combat(delta: float) -> void:
@@ -739,337 +687,23 @@ func _kill_enemy(enemy: Dictionary) -> void:
 
 
 func _update_combat_hud(delta: float) -> void:
-	_sync_combat_stat_bar(player_hp_bar_ui, max(0.0, player_hp), player_max_hp, delta)
-	_sync_combat_stat_bar(player_mana_bar_ui, clamp(player_mana, 0.0, player_max_mana), max(1.0, player_max_mana), delta)
-	if not boss_hp_bar_ui.is_empty():
-		var boss_root: Control = boss_hp_bar_ui.get("root", null)
-		if boss_root != null and is_instance_valid(boss_root):
-			boss_root.visible = boss_spawned and not boss_enemy.is_empty()
-		if boss_root != null and is_instance_valid(boss_root) and boss_root.visible:
-			_sync_combat_stat_bar(boss_hp_bar_ui, max(0.0, float(boss_enemy.get("hp", 0.0))), float(boss_enemy.get("max_hp", 1.0)), delta)
-	if combat_hud_label != null:
-		var phase = "Boss" if boss_spawned else "Mobs"
-		combat_hud_label.text = "%s  Floor %d  Weapons %d/4" % [
-			phase,
-			run_context.floor,
-			_equipped_weapon_count(),
-		]
-	for i in range(magic_slot_nodes.size()):
-		_update_magic_slot(i)
-
-
-func _make_combat_stat_bar(position: Vector2, max_value: float, fill_color: Color, lag_color: Color, heat_color: Color, frame_path: String, label_prefix: String, is_boss_bar: bool) -> Dictionary:
-	var bar_width = _hud_bar_width(max_value, is_boss_bar)
-	var frame_texture = _load_texture(frame_path)
-	var split = _bar_frame_split(frame_texture, is_boss_bar)
-	var left_cap = int(split["left"])
-	var right_cap = int(split["right"])
-	var frame_height = float(split["height"])
-	var frame_y = 0.0
-	var root = Control.new()
-	root.position = position
-	root.size = Vector2(left_cap + bar_width + right_cap, max(54.0, frame_height))
-	if is_boss_bar:
-		root.position.x = (1280.0 - root.size.x) * 0.5
-	_add_hud_child(root)
-
-	var backing = ColorRect.new()
-	backing.position = Vector2(2, 8)
-	backing.size = Vector2(root.size.x - 4, root.size.y - 14)
-	backing.color = Color(0.04, 0.024, 0.02, 0.72) if is_boss_bar else Color(0.035, 0.026, 0.02, 0.62)
-	root.add_child(backing)
-
-	var bg = ColorRect.new()
-	var fill_inset = _bar_fill_inset(is_boss_bar)
-	bg.position = Vector2(left_cap + fill_inset.position.x, frame_y + fill_inset.position.y)
-	bg.size = Vector2(bar_width + fill_inset.size.x, fill_inset.size.y)
-	bg.color = Color(0.05, 0.035, 0.025, 0.92)
-	root.add_child(bg)
-
-	var lag = ColorRect.new()
-	lag.position = bg.position
-	lag.size = bg.size
-	lag.color = lag_color
-	root.add_child(lag)
-
-	var fill = ColorRect.new()
-	fill.position = bg.position
-	fill.size = bg.size
-	fill.color = fill_color
-	root.add_child(fill)
-
-	var frame_parts = _add_sliced_bar_frame(root, frame_texture, left_cap, right_cap, bar_width, frame_y)
-
-	var label = _make_label("", 16, Color.WHITE, HORIZONTAL_ALIGNMENT_CENTER)
-	label.position = Vector2(left_cap, 10)
-	label.size = Vector2(bar_width, 32)
-	root.add_child(label)
-
-	return {
-		"root": root,
-		"bg": bg,
-		"lag": lag,
-		"fill": fill,
-		"backing": backing,
-		"frame_texture": frame_texture,
-		"frame_parts": frame_parts,
-		"left_cap": left_cap,
-		"right_cap": right_cap,
-		"frame_y": frame_y,
-		"fill_inset": fill_inset,
-		"label": label,
-		"prefix": label_prefix,
-		"value": max_value,
-		"lag_value": max_value,
-		"max_value": max_value,
-		"fill_color": fill_color,
-		"lag_color": lag_color,
-		"heat_color": heat_color,
-		"heat": 0.0,
-		"heat_timer": 0.0,
-		"lag_timer": 0.0,
-		"is_boss": is_boss_bar,
-	}
-
-
-func _hud_bar_width(max_value: float, is_boss_bar: bool) -> float:
-	if is_boss_bar:
-		return clamp(600.0 + max(0.0, max_value - 250.0) * 0.12, 600.0, 760.0)
-	return clamp(235.0 + max(0.0, max_value - 80.0) * 0.62, 235.0, 360.0)
-
-
-func _bar_fill_inset(is_boss_bar: bool) -> Rect2:
-	if is_boss_bar:
-		return Rect2(Vector2(-8, 6), Vector2(10, 18))
-	return Rect2(Vector2(-6, 12), Vector2(10, 22))
-
-
-func _bar_frame_split(texture: Texture2D, is_boss_bar: bool) -> Dictionary:
-	if texture == null:
-		return {"left": 34, "right": 20, "height": 45}
-	var size = texture.get_size()
-	var left_cap = 72 if is_boss_bar else 32
-	var right_cap = 32 if is_boss_bar else 18
-	left_cap = min(left_cap, int(size.x * 0.46))
-	right_cap = min(right_cap, int(size.x * 0.32))
-	if is_boss_bar:
-		left_cap = min(72, int(size.x * 0.64))
-		right_cap = min(32, int(size.x * 0.28))
-	return {"left": left_cap, "right": right_cap, "height": size.y}
-
-
-func _add_sliced_bar_frame(root: Control, texture: Texture2D, left_cap: int, right_cap: int, middle_width: float, y: float) -> Array:
-	var parts: Array = []
-	if texture == null:
-		return parts
-	var size = texture.get_size()
-	var source_middle_width = max(1.0, size.x - left_cap - right_cap)
-	var left = _make_frame_slice(texture, Rect2(0, 0, left_cap, size.y), Vector2(0, y), Vector2(left_cap, size.y))
-	var middle = _make_frame_slice(texture, Rect2(left_cap, 0, source_middle_width, size.y), Vector2(left_cap, y), Vector2(middle_width, size.y))
-	var right = _make_frame_slice(texture, Rect2(size.x - right_cap, 0, right_cap, size.y), Vector2(left_cap + middle_width, y), Vector2(right_cap, size.y))
-	root.add_child(left)
-	root.add_child(middle)
-	root.add_child(right)
-	parts.append(left)
-	parts.append(middle)
-	parts.append(right)
-	return parts
-
-
-func _make_frame_slice(texture: Texture2D, region: Rect2, position: Vector2, size: Vector2) -> TextureRect:
-	var atlas = AtlasTexture.new()
-	atlas.atlas = texture
-	atlas.region = region
-	var slice = TextureRect.new()
-	slice.position = position
-	slice.size = size
-	slice.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	slice.stretch_mode = TextureRect.STRETCH_SCALE
-	slice.texture = atlas
-	return slice
-
-
-func _layout_sliced_bar_frame(bar: Dictionary, bar_width: float) -> void:
-	var parts: Array = bar.get("frame_parts", [])
-	if parts.size() < 3:
+	if combat_hud_layer == null or not is_instance_valid(combat_hud_layer) or not combat_hud_layer.has_method("update_state"):
 		return
-	var left_cap = int(bar.get("left_cap", 34))
-	var right_cap = int(bar.get("right_cap", 20))
-	var y = float(bar.get("frame_y", 0.0))
-	var texture: Texture2D = bar.get("frame_texture", null)
-	var height = texture.get_size().y if texture != null else 45.0
-	var left: TextureRect = parts[0]
-	var middle: TextureRect = parts[1]
-	var right: TextureRect = parts[2]
-	if left != null and is_instance_valid(left):
-		left.position = Vector2(0, y)
-		left.size = Vector2(left_cap, height)
-	if middle != null and is_instance_valid(middle):
-		middle.position = Vector2(left_cap, y)
-		middle.size = Vector2(bar_width, height)
-	if right != null and is_instance_valid(right):
-		right.position = Vector2(left_cap + bar_width, y)
-		right.size = Vector2(right_cap, height)
-
-
-func _sync_combat_stat_bar(bar: Dictionary, value: float, max_value: float, delta: float) -> void:
-	if bar.is_empty():
-		return
-	var root: Control = bar.get("root", null)
-	var bg: ColorRect = bar.get("bg", null)
-	var fill: ColorRect = bar.get("fill", null)
-	var lag: ColorRect = bar.get("lag", null)
-	var backing: ColorRect = bar.get("backing", null)
-	var label: Label = bar.get("label", null)
-	if root == null or bg == null or fill == null or lag == null or label == null:
-		return
-	if not is_instance_valid(root):
-		return
-
-	max_value = max(1.0, max_value)
-	value = clamp(value, 0.0, max_value)
-	var previous = float(bar.get("value", value))
-	if abs(max_value - float(bar.get("max_value", max_value))) > 0.01:
-		var bar_width = _hud_bar_width(max_value, bool(bar.get("is_boss", false)))
-		var left_cap = int(bar.get("left_cap", 34))
-		var right_cap = int(bar.get("right_cap", 20))
-		root.size = Vector2(left_cap + bar_width + right_cap, root.size.y)
-		if bool(bar.get("is_boss", false)):
-			root.position.x = (1280.0 - root.size.x) * 0.5
-		if backing != null and is_instance_valid(backing):
-			backing.size.x = root.size.x - 4
-		var fill_inset: Rect2 = bar.get("fill_inset", _bar_fill_inset(bool(bar.get("is_boss", false))))
-		bg.position.x = left_cap + fill_inset.position.x
-		bg.size.x = bar_width + fill_inset.size.x
-		bg.position.y = fill_inset.position.y
-		bg.size.y = fill_inset.size.y
-		lag.position = bg.position
-		lag.size.y = bg.size.y
-		fill.position = bg.position
-		fill.size.y = bg.size.y
-		label.position.x = left_cap
-		label.size.x = bar_width
-		_layout_sliced_bar_frame(bar, bar_width)
-		bar["max_value"] = max_value
-
-	if value < previous:
-		bar["lag_value"] = max(float(bar.get("lag_value", previous)), previous)
-		bar["lag_timer"] = _float_from(_section("hud"), "bar_loss_delay_seconds", 0.32)
-		bar["heat"] = clamp(float(bar.get("heat", 0.0)) + (previous - value) / max_value * 1.9, 0.0, 1.0)
-		bar["heat_timer"] = _float_from(_section("hud"), "damage_heat_window_seconds", 0.85)
-	elif value > previous and value > float(bar.get("lag_value", value)):
-		bar["lag_value"] = value
-
-	bar["lag_timer"] = max(0.0, float(bar.get("lag_timer", 0.0)) - delta)
-	if float(bar["lag_timer"]) <= 0.0:
-		var catchup = _float_from(_section("hud"), "bar_loss_catchup_speed", 3.0)
-		bar["lag_value"] = lerp(float(bar.get("lag_value", value)), value, clamp(delta * catchup, 0.0, 1.0))
-	bar["heat_timer"] = max(0.0, float(bar.get("heat_timer", 0.0)) - delta)
-	if float(bar["heat_timer"]) <= 0.0:
-		var decay = _float_from(_section("hud"), "damage_heat_decay_speed", 1.35)
-		bar["heat"] = max(0.0, float(bar.get("heat", 0.0)) - delta * decay)
-
-	var ratio = value / max_value
-	var lag_ratio = clamp(float(bar.get("lag_value", value)) / max_value, ratio, 1.0)
-	fill.size.x = bg.size.x * ratio
-	lag.size.x = bg.size.x * lag_ratio
-	var lag_color: Color = bar.get("lag_color", Color.WHITE)
-	var heat_color: Color = bar.get("heat_color", lag_color)
-	lag.color = lag_color.lerp(heat_color, float(bar.get("heat", 0.0)))
-	label.text = "%s %d/%d" % [String(bar.get("prefix", "")), int(round(value)), int(round(max_value))]
-	bar["value"] = value
-
-
-func _make_magic_slot(slot_index: int, key_text: String) -> Dictionary:
-	var root = Control.new()
-	root.position = Vector2(26 + slot_index * 72, 632)
-	root.size = Vector2(68, 78)
-	_add_hud_child(root)
-
-	var frame = TextureRect.new()
-	frame.position = Vector2(0, 6)
-	frame.size = Vector2(64, 64)
-	frame.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	frame.stretch_mode = TextureRect.STRETCH_SCALE
-	frame.texture = _load_texture("res://assets/art/ui/combat_magic_slot_disabled.png")
-	root.add_child(frame)
-
-	var icon = TextureRect.new()
-	icon.position = Vector2(10, 16)
-	icon.size = Vector2(44, 44)
-	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	root.add_child(icon)
-
-	var mask = ColorRect.new()
-	mask.position = Vector2(8, 14)
-	mask.size = Vector2(48, 48)
-	mask.color = Color(0, 0, 0, 0.58)
-	root.add_child(mask)
-
-	var key = _make_label(key_text, 15, Color(1.0, 0.92, 0.62), HORIZONTAL_ALIGNMENT_CENTER)
-	key.position = Vector2(0, 0)
-	key.size = Vector2(64, 18)
-	root.add_child(key)
-
-	var cooldown = _make_label("", 18, Color.WHITE, HORIZONTAL_ALIGNMENT_CENTER)
-	cooldown.position = Vector2(0, 25)
-	cooldown.size = Vector2(64, 30)
-	root.add_child(cooldown)
-
-	return {
-		"root": root,
-		"frame": frame,
-		"icon": icon,
-		"mask": mask,
-		"cooldown": cooldown,
-	}
-
-
-func _update_magic_slot(slot_index: int) -> void:
-	if slot_index < 0 or slot_index >= magic_slot_nodes.size():
-		return
-	var slot: Dictionary = magic_slot_nodes[slot_index]
-	var frame: TextureRect = slot.get("frame", null)
-	var icon: TextureRect = slot.get("icon", null)
-	var mask: ColorRect = slot.get("mask", null)
-	var cooldown_label: Label = slot.get("cooldown", null)
-	if frame == null or icon == null or mask == null or cooldown_label == null:
-		return
-	var magic_id = run_context.equipped_magics[slot_index] if slot_index < run_context.equipped_magics.size() else null
-	var cd = magic_cooldowns[slot_index] if slot_index < magic_cooldowns.size() else 0.0
-	if magic_id == null:
-		frame.texture = _load_texture("res://assets/art/ui/combat_magic_slot_disabled.png")
-		icon.texture = null
-		mask.visible = true
-		mask.position = Vector2(8, 14)
-		mask.size = Vector2(48, 48)
-		mask.color = Color(0, 0, 0, 0.42)
-		cooldown_label.text = "-"
-		return
-
-	var magic_entry = registry.get_entry("magic", String(magic_id))
-	frame.texture = _load_texture("res://assets/art/ui/combat_magic_slot_disabled.png")
-	icon.texture = _load_texture(_content_icon_path(magic_entry))
-	if cd > 0.0:
-		var total = max(0.1, magic_total_cooldowns[slot_index] if slot_index < magic_total_cooldowns.size() else cd)
-		var remaining_ratio = clamp(cd / total, 0.0, 1.0)
-		mask.visible = true
-		mask.color = Color(0, 0, 0, 0.62)
-		mask.position = Vector2(8, 14 + 48.0 * (1.0 - remaining_ratio))
-		mask.size = Vector2(48, 48.0 * remaining_ratio)
-		cooldown_label.text = "%.1f" % cd if cd < 10.0 else "%.0f" % cd
-		return
-	var mana_cost = float(magic_entry.get("mana_cost", _float_from(_section("magic"), "default_mana_cost", 28.0)))
-	if player_mana < mana_cost:
-		mask.visible = true
-		mask.position = Vector2(8, 14)
-		mask.size = Vector2(48, 48)
-		mask.color = Color(0.1, 0.42, 1.0, 0.46)
-		cooldown_label.text = ""
-	else:
-		mask.visible = false
-		cooldown_label.text = ""
+	combat_hud_layer.update_state(delta, {
+		"player_hp": player_hp,
+		"player_max_hp": player_max_hp,
+		"player_mana": player_mana,
+		"player_max_mana": player_max_mana,
+		"boss_spawned": boss_spawned and not boss_enemy.is_empty(),
+		"boss_hp": float(boss_enemy.get("hp", 0.0)),
+		"boss_max_hp": float(boss_enemy.get("max_hp", 1.0)),
+		"phase": "Boss" if boss_spawned else "Mobs",
+		"floor": run_context.floor,
+		"weapon_count": _equipped_weapon_count(),
+		"equipped_magics": run_context.equipped_magics,
+		"cooldowns": magic_cooldowns,
+		"total_cooldowns": magic_total_cooldowns,
+	})
 
 
 func _equipped_weapon_count() -> int:
@@ -1096,69 +730,14 @@ func _add_overlay(color: Color) -> void:
 	add_child(overlay)
 
 
-func _add_toast_anchor() -> void:
-	toast_label = _make_label("", 20, Color(1.0, 0.92, 0.62), HORIZONTAL_ALIGNMENT_CENTER)
-	toast_label.position = Vector2(220, 120)
-	toast_label.size = Vector2(840, 34)
-	_add_hud_child(toast_label)
-
-
 func _show_toast(text: String) -> void:
-	if toast_label == null or not is_instance_valid(toast_label):
+	if combat_hud_layer == null or not is_instance_valid(combat_hud_layer) or not combat_hud_layer.has_method("show_toast"):
 		return
-	toast_label.text = text
-	var tween = create_tween()
-	tween.bind_node(toast_label)
-	toast_label.modulate = Color(1, 1, 1, 1)
-	tween.tween_interval(1.2)
-	tween.tween_property(toast_label, "modulate:a", 0.0, 0.35)
+	combat_hud_layer.show_toast(text)
 
 
 func _make_label(text: String, font_size: int, color: Color, alignment: HorizontalAlignment) -> Label:
 	return PlayableUiFactory.make_label(text, font_size, color, alignment)
-
-
-func _add_hud_child(node: Control) -> void:
-	if node == null:
-		return
-	node.z_index = 0
-	if combat_hud_layer != null and is_instance_valid(combat_hud_layer):
-		combat_hud_layer.add_child(node)
-	else:
-		add_child(node)
-
-
-func _add_hud_panel(position: Vector2, size: Vector2, color: Color) -> Control:
-	var panel = Control.new()
-	panel.position = position
-	panel.size = size
-	_add_hud_child(panel)
-
-	var shadow = ColorRect.new()
-	shadow.position = Vector2(5, 6)
-	shadow.size = size
-	shadow.color = Color(0, 0, 0, 0.26)
-	panel.add_child(shadow)
-
-	var bg = ColorRect.new()
-	bg.position = Vector2.ZERO
-	bg.size = size
-	bg.color = color
-	panel.add_child(bg)
-
-	var texture = TextureRect.new()
-	texture.position = Vector2.ZERO
-	texture.size = size
-	texture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	texture.stretch_mode = TextureRect.STRETCH_TILE
-	texture.texture = _load_texture("res://assets/art/ui/panel_wood_wide.png")
-	texture.modulate = Color(1, 1, 1, 0.52)
-	panel.add_child(texture)
-	return panel
-
-
-func _make_bar(position: Vector2, size: Vector2, fill_color: Color) -> ProgressBar:
-	return PlayableUiFactory.make_bar(position, size, fill_color)
 
 
 func _make_sprite(texture_path: String, sprite_size: Vector2) -> TextureRect:
