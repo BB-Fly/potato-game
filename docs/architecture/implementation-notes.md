@@ -2,6 +2,8 @@
 
 本文档描述的是当前可运行的 Godot 原型，而不是长期目标架构。新窗口或后续 Agent 接手时，可以先读这份文档，再决定是否下钻到代码。
 
+更新说明：更细的模块化开发文档已经拆到 `docs/development/`。后续实现细节优先维护 `docs/development/`，本文保留为当前可运行切片的历史交接摘要。
+
 ## 快照
 
 - 当前稳定恢复点：`d6ea0ca Restore playable Godot prototype`。

@@ -39,9 +39,11 @@ Start-Process -FilePath 'C:\Program Files\Godot\Godot_v4.6.2-stable_mono_win64.e
 
 ## 文档导航
 
+- `docs/README.md`：完整文档入口，按玩法、架构、开发实现、美术资源分层导航。
 - `docs/gameplay-design/`：玩法规则和目标系统设计。
 - `docs/architecture/game-architecture.md`：长期目标架构文档。
-- `docs/architecture/implementation-notes.md`：当前可运行原型的技术实现和交接说明。
+- `docs/development/`：当前项目的分模块开发说明，后续新窗口优先阅读。
+- `docs/architecture/implementation-notes.md`：当前可运行原型的技术实现和交接说明，已被 `docs/development/` 拆分扩展。
 - `docs/art/asset-list.md`：美术资源清单、生成资源记录和运行时资源约定。
 
 ## 修改运行时代码前
