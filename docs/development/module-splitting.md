@@ -22,6 +22,8 @@ src/app/playable/
   playable_ui_factory.gd
   playable_input_actions.gd
   playable_content_presenter.gd
+  playable_map_controller.gd
+  playable_reward_controller.gd
 ```
 
 ### `playable_ui_factory.gd`
@@ -94,40 +96,51 @@ src/app/playable/
 - `ui_root` 缩放。
 - 界面状态切换。
 - starter/map/reward/shop/combat screen 构建。
-- 路线选择状态。
+- 地图、奖励、商店 UI 的具体创建。
 - 战斗实体数组和更新循环。
 - Boss 技能逻辑。
 - HUD 更新。
 
 这些逻辑互相引用较多，直接搬走风险较高，需要按功能边界逐步拆。
 
-## 第二阶段建议：拆地图和奖励
+## 第二阶段：已完成的地图和奖励基础拆分
 
-建议新增：
+当前新增：
 
 ```text
 src/app/playable/playable_map_controller.gd
 src/app/playable/playable_reward_controller.gd
 ```
 
-### `PlayableMapController` 候选职责
+### `playable_map_controller.gd`
+
+职责：
 
 - 持有 `selected_route_id`。
 - 持有 `active_route`。
 - 持有 `claimed_route_nodes`。
-- 根据 `MapFlow` 返回当前可点击节点状态。
-- 判断 `_route_rewards_complete()`。
+- 调用 `MapFlow.choose_route()`。
+- 判断路线是否选中、锁定、预览。
+- 判断奖励节点是否可点击。
+- 读取当前路线节点数据。
+- 判断路线奖励是否全部领取。
+- 判断战斗入口是否锁定。
 
-它不一定直接创建 UI。第一步可以只迁移地图状态和规则，让 `main.gd` 继续负责表现。
+`main.gd` 仍负责地图画面创建，但路线状态和点击规则已经委托给 `PlayableMapController`。
 
-### `PlayableRewardController` 候选职责
+### `playable_reward_controller.gd`
+
+职责：
 
 - 根据 `reward_id` 判断 `content_type`。
+- 根据商店节点类型判断 `content_type`。
 - 调用 `ItemPoolService.roll_offer()`。
 - 使用填充策略保证三选一数量。
-- 处理 `_grant_content()`。
+- 生成开局奖励、路线奖励、商店候选。
+- 处理内容发放。
+- 处理当前简化商店购买逻辑。
 
-这样 reward/shop 都能共用候选生成逻辑。
+`main.gd` 暂时保留 `_grant_content()`、`_fill_offer_choices()` 等 wrapper，内部委托给 `PlayableRewardController`。这样 reward/shop/starter 共用同一套候选生成和发放逻辑。
 
 ## 第三阶段建议：拆战斗状态和系统
 
@@ -178,7 +191,7 @@ Puritato playable slice ready.
 
 ## 本轮验证
 
-第一阶段拆分后已运行：
+第一阶段和第二阶段拆分后已运行：
 
 ```powershell
 git -c safe.directory=C:/Users/LYZ/Desktop/work/potato-game diff --check -- src/app/main.gd src/app/playable

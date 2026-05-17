@@ -30,7 +30,12 @@ content/base/shops/default_shops.json
 src/domain/economy/economy_service.gd
 ```
 
-当前地图 UI 和交互主要在 `src/app/main.gd` 中实现。
+当前地图 UI 主要在 `src/app/main.gd` 中实现；路线状态、奖励候选和购买发放逻辑已经拆到：
+
+```text
+src/app/playable/playable_map_controller.gd
+src/app/playable/playable_reward_controller.gd
+```
 
 ## 地图结构
 
@@ -59,9 +64,7 @@ _show_map_screen()
 
 点击路线
   -> _choose_route(route_id)
-  -> map_flow.choose_route(route_id)
-  -> active_route = route
-  -> selected_route_id = route_id
+  -> route_controller.choose_route(map_flow, route_id)
   -> _show_map_screen()
 ```
 
@@ -92,7 +95,7 @@ _show_map_screen()
 领取奖励后：
 
 ```text
-claimed_route_nodes[node_index] = true
+route_controller.claim_node(node_index)
 ```
 
 然后回到地图。
@@ -107,9 +110,9 @@ _show_reward_choices(reward_id, on_done)
 
 当前实现：
 
-- 根据 `reward_id` 粗略判断 `content_type`。
-- 使用 `ItemPoolService.roll_offer()` 抽取 3 个候选。
-- 如果候选不足，`_fill_offer_choices()` 会重复已有候选填满。
+- `PlayableRewardController` 根据 `reward_id` 粗略判断 `content_type`。
+- `PlayableRewardController` 使用 `ItemPoolService.roll_offer()` 抽取 3 个候选。
+- 如果候选不足，会重复已有候选填满。
 - 玩家点击卡片或图标后调用 `_grant_content_and_continue()`。
 
 注意：当前没有单独的“选择”按钮，卡片整体可点击。
@@ -127,7 +130,7 @@ _show_shop_screen(node_data, on_done)
 - 根据节点类型判断 `content_type`。
 - 展示 3 个候选。
 - 点击卡片直接购买。
-- 当前价格逻辑在 `main.gd::_buy_content()` 中简化为 `120 + floor * 35`。
+- 当前价格逻辑在 `PlayableRewardController.shop_price()` 中简化为 `120 + floor * 35`。
 
 长期应改回读取 `EconomyService` 和 `content/base/shops/default_shops.json` 的正式价格表。
 
@@ -138,8 +141,7 @@ _show_shop_screen(node_data, on_done)
 解锁条件：
 
 ```text
-selected_route_id 不为空
-并且 _route_rewards_complete() 为 true
+route_controller.combat_locked() 为 false
 ```
 
 点击后进入：

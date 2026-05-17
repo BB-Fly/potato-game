@@ -17,6 +17,8 @@ const AssetCatalog = preload("res://src/config/asset_catalog.gd")
 const PlayableUiFactory = preload("res://src/app/playable/playable_ui_factory.gd")
 const PlayableInputActions = preload("res://src/app/playable/playable_input_actions.gd")
 const PlayableContentPresenter = preload("res://src/app/playable/playable_content_presenter.gd")
+const PlayableMapController = preload("res://src/app/playable/playable_map_controller.gd")
+const PlayableRewardController = preload("res://src/app/playable/playable_reward_controller.gd")
 
 const LOGICAL_VIEWPORT_SIZE = Vector2(1280, 720)
 const COMBAT_ARENA_RECT = Rect2(Vector2(48, 118), Vector2(1184, 560))
@@ -43,9 +45,8 @@ var asset_catalog
 
 var ui_root: Control
 var screen = "boot"
-var active_route: Dictionary = {}
-var selected_route_id = ""
-var claimed_route_nodes: Dictionary = {}
+var route_controller: PlayableMapController
+var reward_controller: PlayableRewardController
 var pending_continue: Callable = Callable()
 
 var toast_label: Label
@@ -128,6 +129,8 @@ func _bootstrap_architecture() -> void:
 	audio_director = AudioDirector.new(registry, event_bus)
 	effect_runner = EffectRunner.new(registry, event_bus)
 	asset_catalog = AssetCatalog.new(registry)
+	route_controller = PlayableMapController.new()
+	reward_controller = PlayableRewardController.new()
 	tick_loop = FixedTickLoop.new(event_bus)
 	tick_loop.add_system(combat_runtime)
 
@@ -188,18 +191,12 @@ func _show_starter_screen() -> void:
 	title.size = Vector2(1280, 60)
 	ui_root.add_child(title)
 
-	var offer = _fill_offer_choices(item_pool.roll_offer(run_context, "weapon", {
-		"count": 3,
-		"duplicate_policy": "avoid_same_offer",
-		"guarantees": [{"slot": 0, "school": "character_primary"}],
-	}), 3, "weapon")
+	var offer = reward_controller.build_starter_offer(item_pool, run_context)
 	_add_choice_grid(offer, Vector2(270, 230), func(content_id): _grant_content_and_continue(content_id, _complete_starter_reward))
 
 
 func _complete_starter_reward() -> void:
-	selected_route_id = ""
-	active_route = {}
-	claimed_route_nodes.clear()
+	route_controller.reset_route()
 	_show_map_screen()
 
 
@@ -221,7 +218,7 @@ func _show_map_screen() -> void:
 	for i in range(routes.size()):
 		_add_route_hotspot(routes[i], i)
 	for route in routes:
-		_add_route_reward_nodes(route, String(route.get("id", "")) != selected_route_id)
+		_add_route_reward_nodes(route, route_controller.is_route_preview(route))
 	_add_combat_node()
 	_add_inventory_panel()
 	_add_toast_anchor()
@@ -229,8 +226,8 @@ func _show_map_screen() -> void:
 
 func _add_route_hotspot(route: Dictionary, index: int) -> void:
 	var route_id = String(route.get("id", ""))
-	var is_selected = route_id == selected_route_id
-	var locked = not selected_route_id.is_empty() and not is_selected
+	var is_selected = route_controller.is_route_selected(route_id)
+	var locked = route_controller.is_route_locked(route_id)
 	var rect = Rect2(Vector2(96, 154), Vector2(500, 414))
 	if index == 1:
 		rect.position.x = 684
@@ -251,7 +248,7 @@ func _add_route_hotspot(route: Dictionary, index: int) -> void:
 	button.size = rect.size
 	button.text = ""
 	button.flat = true
-	button.disabled = locked or not claimed_route_nodes.is_empty()
+	button.disabled = locked or route_controller.has_claimed_nodes()
 	button.pressed.connect(_choose_route.bind(route_id))
 	ui_root.add_child(button)
 
@@ -270,7 +267,7 @@ func _add_route_reward_nodes(route: Dictionary, preview_only: bool) -> void:
 		var node_data: Dictionary = nodes[i]
 		var hint: Dictionary = node_data.get("position_hint", {})
 		var pos = Vector2(float(hint.get("x", 0.5)) * 1280.0, float(hint.get("y", 0.5)) * 720.0)
-		var claimed = bool(claimed_route_nodes.get(i, false))
+		var claimed = route_controller.is_node_claimed(i)
 		var button = _make_map_node_button(String(node_data.get("type", "")), pos, preview_only or claimed, Callable(self, "_click_route_reward_node").bind(i))
 		if preview_only:
 			button.modulate = Color(0.86, 0.86, 0.86, 0.74)
@@ -288,7 +285,7 @@ func _add_combat_node() -> void:
 		return
 	var hint: Dictionary = exits[0].get("position_hint", {})
 	var pos = Vector2(float(hint.get("x", 0.5)) * 1280.0, float(hint.get("y", 0.12)) * 720.0)
-	var locked = selected_route_id.is_empty() or not _route_rewards_complete()
+	var locked = route_controller.combat_locked()
 	var button = _make_map_node_button("combat", pos, locked, Callable(self, "_start_combat"))
 	ui_root.add_child(button)
 	var label = _make_label("Combat" if not locked else "Claim route rewards first", 17, Color(1.0, 0.86, 0.54), HORIZONTAL_ALIGNMENT_CENTER)
@@ -312,24 +309,18 @@ func _make_map_node_button(node_type: String, pos: Vector2, disabled: bool, on_p
 
 
 func _choose_route(route_id: String) -> void:
-	if not selected_route_id.is_empty() and not claimed_route_nodes.is_empty():
-		return
-	active_route = map_flow.choose_route(route_id)
-	if active_route.is_empty():
+	if not route_controller.choose_route(map_flow, route_id):
 		_show_toast("Route unavailable")
 		return
-	selected_route_id = route_id
-	claimed_route_nodes.clear()
 	_show_map_screen()
 
 
 func _click_route_reward_node(node_index: int) -> void:
-	if selected_route_id.is_empty() or claimed_route_nodes.has(node_index):
+	if not route_controller.can_click_reward_node(node_index):
 		return
-	var nodes: Array = active_route.get("nodes", [])
-	if node_index < 0 or node_index >= nodes.size():
+	var node_data = route_controller.get_active_node(node_index)
+	if node_data.is_empty():
 		return
-	var node_data: Dictionary = nodes[node_index]
 	match String(node_data.get("type", "")):
 		"coin":
 			run_context.grant_gold(int(node_data.get("gold", 0)))
@@ -348,14 +339,12 @@ func _click_route_reward_node(node_index: int) -> void:
 
 
 func _complete_route_reward_node(node_index: int) -> void:
-	claimed_route_nodes[node_index] = true
+	route_controller.claim_node(node_index)
 	_show_map_screen()
 
 
 func _route_rewards_complete() -> bool:
-	if active_route.is_empty():
-		return false
-	return claimed_route_nodes.size() >= active_route.get("nodes", []).size()
+	return route_controller.rewards_complete()
 
 
 func _show_reward_choices(reward_id: String, on_done: Callable) -> void:
@@ -364,14 +353,7 @@ func _show_reward_choices(reward_id: String, on_done: Callable) -> void:
 	_add_background_for_area(map_flow.get_current_area())
 	_add_overlay(Color(0.03, 0.025, 0.02, 0.68))
 	_add_top_bar("Choose Reward", "Click an icon to pick")
-	var content_type = "item"
-	if reward_id.contains("weapon"):
-		content_type = "weapon"
-	var offer = _fill_offer_choices(item_pool.roll_offer(run_context, content_type, {
-		"count": 3,
-		"duplicate_policy": "avoid_same_offer",
-		"guarantees": [{"slot": 0, "school": "character_primary"}],
-	}), 3, content_type)
+	var offer = reward_controller.build_reward_offer(item_pool, run_context, reward_id)
 	_add_choice_grid(offer, Vector2(270, 220), func(content_id): _grant_content_and_continue(content_id, on_done))
 
 
@@ -383,16 +365,7 @@ func _show_shop_screen(node_data: Dictionary, on_done: Callable) -> void:
 	_add_top_bar(_node_type_name(String(node_data.get("type", ""))), "Gold %d - click icon to buy" % run_context.gold)
 
 	var node_type = String(node_data.get("type", ""))
-	var content_type = "item"
-	if node_type.contains("weapon"):
-		content_type = "weapon"
-	elif node_type.contains("magic"):
-		content_type = "magic"
-	var offer = _fill_offer_choices(item_pool.roll_offer(run_context, content_type, {
-		"count": 3,
-		"duplicate_policy": "avoid_same_offer",
-		"guarantees": [{"slot": 0, "school": "character_primary"}],
-	}), 3, content_type)
+	var offer = reward_controller.build_shop_offer(item_pool, run_context, node_type)
 	_add_choice_grid(offer, Vector2(270, 190), func(content_id): _buy_content(content_id))
 
 	var leave = _make_pixel_button("Leave Shop", Vector2(520, 590), Vector2(240, 56))
@@ -401,12 +374,8 @@ func _show_shop_screen(node_data: Dictionary, on_done: Callable) -> void:
 
 
 func _buy_content(content_id: String) -> void:
-	var price = 120 + run_context.floor * 35
-	if not run_context.spend_gold(price):
-		_show_toast("Not enough gold")
-		return
-	_grant_content(content_id)
-	_show_toast("Purchased")
+	var result = reward_controller.buy_content(run_context, content_id)
+	_show_toast(String(result.get("message", "")))
 
 
 func _add_choice_grid(entries: Array, pos: Vector2, on_pick: Callable) -> void:
@@ -456,12 +425,7 @@ func _grant_content_and_continue(content_id: String, on_done: Callable) -> void:
 
 
 func _grant_content(content_id: String) -> void:
-	if content_id.begins_with("weapon."):
-		run_context.add_weapon(content_id)
-	elif content_id.begins_with("magic."):
-		run_context.add_magic(content_id)
-	elif content_id.begins_with("item."):
-		run_context.add_item(content_id)
+	reward_controller.grant_content(run_context, content_id)
 
 
 func _start_combat() -> void:
@@ -856,9 +820,7 @@ func _kill_enemy(enemy: Dictionary) -> void:
 
 func _finish_combat() -> void:
 	if map_flow.advance_area():
-		selected_route_id = ""
-		active_route = {}
-		claimed_route_nodes.clear()
+		route_controller.reset_route()
 		_show_map_screen()
 	else:
 		_show_victory_screen()
@@ -898,6 +860,8 @@ func _restart_run() -> void:
 	run_context.school_state.initialize(character.get("primary_school_id", "school.metamorph"))
 	map_flow = MapFlow.new(registry, run_context)
 	map_flow.start_map("map.demo")
+	route_controller = PlayableMapController.new()
+	reward_controller = PlayableRewardController.new()
 	combat_runtime = CombatRuntime.new(registry, event_bus, run_context)
 	tick_loop = FixedTickLoop.new(event_bus)
 	tick_loop.add_system(combat_runtime)
@@ -1113,16 +1077,7 @@ func _update_floating_texts(delta: float) -> void:
 
 
 func _fill_offer_choices(entries: Array, count: int, content_type: String) -> Array:
-	var result = entries.duplicate()
-	if result.is_empty():
-		result = item_pool.build_candidates(run_context, content_type, {})
-	if result.is_empty():
-		return []
-	var i = 0
-	while result.size() < count:
-		result.append(result[i % result.size()])
-		i += 1
-	return result.slice(0, count)
+	return reward_controller.fill_offer_choices(item_pool, run_context, entries, count, content_type)
 
 
 func _content_name(content_id: String) -> String:
