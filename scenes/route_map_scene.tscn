@@ -1,0 +1,611 @@
+[gd_scene load_steps=7 format=3 uid="uid://b4b6drj2m2ddq"]
+
+[ext_resource type="Script" path="res://src/app/playable/route_map_scene.gd" id="1_route_map"]
+[ext_resource type="Texture2D" path="res://assets/art/map/backgrounds/chapter_1_route_background.png" id="2_bg"]
+[ext_resource type="Script" path="res://src/app/playable/route_map_area.gd" id="2_area"]
+[ext_resource type="Script" path="res://src/app/playable/route_map_route.gd" id="3_route"]
+[ext_resource type="Script" path="res://src/app/playable/route_map_reward_node.gd" id="4_reward"]
+[ext_resource type="Script" path="res://src/app/playable/route_map_combat_node.gd" id="5_combat"]
+
+[node name="RouteMapScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_route_map")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Overlay" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.018, 0.014, 0.18)
+
+[node name="AreaDefinitions" type="Node2D" parent="."]
+
+[node name="Chapter1Area1" type="Node2D" parent="AreaDefinitions"]
+script = ExtResource("2_area")
+area_id = "chapter_1_area_1"
+chapter_id = "chapter_1"
+floor = 1
+background_path = "res://assets/art/map/backgrounds/chapter_1_route_background.png"
+
+[node name="Routes" type="Node" parent="AreaDefinitions/Chapter1Area1"]
+
+[node name="LeftRoute" type="Control" parent="AreaDefinitions/Chapter1Area1/Routes"]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+script = ExtResource("3_route")
+route_id = "left"
+display_lane = "left"
+
+[node name="Hotspot" type="Control" parent="AreaDefinitions/Chapter1Area1/Routes/LeftRoute"]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 154.0
+offset_right = 596.0
+offset_bottom = 568.0
+mouse_filter = 2
+
+[node name="RewardNodes" type="Node2D" parent="AreaDefinitions/Chapter1Area1/Routes/LeftRoute"]
+
+[node name="FreeWeapon" type="Marker2D" parent="AreaDefinitions/Chapter1Area1/Routes/LeftRoute/RewardNodes"]
+position = Vector2(230, 461)
+script = ExtResource("4_reward")
+node_type = "free_weapon"
+reward_table_id = "reward.free_weapon.start"
+side = "outer"
+
+[node name="Coin" type="Marker2D" parent="AreaDefinitions/Chapter1Area1/Routes/LeftRoute/RewardNodes"]
+position = Vector2(538, 317)
+script = ExtResource("4_reward")
+node_type = "coin"
+gold = 150
+side = "inner"
+
+[node name="RightRoute" type="Control" parent="AreaDefinitions/Chapter1Area1/Routes"]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+script = ExtResource("3_route")
+route_id = "right"
+display_lane = "right"
+
+[node name="Hotspot" type="Control" parent="AreaDefinitions/Chapter1Area1/Routes/RightRoute"]
+layout_mode = 0
+offset_left = 684.0
+offset_top = 154.0
+offset_right = 1184.0
+offset_bottom = 568.0
+mouse_filter = 2
+
+[node name="RewardNodes" type="Node2D" parent="AreaDefinitions/Chapter1Area1/Routes/RightRoute"]
+
+[node name="FreeWeapon" type="Marker2D" parent="AreaDefinitions/Chapter1Area1/Routes/RightRoute/RewardNodes"]
+position = Vector2(742, 461)
+script = ExtResource("4_reward")
+node_type = "free_weapon"
+reward_table_id = "reward.free_weapon.start"
+side = "inner"
+
+[node name="RandomItem" type="Marker2D" parent="AreaDefinitions/Chapter1Area1/Routes/RightRoute/RewardNodes"]
+position = Vector2(1050, 317)
+script = ExtResource("4_reward")
+node_type = "random_item"
+reward_table_id = "reward.random_item.chapter_1"
+side = "outer"
+
+[node name="CombatNodes" type="Node2D" parent="AreaDefinitions/Chapter1Area1"]
+
+[node name="Combat" type="Marker2D" parent="AreaDefinitions/Chapter1Area1/CombatNodes"]
+position = Vector2(640, 122)
+script = ExtResource("5_combat")
+node_id = "combat.floor_1"
+
+[node name="Chapter1Area2" type="Node2D" parent="AreaDefinitions"]
+script = ExtResource("2_area")
+area_id = "chapter_1_area_2"
+chapter_id = "chapter_1"
+floor = 2
+background_path = "res://assets/art/map/backgrounds/chapter_1_route_background.png"
+
+[node name="Routes" type="Node" parent="AreaDefinitions/Chapter1Area2"]
+
+[node name="LeftRoute" type="Control" parent="AreaDefinitions/Chapter1Area2/Routes"]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+script = ExtResource("3_route")
+route_id = "left"
+display_lane = "left"
+
+[node name="Hotspot" type="Control" parent="AreaDefinitions/Chapter1Area2/Routes/LeftRoute"]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 154.0
+offset_right = 596.0
+offset_bottom = 568.0
+mouse_filter = 2
+
+[node name="RewardNodes" type="Node2D" parent="AreaDefinitions/Chapter1Area2/Routes/LeftRoute"]
+
+[node name="WeaponShop" type="Marker2D" parent="AreaDefinitions/Chapter1Area2/Routes/LeftRoute/RewardNodes"]
+position = Vector2(230, 490)
+script = ExtResource("4_reward")
+node_type = "weapon_shop"
+shop_id = "shop.weapon.default"
+side = "outer"
+
+[node name="ItemShop" type="Marker2D" parent="AreaDefinitions/Chapter1Area2/Routes/LeftRoute/RewardNodes"]
+position = Vector2(538, 346)
+script = ExtResource("4_reward")
+node_type = "item_shop"
+shop_id = "shop.item.default"
+side = "inner"
+
+[node name="Coin" type="Marker2D" parent="AreaDefinitions/Chapter1Area2/Routes/LeftRoute/RewardNodes"]
+position = Vector2(282, 216)
+script = ExtResource("4_reward")
+node_type = "coin"
+gold = 225
+side = "outer"
+
+[node name="RightRoute" type="Control" parent="AreaDefinitions/Chapter1Area2/Routes"]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+script = ExtResource("3_route")
+route_id = "right"
+display_lane = "right"
+
+[node name="Hotspot" type="Control" parent="AreaDefinitions/Chapter1Area2/Routes/RightRoute"]
+layout_mode = 0
+offset_left = 684.0
+offset_top = 154.0
+offset_right = 1184.0
+offset_bottom = 568.0
+mouse_filter = 2
+
+[node name="RewardNodes" type="Node2D" parent="AreaDefinitions/Chapter1Area2/Routes/RightRoute"]
+
+[node name="WeaponShop" type="Marker2D" parent="AreaDefinitions/Chapter1Area2/Routes/RightRoute/RewardNodes"]
+position = Vector2(742, 490)
+script = ExtResource("4_reward")
+node_type = "weapon_shop"
+shop_id = "shop.weapon.default"
+side = "inner"
+
+[node name="MagicShop" type="Marker2D" parent="AreaDefinitions/Chapter1Area2/Routes/RightRoute/RewardNodes"]
+position = Vector2(1050, 346)
+script = ExtResource("4_reward")
+node_type = "magic_shop"
+shop_id = "shop.magic.default"
+side = "outer"
+
+[node name="Coin" type="Marker2D" parent="AreaDefinitions/Chapter1Area2/Routes/RightRoute/RewardNodes"]
+position = Vector2(794, 216)
+script = ExtResource("4_reward")
+node_type = "coin"
+gold = 225
+side = "inner"
+
+[node name="CombatNodes" type="Node2D" parent="AreaDefinitions/Chapter1Area2"]
+
+[node name="Combat" type="Marker2D" parent="AreaDefinitions/Chapter1Area2/CombatNodes"]
+position = Vector2(640, 122)
+script = ExtResource("5_combat")
+node_id = "combat.floor_2"
+
+[node name="Chapter1Area3" type="Node2D" parent="AreaDefinitions"]
+script = ExtResource("2_area")
+area_id = "chapter_1_area_3"
+chapter_id = "chapter_1"
+floor = 3
+background_path = "res://assets/art/map/backgrounds/chapter_1_route_background.png"
+
+[node name="Routes" type="Node" parent="AreaDefinitions/Chapter1Area3"]
+
+[node name="LeftRoute" type="Control" parent="AreaDefinitions/Chapter1Area3/Routes"]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+script = ExtResource("3_route")
+route_id = "left"
+display_lane = "left"
+
+[node name="Hotspot" type="Control" parent="AreaDefinitions/Chapter1Area3/Routes/LeftRoute"]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 154.0
+offset_right = 596.0
+offset_bottom = 568.0
+mouse_filter = 2
+
+[node name="RewardNodes" type="Node2D" parent="AreaDefinitions/Chapter1Area3/Routes/LeftRoute"]
+
+[node name="WeaponShop" type="Marker2D" parent="AreaDefinitions/Chapter1Area3/Routes/LeftRoute/RewardNodes"]
+position = Vector2(230, 490)
+script = ExtResource("4_reward")
+node_type = "weapon_shop"
+shop_id = "shop.weapon.default"
+side = "outer"
+
+[node name="ItemShop" type="Marker2D" parent="AreaDefinitions/Chapter1Area3/Routes/LeftRoute/RewardNodes"]
+position = Vector2(538, 346)
+script = ExtResource("4_reward")
+node_type = "item_shop"
+shop_id = "shop.item.default"
+side = "inner"
+
+[node name="RandomItem" type="Marker2D" parent="AreaDefinitions/Chapter1Area3/Routes/LeftRoute/RewardNodes"]
+position = Vector2(282, 216)
+script = ExtResource("4_reward")
+node_type = "random_item"
+reward_table_id = "reward.random_item.chapter_1"
+side = "outer"
+
+[node name="RightRoute" type="Control" parent="AreaDefinitions/Chapter1Area3/Routes"]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+script = ExtResource("3_route")
+route_id = "right"
+display_lane = "right"
+
+[node name="Hotspot" type="Control" parent="AreaDefinitions/Chapter1Area3/Routes/RightRoute"]
+layout_mode = 0
+offset_left = 684.0
+offset_top = 154.0
+offset_right = 1184.0
+offset_bottom = 568.0
+mouse_filter = 2
+
+[node name="RewardNodes" type="Node2D" parent="AreaDefinitions/Chapter1Area3/Routes/RightRoute"]
+
+[node name="MagicShop" type="Marker2D" parent="AreaDefinitions/Chapter1Area3/Routes/RightRoute/RewardNodes"]
+position = Vector2(742, 490)
+script = ExtResource("4_reward")
+node_type = "magic_shop"
+shop_id = "shop.magic.default"
+side = "inner"
+
+[node name="ItemShop" type="Marker2D" parent="AreaDefinitions/Chapter1Area3/Routes/RightRoute/RewardNodes"]
+position = Vector2(1050, 346)
+script = ExtResource("4_reward")
+node_type = "item_shop"
+shop_id = "shop.item.default"
+side = "outer"
+
+[node name="Encounter" type="Marker2D" parent="AreaDefinitions/Chapter1Area3/Routes/RightRoute/RewardNodes"]
+position = Vector2(794, 216)
+script = ExtResource("4_reward")
+node_type = "encounter"
+encounter_pool_id = "encounter_pool.default"
+side = "inner"
+
+[node name="CombatNodes" type="Node2D" parent="AreaDefinitions/Chapter1Area3"]
+
+[node name="Combat" type="Marker2D" parent="AreaDefinitions/Chapter1Area3/CombatNodes"]
+position = Vector2(640, 122)
+script = ExtResource("5_combat")
+node_id = "combat.floor_3"
+
+[node name="Chapter2Area1" type="Node2D" parent="AreaDefinitions"]
+script = ExtResource("2_area")
+area_id = "chapter_2_area_1"
+chapter_id = "chapter_2"
+floor = 4
+background_path = "res://assets/art/map/backgrounds/chapter_2_route_background.png"
+
+[node name="Routes" type="Node" parent="AreaDefinitions/Chapter2Area1"]
+
+[node name="LeftRoute" type="Control" parent="AreaDefinitions/Chapter2Area1/Routes"]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+script = ExtResource("3_route")
+route_id = "left"
+display_lane = "left"
+
+[node name="Hotspot" type="Control" parent="AreaDefinitions/Chapter2Area1/Routes/LeftRoute"]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 154.0
+offset_right = 596.0
+offset_bottom = 568.0
+mouse_filter = 2
+
+[node name="RewardNodes" type="Node2D" parent="AreaDefinitions/Chapter2Area1/Routes/LeftRoute"]
+
+[node name="Coin" type="Marker2D" parent="AreaDefinitions/Chapter2Area1/Routes/LeftRoute/RewardNodes"]
+position = Vector2(230, 490)
+script = ExtResource("4_reward")
+node_type = "coin"
+gold = 375
+side = "outer"
+
+[node name="Encounter" type="Marker2D" parent="AreaDefinitions/Chapter2Area1/Routes/LeftRoute/RewardNodes"]
+position = Vector2(538, 346)
+script = ExtResource("4_reward")
+node_type = "encounter"
+encounter_pool_id = "encounter_pool.default"
+side = "inner"
+
+[node name="WeaponShop" type="Marker2D" parent="AreaDefinitions/Chapter2Area1/Routes/LeftRoute/RewardNodes"]
+position = Vector2(282, 216)
+script = ExtResource("4_reward")
+node_type = "weapon_shop"
+shop_id = "shop.weapon.default"
+side = "outer"
+
+[node name="RightRoute" type="Control" parent="AreaDefinitions/Chapter2Area1/Routes"]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+script = ExtResource("3_route")
+route_id = "right"
+display_lane = "right"
+
+[node name="Hotspot" type="Control" parent="AreaDefinitions/Chapter2Area1/Routes/RightRoute"]
+layout_mode = 0
+offset_left = 684.0
+offset_top = 154.0
+offset_right = 1184.0
+offset_bottom = 568.0
+mouse_filter = 2
+
+[node name="RewardNodes" type="Node2D" parent="AreaDefinitions/Chapter2Area1/Routes/RightRoute"]
+
+[node name="Encounter" type="Marker2D" parent="AreaDefinitions/Chapter2Area1/Routes/RightRoute/RewardNodes"]
+position = Vector2(742, 490)
+script = ExtResource("4_reward")
+node_type = "encounter"
+encounter_pool_id = "encounter_pool.default"
+side = "inner"
+
+[node name="RandomItem" type="Marker2D" parent="AreaDefinitions/Chapter2Area1/Routes/RightRoute/RewardNodes"]
+position = Vector2(1050, 346)
+script = ExtResource("4_reward")
+node_type = "random_item"
+reward_table_id = "reward.random_item.chapter_2"
+side = "outer"
+
+[node name="MagicShop" type="Marker2D" parent="AreaDefinitions/Chapter2Area1/Routes/RightRoute/RewardNodes"]
+position = Vector2(794, 216)
+script = ExtResource("4_reward")
+node_type = "magic_shop"
+shop_id = "shop.magic.default"
+side = "inner"
+
+[node name="CombatNodes" type="Node2D" parent="AreaDefinitions/Chapter2Area1"]
+
+[node name="Combat" type="Marker2D" parent="AreaDefinitions/Chapter2Area1/CombatNodes"]
+position = Vector2(640, 122)
+script = ExtResource("5_combat")
+node_id = "combat.floor_4"
+
+[node name="Chapter2Area2" type="Node2D" parent="AreaDefinitions"]
+script = ExtResource("2_area")
+area_id = "chapter_2_area_2"
+chapter_id = "chapter_2"
+floor = 5
+background_path = "res://assets/art/map/backgrounds/chapter_2_route_background.png"
+
+[node name="Routes" type="Node" parent="AreaDefinitions/Chapter2Area2"]
+
+[node name="LeftRoute" type="Control" parent="AreaDefinitions/Chapter2Area2/Routes"]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+script = ExtResource("3_route")
+route_id = "left"
+display_lane = "left"
+
+[node name="Hotspot" type="Control" parent="AreaDefinitions/Chapter2Area2/Routes/LeftRoute"]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 154.0
+offset_right = 596.0
+offset_bottom = 568.0
+mouse_filter = 2
+
+[node name="RewardNodes" type="Node2D" parent="AreaDefinitions/Chapter2Area2/Routes/LeftRoute"]
+
+[node name="WeaponShop" type="Marker2D" parent="AreaDefinitions/Chapter2Area2/Routes/LeftRoute/RewardNodes"]
+position = Vector2(230, 490)
+script = ExtResource("4_reward")
+node_type = "weapon_shop"
+shop_id = "shop.weapon.default"
+side = "outer"
+
+[node name="Encounter" type="Marker2D" parent="AreaDefinitions/Chapter2Area2/Routes/LeftRoute/RewardNodes"]
+position = Vector2(538, 346)
+script = ExtResource("4_reward")
+node_type = "encounter"
+encounter_pool_id = "encounter_pool.default"
+side = "inner"
+
+[node name="WeaponMaster" type="Marker2D" parent="AreaDefinitions/Chapter2Area2/Routes/LeftRoute/RewardNodes"]
+position = Vector2(282, 216)
+script = ExtResource("4_reward")
+node_type = "weapon_master"
+shop_id = "shop.weapon_master.default"
+side = "outer"
+
+[node name="RightRoute" type="Control" parent="AreaDefinitions/Chapter2Area2/Routes"]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+script = ExtResource("3_route")
+route_id = "right"
+display_lane = "right"
+
+[node name="Hotspot" type="Control" parent="AreaDefinitions/Chapter2Area2/Routes/RightRoute"]
+layout_mode = 0
+offset_left = 684.0
+offset_top = 154.0
+offset_right = 1184.0
+offset_bottom = 568.0
+mouse_filter = 2
+
+[node name="RewardNodes" type="Node2D" parent="AreaDefinitions/Chapter2Area2/Routes/RightRoute"]
+
+[node name="MagicShop" type="Marker2D" parent="AreaDefinitions/Chapter2Area2/Routes/RightRoute/RewardNodes"]
+position = Vector2(742, 490)
+script = ExtResource("4_reward")
+node_type = "magic_shop"
+shop_id = "shop.magic.default"
+side = "inner"
+
+[node name="RandomItem" type="Marker2D" parent="AreaDefinitions/Chapter2Area2/Routes/RightRoute/RewardNodes"]
+position = Vector2(1050, 346)
+script = ExtResource("4_reward")
+node_type = "random_item"
+reward_table_id = "reward.random_item.chapter_2"
+side = "outer"
+
+[node name="MagicMaster" type="Marker2D" parent="AreaDefinitions/Chapter2Area2/Routes/RightRoute/RewardNodes"]
+position = Vector2(794, 216)
+script = ExtResource("4_reward")
+node_type = "magic_master"
+shop_id = "shop.magic_master.default"
+side = "inner"
+
+[node name="CombatNodes" type="Node2D" parent="AreaDefinitions/Chapter2Area2"]
+
+[node name="Combat" type="Marker2D" parent="AreaDefinitions/Chapter2Area2/CombatNodes"]
+position = Vector2(640, 122)
+script = ExtResource("5_combat")
+node_id = "combat.floor_5"
+
+[node name="Chapter2Area3" type="Node2D" parent="AreaDefinitions"]
+script = ExtResource("2_area")
+area_id = "chapter_2_area_3"
+chapter_id = "chapter_2"
+floor = 6
+background_path = "res://assets/art/map/backgrounds/chapter_2_route_background.png"
+run_victory_on_clear = true
+
+[node name="Routes" type="Node" parent="AreaDefinitions/Chapter2Area3"]
+
+[node name="LeftRoute" type="Control" parent="AreaDefinitions/Chapter2Area3/Routes"]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+script = ExtResource("3_route")
+route_id = "left"
+display_lane = "left"
+
+[node name="Hotspot" type="Control" parent="AreaDefinitions/Chapter2Area3/Routes/LeftRoute"]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 154.0
+offset_right = 596.0
+offset_bottom = 568.0
+mouse_filter = 2
+
+[node name="RewardNodes" type="Node2D" parent="AreaDefinitions/Chapter2Area3/Routes/LeftRoute"]
+
+[node name="Coin" type="Marker2D" parent="AreaDefinitions/Chapter2Area3/Routes/LeftRoute/RewardNodes"]
+position = Vector2(230, 490)
+script = ExtResource("4_reward")
+node_type = "coin"
+gold = 525
+side = "outer"
+
+[node name="Encounter" type="Marker2D" parent="AreaDefinitions/Chapter2Area3/Routes/LeftRoute/RewardNodes"]
+position = Vector2(538, 346)
+script = ExtResource("4_reward")
+node_type = "encounter"
+encounter_pool_id = "encounter_pool.default"
+side = "inner"
+
+[node name="ItemShop" type="Marker2D" parent="AreaDefinitions/Chapter2Area3/Routes/LeftRoute/RewardNodes"]
+position = Vector2(282, 216)
+script = ExtResource("4_reward")
+node_type = "item_shop"
+shop_id = "shop.item.default"
+side = "outer"
+
+[node name="RightRoute" type="Control" parent="AreaDefinitions/Chapter2Area3/Routes"]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+script = ExtResource("3_route")
+route_id = "right"
+display_lane = "right"
+
+[node name="Hotspot" type="Control" parent="AreaDefinitions/Chapter2Area3/Routes/RightRoute"]
+layout_mode = 0
+offset_left = 684.0
+offset_top = 154.0
+offset_right = 1184.0
+offset_bottom = 568.0
+mouse_filter = 2
+
+[node name="RewardNodes" type="Node2D" parent="AreaDefinitions/Chapter2Area3/Routes/RightRoute"]
+
+[node name="Encounter" type="Marker2D" parent="AreaDefinitions/Chapter2Area3/Routes/RightRoute/RewardNodes"]
+position = Vector2(742, 490)
+script = ExtResource("4_reward")
+node_type = "encounter"
+encounter_pool_id = "encounter_pool.default"
+side = "inner"
+
+[node name="RandomItem" type="Marker2D" parent="AreaDefinitions/Chapter2Area3/Routes/RightRoute/RewardNodes"]
+position = Vector2(1050, 346)
+script = ExtResource("4_reward")
+node_type = "random_item"
+reward_table_id = "reward.random_item.chapter_2"
+side = "outer"
+
+[node name="WeaponShop" type="Marker2D" parent="AreaDefinitions/Chapter2Area3/Routes/RightRoute/RewardNodes"]
+position = Vector2(794, 216)
+script = ExtResource("4_reward")
+node_type = "weapon_shop"
+shop_id = "shop.weapon.default"
+side = "inner"
+
+[node name="CombatNodes" type="Node2D" parent="AreaDefinitions/Chapter2Area3"]
+
+[node name="Combat" type="Marker2D" parent="AreaDefinitions/Chapter2Area3/CombatNodes"]
+position = Vector2(640, 122)
+script = ExtResource("5_combat")
+node_id = "combat.floor_6"
+
+[node name="Generated" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

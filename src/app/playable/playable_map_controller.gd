@@ -24,6 +24,22 @@ func choose_route(map_flow, route_id: String) -> bool:
 	return true
 
 
+func choose_route_data(map_flow, route: Dictionary) -> bool:
+	if not selected_route_id.is_empty() and not claimed_route_nodes.is_empty():
+		return false
+	if route.is_empty():
+		return false
+	var route_id = String(route.get("id", ""))
+	if route_id.is_empty():
+		return false
+	if map_flow != null and map_flow.has_method("record_route_choice"):
+		map_flow.record_route_choice(route_id)
+	active_route = route
+	selected_route_id = route_id
+	claimed_route_nodes.clear()
+	return true
+
+
 func is_route_selected(route_id: String) -> bool:
 	return route_id == selected_route_id
 

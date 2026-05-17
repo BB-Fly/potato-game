@@ -75,18 +75,18 @@ const LOGICAL_VIEWPORT_SIZE = Vector2(1280, 720)
 | 状态 | 入口函数 | 说明 |
 | --- | --- | --- |
 | `starter` | `_show_starter_screen()` | 初始装备三选一 |
-| `map` | `_show_map_screen()` | 路线选择、奖励预览、战斗入口 |
+| `map` | `_show_map_screen()` | 加载独立地图场景，处理路线选择、奖励预览、战斗入口 |
 | `reward` | `_show_reward_choices()` | 奖励三选一 |
 | `shop` | `_show_shop_screen()` | 简化商店 |
 | `combat` | `_start_combat()` | 战斗 |
 | `defeat` | `_show_defeat_screen()` | 失败重试 |
 | `victory` | `_show_victory_screen()` | 通关 |
 
-`_clear_screen()` 会清空 `ui_root` 的全部子节点。战斗现在由 `scenes/combat_scene.tscn` 承载，进入战斗时创建独立 `PlayableCombatScene`，战斗结束后销毁整棵战斗场景。切换界面时通常是“清空再重建”。
+`_clear_screen()` 会清空 `ui_root` 的全部子节点。地图现在由 `scenes/route_map_scene.tscn` 承载，进入地图时创建独立 `RouteMapScene`，由该场景读取 `AreaDefinitions` 中的路线、奖励节点和战斗节点。战斗由 `scenes/combat_scene.tscn` 承载，进入战斗时创建独立 `PlayableCombatScene`，战斗结束后销毁整棵战斗场景。切换界面时通常是“清空再重建”。
 
 ## UI 构建方式
 
-当前 UI 大多由代码直接创建 Godot `Control` 节点。通用 UI 创建函数已经拆到：
+当前 UI 仍有一部分由代码直接创建 Godot `Control` 节点。地图和战斗已经拆成独立场景；奖励、商店和部分通用面板仍由 `main.gd` 编排。通用 UI 创建函数已经拆到：
 
 ```text
 src/app/playable/playable_ui_factory.gd
@@ -109,12 +109,10 @@ src/app/playable/playable_ui_factory.gd
 
 - `_make_label()`
 - `_make_pixel_button()`
-- `_make_map_node_button()`
 - `_make_choice_card()`
-- `_make_bar()`
 - `_style_box()`
 
-当前仍是原型阶段，尚未形成独立 UI 组件目录。后续如果拆分，建议从 reward card、shop card、combat HUD、map node button 这些重复结构开始。
+当前仍是原型阶段，尚未形成完整 UI 组件目录。后续如果拆分，建议从 reward card、shop card 这些重复结构开始。地图节点按钮已经迁入 `RouteMapScene`。
 
 ## 灰屏排查
 
@@ -124,6 +122,7 @@ src/app/playable/playable_ui_factory.gd
 2. `_ready()` 没有调用 `_show_starter_screen()`。
 3. UI 被加在 `ui_root` 外面，缩放或位置异常。
 4. 背景资源缺失并且没有 fallback。
+5. 当前地图 area 的 `area_id` 和 `scenes/route_map_scene.tscn` 中 `AreaDefinitions` 下的节点配置不匹配。
 
 检查命令：
 

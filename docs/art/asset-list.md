@@ -108,7 +108,9 @@ Current config: `content/base/items/potato_enhancement.json`, `content/base/buff
 
 ### Map Nodes
 
-Current config: `content/base/maps/demo_map.json`
+Current editable layout: `scenes/route_map_scene.tscn`
+
+Map progression seed data still exists in `content/base/maps/demo_map.json`, but node placement and route-node logic for the playable slice are edited in the route map scene.
 
 | Asset ID | Type | Suggested path | Status |
 | --- | --- | --- | --- |

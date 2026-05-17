@@ -522,6 +522,8 @@ areas:
 - 章节结束后进入下一章或判定 Demo 胜利。
 - 第三章和后续章节通过配置追加。
 
+当前可运行原型中，`content/base/maps/demo_map.json` 仍提供章节和 area 推进基础数据，但路线布局、奖励节点和战斗节点已经迁移到 `scenes/route_map_scene.tscn` 的 `AreaDefinitions` 中维护。下面的 `position_hint` 示例保留为长期数据 schema 参考，不代表当前编辑地图布局的首选方式。
+
 推荐区域配置：
 
 ```yaml

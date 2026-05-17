@@ -7,6 +7,8 @@ Puritato 是一个 Godot 4 自动攻击生存 roguelike 原型。当前仓库里
 - 稳定提交：`d6ea0ca Restore playable Godot prototype`
 - 主场景：`res://scenes/main.tscn`
 - 运行入口脚本：`src/app/main.gd`
+- 可编辑路线地图场景：`res://scenes/route_map_scene.tscn`
+- 战斗场景：`res://scenes/combat_scene.tscn`
 - 单局共享状态：`src/domain/run/run_context.gd`
 - 基础内容配置：`content/base/`
 - 运行时美术资源：`assets/art/`
@@ -25,10 +27,16 @@ C:\Program Files\Godot
 & 'C:\Program Files\Godot\Godot_v4.6.2-stable_mono_win64_console.exe' --headless --path 'C:\Users\LYZ\Desktop\work\potato-game' --quit
 ```
 
+当前机器也配置了 `godot` 命令入口，可以在仓库根目录直接运行：
+
+```powershell
+godot --headless --path . --quit
+```
+
 健康启动时应该看到：
 
 ```text
-Puritato playable slice ready. Registered types: ["school", "character", "weapon", "magic", "item", "buff", "monster", "boss", "map", "reward_table", "shop", "audio", "asset"]
+Puritato playable slice ready. Registered types: ["school", "character", "weapon", "magic", "item", "buff", "monster", "boss", "map", "reward_table", "shop", "audio", "asset", "balance"]
 ```
 
 启动可见游戏窗口：
@@ -50,5 +58,6 @@ Start-Process -FilePath 'C:\Program Files\Godot\Godot_v4.6.2-stable_mono_win64.e
 
 1. 修改前后都运行一次 Godot headless 检查。
 2. 保持 `src/app/main.gd` 在 `_ready()` 中创建可见 UI。如果启动只打印架构初始化日志、没有调用 `_show_starter_screen()`，游戏窗口会变成灰屏。
-3. 武器最多自动装备 4 个。多余武器进入 `inventory["weapons"]`，在背包/装备 UI 实现前不能自动生效。
-4. Godot 生成的 `.import` 文件默认视为自动生成噪声，除非确实改了导入设置，不要批量提交。
+3. 地图路线、奖励节点和战斗节点以 `scenes/route_map_scene.tscn` 为准；调整地图布局时优先改该场景的 `AreaDefinitions`，不要只改 JSON 的 `position_hint`。
+4. 武器最多自动装备 4 个。多余武器进入 `inventory["weapons"]`，在背包/装备 UI 实现前不能自动生效。
+5. Godot 生成的 `.import` 文件默认视为自动生成噪声，除非确实改了导入设置，不要批量提交。

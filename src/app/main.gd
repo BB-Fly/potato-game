@@ -20,6 +20,7 @@ const PlayableContentPresenter = preload("res://src/app/playable/playable_conten
 const PlayableMapController = preload("res://src/app/playable/playable_map_controller.gd")
 const PlayableRewardController = preload("res://src/app/playable/playable_reward_controller.gd")
 const CombatScenePacked = preload("res://scenes/combat_scene.tscn")
+const RouteMapScenePacked = preload("res://scenes/route_map_scene.tscn")
 
 const LOGICAL_VIEWPORT_SIZE = Vector2(1280, 720)
 
@@ -48,6 +49,7 @@ var active_shop_on_done: Callable = Callable()
 
 var toast_label: Label
 var combat_scene: Control
+var route_map_scene
 
 
 func _ready() -> void:
@@ -130,6 +132,7 @@ func _clear_screen() -> void:
 		ui_root.remove_child(child)
 		_queue_free_if_valid(child)
 	combat_scene = null
+	route_map_scene = null
 	toast_label = null
 
 
@@ -157,8 +160,12 @@ func _complete_starter_reward() -> void:
 func _show_map_screen() -> void:
 	screen = "map"
 	_clear_screen()
-	_add_background_for_area(map_flow.get_current_area())
-	_add_overlay(Color(0.02, 0.018, 0.014, 0.18))
+	route_map_scene = RouteMapScenePacked.instantiate()
+	route_map_scene.connect("route_selected", _choose_route)
+	route_map_scene.connect("reward_node_selected", _click_route_reward_node)
+	route_map_scene.connect("combat_requested", _start_combat)
+	ui_root.add_child(route_map_scene)
+	route_map_scene.setup(map_flow, route_controller, run_context, asset_catalog)
 	_add_top_bar("Puritato", "Floor %d  Gold %d  Weapons %d/%d  Magics %d  Items %d" % [
 		run_context.floor,
 		run_context.gold,
@@ -167,103 +174,17 @@ func _show_map_screen() -> void:
 		run_context.inventory["magics"].size(),
 		run_context.inventory["items"].size(),
 	])
-
-	var routes = map_flow.get_available_routes()
-	for i in range(routes.size()):
-		_add_route_hotspot(routes[i], i)
-	for route in routes:
-		_add_route_reward_nodes(route, route_controller.is_route_preview(route))
-	_add_combat_node()
 	_add_inventory_panel()
 	_add_toast_anchor()
 
 
-func _add_route_hotspot(route: Dictionary, index: int) -> void:
-	var route_id = String(route.get("id", ""))
-	var is_selected = route_controller.is_route_selected(route_id)
-	var locked = route_controller.is_route_locked(route_id)
-	var rect = Rect2(Vector2(96, 154), Vector2(500, 414))
-	if index == 1:
-		rect.position.x = 684
-
-	var panel = PanelContainer.new()
-	panel.position = rect.position
-	panel.size = rect.size
-	panel.add_theme_stylebox_override("panel", _style_box(
-		Color(0.42, 0.28, 0.08, 0.30) if is_selected else Color(0.08, 0.055, 0.035, 0.32),
-		Color(1.0, 0.86, 0.32, 0.95) if is_selected else Color(0.95, 0.72, 0.28, 0.42),
-		3 if is_selected else 1,
-		8
-	))
-	ui_root.add_child(panel)
-
-	var button = Button.new()
-	button.position = rect.position
-	button.size = rect.size
-	button.text = ""
-	button.flat = true
-	button.disabled = locked or route_controller.has_claimed_nodes()
-	button.pressed.connect(_choose_route.bind(route_id))
-	ui_root.add_child(button)
-
-	var lane_text = "Left Route" if index == 0 else "Right Route"
-	if is_selected:
-		lane_text += " Selected"
-	var label = _make_label(lane_text, 28, Color(1.0, 0.9, 0.58), HORIZONTAL_ALIGNMENT_CENTER)
-	label.position = Vector2(rect.position.x, rect.position.y + 16)
-	label.size = Vector2(rect.size.x, 46)
-	ui_root.add_child(label)
-
-
-func _add_route_reward_nodes(route: Dictionary, preview_only: bool) -> void:
-	var nodes: Array = route.get("nodes", [])
-	for i in range(nodes.size()):
-		var node_data: Dictionary = nodes[i]
-		var hint: Dictionary = node_data.get("position_hint", {})
-		var pos = Vector2(float(hint.get("x", 0.5)) * 1280.0, float(hint.get("y", 0.5)) * 720.0)
-		var claimed = route_controller.is_node_claimed(i)
-		var button = _make_map_node_button(String(node_data.get("type", "")), pos, preview_only or claimed, Callable(self, "_click_route_reward_node").bind(i))
-		if preview_only:
-			button.modulate = Color(0.86, 0.86, 0.86, 0.74)
-		ui_root.add_child(button)
-
-		var label = _make_label(_node_label(node_data), 16, Color(0.86, 0.84, 0.76, 0.78) if preview_only else Color(1.0, 0.92, 0.68), HORIZONTAL_ALIGNMENT_CENTER)
-		label.position = pos + Vector2(-100, 42)
-		label.size = Vector2(200, 32)
-		ui_root.add_child(label)
-
-
-func _add_combat_node() -> void:
-	var exits: Array = map_flow.get_current_area().get("shared_exit_nodes", [])
-	if exits.is_empty():
-		return
-	var hint: Dictionary = exits[0].get("position_hint", {})
-	var pos = Vector2(float(hint.get("x", 0.5)) * 1280.0, float(hint.get("y", 0.12)) * 720.0)
-	var locked = route_controller.combat_locked()
-	var button = _make_map_node_button("combat", pos, locked, Callable(self, "_start_combat"))
-	ui_root.add_child(button)
-	var label = _make_label("Combat" if not locked else "Claim route rewards first", 17, Color(1.0, 0.86, 0.54), HORIZONTAL_ALIGNMENT_CENTER)
-	label.position = pos + Vector2(-140, 44)
-	label.size = Vector2(280, 34)
-	ui_root.add_child(label)
-
-
-func _make_map_node_button(node_type: String, pos: Vector2, disabled: bool, on_pressed: Callable) -> Button:
-	var button = Button.new()
-	button.position = pos - Vector2(38, 38)
-	button.size = Vector2(76, 76)
-	button.icon = _load_texture(_node_icon_path(node_type))
-	button.expand_icon = true
-	button.disabled = disabled
-	button.add_theme_stylebox_override("normal", _style_box(Color(0.08, 0.055, 0.03, 0.42), Color(1.0, 0.82, 0.32, 0.78), 2, 38))
-	button.add_theme_stylebox_override("hover", _style_box(Color(0.36, 0.24, 0.08, 0.7), Color(1.0, 0.92, 0.42, 1.0), 3, 38))
-	button.add_theme_stylebox_override("pressed", _style_box(Color(0.52, 0.34, 0.08, 0.78), Color(1.0, 0.92, 0.42, 1.0), 3, 38))
-	button.pressed.connect(on_pressed)
-	return button
-
-
 func _choose_route(route_id: String) -> void:
-	if not route_controller.choose_route(map_flow, route_id):
+	var route_chosen = false
+	if route_map_scene != null and is_instance_valid(route_map_scene) and route_map_scene.has_method("choose_route"):
+		route_chosen = route_map_scene.choose_route(route_id)
+	else:
+		route_chosen = route_controller.choose_route(map_flow, route_id)
+	if not route_chosen:
 		_show_toast("Route unavailable")
 		return
 	_show_map_screen()

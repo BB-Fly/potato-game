@@ -24,6 +24,11 @@ src/app/playable/
   playable_content_presenter.gd
   playable_map_controller.gd
   playable_reward_controller.gd
+  route_map_scene.gd
+  route_map_area.gd
+  route_map_route.gd
+  route_map_reward_node.gd
+  route_map_combat_node.gd
 ```
 
 ### `playable_ui_factory.gd`
@@ -95,11 +100,11 @@ src/app/playable/
 - 应用启动和服务创建。
 - `ui_root` 缩放。
 - 界面状态切换。
-- starter/map/reward/shop screen 构建。
-- 地图、奖励、商店 UI 的具体创建。
+- starter/reward/shop screen 构建。
+- 奖励、商店 UI 的具体创建。
 - 创建和销毁独立战斗场景。
 
-这些逻辑互相引用较多，直接搬走风险较高，需要按功能边界逐步拆。
+地图 screen 现在只由 `main.gd` 创建 `scenes/route_map_scene.tscn` 并监听信号；路线布局、奖励节点分布和战斗节点位置由地图场景自身维护。
 
 ## 第二阶段：已完成的地图和奖励基础拆分
 
@@ -108,6 +113,12 @@ src/app/playable/
 ```text
 src/app/playable/playable_map_controller.gd
 src/app/playable/playable_reward_controller.gd
+scenes/route_map_scene.tscn
+src/app/playable/route_map_scene.gd
+src/app/playable/route_map_area.gd
+src/app/playable/route_map_route.gd
+src/app/playable/route_map_reward_node.gd
+src/app/playable/route_map_combat_node.gd
 ```
 
 ### `playable_map_controller.gd`
@@ -123,8 +134,21 @@ src/app/playable/playable_reward_controller.gd
 - 读取当前路线节点数据。
 - 判断路线奖励是否全部领取。
 - 判断战斗入口是否锁定。
+- 接收 `RouteMapScene` 从场景树生成的路线数据。
 
-`main.gd` 仍负责地图画面创建，但路线状态和点击规则已经委托给 `PlayableMapController`。
+`main.gd` 不再直接创建地图奖励节点和战斗节点。地图画面由 `RouteMapScene` 负责，路线状态和点击规则委托给 `PlayableMapController`。
+
+### `route_map_scene.tscn` 和地图节点脚本
+
+职责：
+
+- 在 Godot 编辑器中维护每层地图的 `AreaDefinitions`。
+- 用 `Hotspot` 控制路线选择区域。
+- 用 `RewardNodes` 下的 `RouteMapRewardNode` 控制奖励节点类型、奖励表、商店 ID、金币数和位置。
+- 用 `CombatNodes` 下的 `RouteMapCombatNode` 控制战斗入口位置。
+- 运行时生成地图按钮、标签和高亮框，并通过信号把路线、奖励节点和战斗入口点击交给 `main.gd`。
+
+`content/base/maps/demo_map.json` 仍作为 `MapFlow` 的基础推进数据存在，但可编辑布局和节点逻辑以 `scenes/route_map_scene.tscn` 为准。
 
 ### `playable_reward_controller.gd`
 

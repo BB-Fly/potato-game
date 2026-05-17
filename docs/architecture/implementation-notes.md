@@ -10,7 +10,7 @@
 - 本机使用的 Godot 版本：`4.6.2 stable Mono`。
 - 主场景：`scenes/main.tscn`。
 - 运行入口脚本：`src/app/main.gd`。
-- 当前原型为了快速形成可玩闭环，把大量表现层和战斗逻辑集中在 `main.gd`。`src/domain/` 下的模块仍然代表长期架构方向，但当前很多战斗、UI、地图交互行为还没有完全迁移进去。
+- 当前原型为了快速形成可玩闭环，仍由 `main.gd` 编排启动、界面切换、奖励和商店流程。地图已经迁入 `scenes/route_map_scene.tscn`，战斗已经迁入 `scenes/combat_scene.tscn`。`src/domain/` 下的模块仍然代表长期架构方向。
 
 ## 启动流程
 
@@ -69,7 +69,7 @@ const LOGICAL_VIEWPORT_SIZE = Vector2(1280, 720)
 9. Boss 出现并进入 Boss 阶段。
 10. 击败 Boss 后推进到下一层地图。
 
-路线数据来自 `content/base/maps/demo_map.json`，通过 `MapFlow` 读取。
+地图推进基础数据仍来自 `content/base/maps/demo_map.json`，通过 `MapFlow` 读取。可编辑的路线结构、奖励节点分布、战斗节点位置和节点逻辑以 `scenes/route_map_scene.tscn` 的 `AreaDefinitions` 为准；`main.gd` 进入 `map` 时实例化 `RouteMapScene`，并监听它的路线、奖励节点和战斗入口信号。
 
 ## 装备规则
 
@@ -86,7 +86,7 @@ equipped_magics.resize(4)
 
 ## 战斗实现
 
-当前战斗主要在 `main.gd` 中实现，还没有完全使用 `CombatRuntime`。
+当前战斗主要在 `scenes/combat_scene.tscn` 和 `src/app/combat/playable_combat_scene.gd` 中实现，还没有完全使用 `CombatRuntime`。
 
 主要状态包括：
 
@@ -201,6 +201,7 @@ Demo Boss 在小怪阶段结束后出现。
 - `shop`
 - `audio`
 - `asset`
+- `balance`
 
 `content/base/scene_art` 目录存在，但当前恢复后的可玩切片不依赖 `scene_art` 注册类型启动。
 
@@ -241,6 +242,12 @@ rg -n "playable slice ready|_show_starter_screen|LOGICAL_VIEWPORT_SIZE" src\app\
 ```powershell
 git -c safe.directory=C:/Users/LYZ/Desktop/work/potato-game diff --check
 & 'C:\Program Files\Godot\Godot_v4.6.2-stable_mono_win64_console.exe' --headless --path 'C:\Users\LYZ\Desktop\work\potato-game' --quit
+```
+
+当前机器也提供了 `godot.cmd` 命令入口时，可以等价运行：
+
+```powershell
+godot --headless --path . --quit
 ```
 
 Godot 输出中应包含：

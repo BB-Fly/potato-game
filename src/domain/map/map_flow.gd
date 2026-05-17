@@ -36,12 +36,16 @@ func get_available_routes() -> Array:
 func choose_route(route_id: String) -> Dictionary:
 	for route in get_available_routes():
 		if String(route.get("id", "")) == route_id:
-			run_context.route_history.append({
-				"floor": run_context.floor,
-				"route_id": route_id,
-			})
+			record_route_choice(route_id)
 			return route
 	return {}
+
+
+func record_route_choice(route_id: String) -> void:
+	run_context.route_history.append({
+		"floor": run_context.floor,
+		"route_id": route_id,
+	})
 
 
 func advance_area() -> bool:
