@@ -86,6 +86,7 @@ docs/
 | 修改地图路线或节点 | `map-reward-flow.md` |
 | 修改小怪、Boss、战斗输入、碰撞 | `combat-slice.md` |
 | 调整图片、图标、像素资源 | `assets-and-art.md` |
+| 拆分 `main.gd` 或新增运行时模块 | `module-splitting.md` |
 | 提交前验证、Git、常见故障 | `debugging-and-git.md` |
 
 ## 不要轻易破坏的规则

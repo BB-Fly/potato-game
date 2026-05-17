@@ -13,7 +13,8 @@
 4. [地图、路线与奖励](development/map-reward-flow.md)
 5. [战斗原型实现](development/combat-slice.md)
 6. [资源、美术与导入](development/assets-and-art.md)
-7. [调试、验证与 Git 规范](development/debugging-and-git.md)
+7. [模块拆分路线](development/module-splitting.md)
+8. [调试、验证与 Git 规范](development/debugging-and-git.md)
 
 读完上面这些，基本就能接手当前可运行版本。需要理解长期系统设计时，再阅读 `architecture/` 和 `gameplay-design/`。
 

@@ -1,8 +1,23 @@
 .godot/
 .import/
+*.import
 export.cfg
 export_presets.cfg
 *.translation
 *.mono/
 .mono/
 
+# Local logs, test output, and temporary files
+*.log
+logs/
+test-results/
+coverage/
+tmp/
+temp/
+*.tmp
+*.bak
+
+# Local build/export output
+build/
+dist/
+exports/

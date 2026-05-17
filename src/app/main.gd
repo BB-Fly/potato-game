@@ -14,6 +14,9 @@ const CombatRuntime = preload("res://src/domain/combat/combat_runtime.gd")
 const AudioDirector = preload("res://src/domain/audio/audio_director.gd")
 const EffectRunner = preload("res://src/domain/effect/effect_runner.gd")
 const AssetCatalog = preload("res://src/config/asset_catalog.gd")
+const PlayableUiFactory = preload("res://src/app/playable/playable_ui_factory.gd")
+const PlayableInputActions = preload("res://src/app/playable/playable_input_actions.gd")
+const PlayableContentPresenter = preload("res://src/app/playable/playable_content_presenter.gd")
 
 const LOGICAL_VIEWPORT_SIZE = Vector2(1280, 720)
 const COMBAT_ARENA_RECT = Rect2(Vector2(48, 118), Vector2(1184, 560))
@@ -1024,70 +1027,27 @@ func _show_toast(text: String) -> void:
 
 
 func _make_label(text: String, font_size: int, color: Color, alignment: HorizontalAlignment) -> Label:
-	var label = Label.new()
-	label.text = text
-	label.horizontal_alignment = alignment
-	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	label.add_theme_font_size_override("font_size", font_size)
-	label.add_theme_color_override("font_color", color)
-	label.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.7))
-	label.add_theme_constant_override("shadow_offset_x", 2)
-	label.add_theme_constant_override("shadow_offset_y", 2)
-	return label
+	return PlayableUiFactory.make_label(text, font_size, color, alignment)
 
 
 func _make_pixel_button(text: String, pos: Vector2, size: Vector2) -> Button:
-	var button = Button.new()
-	button.text = text
-	button.position = pos
-	button.size = size
-	button.add_theme_font_size_override("font_size", 22)
-	button.add_theme_stylebox_override("normal", _style_box(Color(0.12, 0.08, 0.04, 0.92), Color(0.9, 0.62, 0.24, 0.9), 2, 6))
-	button.add_theme_stylebox_override("hover", _style_box(Color(0.22, 0.13, 0.05, 0.98), Color(1.0, 0.8, 0.34, 1.0), 3, 6))
-	button.add_theme_stylebox_override("pressed", _style_box(Color(0.32, 0.18, 0.05, 1.0), Color(1.0, 0.88, 0.42, 1.0), 3, 6))
-	return button
+	return PlayableUiFactory.make_pixel_button(text, pos, size)
 
 
 func _make_bar(position: Vector2, size: Vector2, fill_color: Color) -> ProgressBar:
-	var bar = ProgressBar.new()
-	bar.position = position
-	bar.size = size
-	bar.min_value = 0.0
-	bar.max_value = 1.0
-	bar.value = 1.0
-	bar.show_percentage = false
-	bar.add_theme_stylebox_override("background", _style_box(Color(0.09, 0.06, 0.05, 0.9), Color(0.28, 0.2, 0.14, 0.9), 1, 4))
-	bar.add_theme_stylebox_override("fill", _style_box(fill_color, fill_color, 0, 4))
-	return bar
+	return PlayableUiFactory.make_bar(position, size, fill_color)
 
 
 func _make_sprite(texture_path: String, sprite_size: Vector2) -> TextureRect:
-	var sprite = TextureRect.new()
-	sprite.size = sprite_size
-	sprite.pivot_offset = sprite_size * 0.5
-	sprite.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	sprite.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	sprite.texture = _load_texture(texture_path)
-	return sprite
+	return PlayableUiFactory.make_sprite(texture_path, sprite_size)
 
 
 func _update_sprite_position(sprite: Control, world_pos: Vector2) -> void:
-	if sprite == null or not is_instance_valid(sprite):
-		return
-	sprite.position = world_pos - sprite.size * 0.5
+	PlayableUiFactory.update_sprite_position(sprite, world_pos)
 
 
 func _style_box(fill: Color, border: Color, border_width: int, corner_radius: int) -> StyleBoxFlat:
-	var box = StyleBoxFlat.new()
-	box.bg_color = fill
-	box.border_color = border
-	box.set_border_width_all(border_width)
-	box.set_corner_radius_all(corner_radius)
-	box.content_margin_left = 14
-	box.content_margin_right = 14
-	box.content_margin_top = 12
-	box.content_margin_bottom = 12
-	return box
+	return PlayableUiFactory.style_box(fill, border, border_width, corner_radius)
 
 
 func _random_edge_position() -> Vector2:
@@ -1166,150 +1126,44 @@ func _fill_offer_choices(entries: Array, count: int, content_type: String) -> Ar
 
 
 func _content_name(content_id: String) -> String:
-	var known = {
-		"character.potato_hero": "Potato Hero",
-		"weapon.metamorph.fries": "Fries Staff",
-		"magic.metamorph.comprehensive_development": "Comprehensive Development",
-		"item.metamorph.potato_enhancement": "Potato Enhancement",
-		"monster.metamorph.sprouting_potato": "Sprouting Potato",
-		"monster.metamorph.mushroom_spore": "Mushroom Spore",
-		"monster.metamorph.bomb_fruitling": "Bomb Fruitling",
-		"boss.demo_pollution_source": "Pollution Source",
-	}
-	if known.has(content_id):
-		return known[content_id]
-	var parts = content_id.split(".")
-	return String(parts[parts.size() - 1]).capitalize() if parts.size() > 0 else content_id
+	return PlayableContentPresenter.content_name(content_id)
 
 
 func _node_label(node_data: Dictionary) -> String:
-	var node_type = String(node_data.get("type", ""))
-	if node_type == "coin":
-		return "Gold +%d" % int(node_data.get("gold", 0))
-	return _node_type_name(node_type)
+	return PlayableContentPresenter.node_label(node_data)
 
 
 func _node_type_name(node_type: String) -> String:
-	var names = {
-		"free_weapon": "Free Weapon",
-		"random_item": "Random Item",
-		"coin": "Gold",
-		"weapon_shop": "Weapon Shop",
-		"magic_shop": "Magic Shop",
-		"item_shop": "Item Shop",
-		"weapon_master": "Weapon Master",
-		"magic_master": "Magic Master",
-		"encounter": "Encounter",
-		"combat": "Combat",
-	}
-	return names.get(node_type, node_type)
+	return PlayableContentPresenter.node_type_name(node_type)
 
 
 func _node_icon_path(node_type: String) -> String:
-	return asset_catalog.resolve_asset_path("map.node.%s.icon" % node_type, "res://icon.svg")
+	return PlayableContentPresenter.node_icon_path(asset_catalog, node_type)
 
 
 func _content_icon_path(entry: Dictionary) -> String:
-	var refs = entry.get("asset_refs", {})
-	if typeof(refs) == TYPE_DICTIONARY:
-		if refs.has("icon"):
-			return asset_catalog.resolve_asset_path(String(refs["icon"]), "res://icon.svg")
-		if refs.has("sprite"):
-			return asset_catalog.resolve_asset_path(String(refs["sprite"]), "res://icon.svg")
-	return "res://icon.svg"
+	return PlayableContentPresenter.content_icon_path(asset_catalog, entry)
 
 
 func _content_sprite_path(entry: Dictionary) -> String:
-	var content_id = String(entry.get("id", ""))
-	match content_id:
-		"monster.metamorph.sprouting_potato":
-			return "res://assets/art/source/sprouting_potato/sprouting_potato-1.png"
-		"monster.metamorph.mushroom_spore":
-			return "res://assets/art/source/enemy_pack_01/mushroom_spore/mushroom_spore-1.png"
-		"monster.metamorph.bomb_fruitling":
-			return "res://assets/art/source/enemy_pack_01/bomb_fruitling/bomb_fruitling-1.png"
-	var refs = entry.get("asset_refs", {})
-	if typeof(refs) == TYPE_DICTIONARY and refs.has("sprite"):
-		return asset_catalog.resolve_asset_path(String(refs["sprite"]), "res://icon.svg")
-	return "res://icon.svg"
+	return PlayableContentPresenter.content_sprite_path(asset_catalog, entry)
 
 
 func _enemy_frame_paths(content_id: String) -> Array:
-	match content_id:
-		"monster.metamorph.sprouting_potato":
-			return [
-				"res://assets/art/source/sprouting_potato/sprouting_potato-1.png",
-				"res://assets/art/source/sprouting_potato/sprouting_potato-2.png",
-				"res://assets/art/source/sprouting_potato/sprouting_potato-3.png",
-				"res://assets/art/source/sprouting_potato/sprouting_potato-4.png",
-			]
-		"monster.metamorph.mushroom_spore":
-			return [
-				"res://assets/art/source/enemy_pack_01/mushroom_spore/mushroom_spore-1.png",
-				"res://assets/art/source/enemy_pack_01/mushroom_spore/mushroom_spore-2.png",
-				"res://assets/art/source/enemy_pack_01/mushroom_spore/mushroom_spore-3.png",
-				"res://assets/art/source/enemy_pack_01/mushroom_spore/mushroom_spore-4.png",
-			]
-		"monster.metamorph.bomb_fruitling":
-			return [
-				"res://assets/art/source/enemy_pack_01/bomb_fruitling/bomb_fruitling-1.png",
-				"res://assets/art/source/enemy_pack_01/bomb_fruitling/bomb_fruitling-2.png",
-				"res://assets/art/source/enemy_pack_01/bomb_fruitling/bomb_fruitling-3.png",
-				"res://assets/art/source/enemy_pack_01/bomb_fruitling/bomb_fruitling-4.png",
-			]
-		"boss.demo_pollution_source":
-			return [
-				"res://assets/art/source/boss_pollution_source/boss_pollution_source-1.png",
-				"res://assets/art/source/boss_pollution_source/boss_pollution_source-2.png",
-				"res://assets/art/source/boss_pollution_source/boss_pollution_source-3.png",
-				"res://assets/art/source/boss_pollution_source/boss_pollution_source-4.png",
-				"res://assets/art/source/boss_pollution_source/boss_pollution_source-5.png",
-				"res://assets/art/source/boss_pollution_source/boss_pollution_source-6.png",
-				"res://assets/art/source/boss_pollution_source/boss_pollution_source-7.png",
-				"res://assets/art/source/boss_pollution_source/boss_pollution_source-8.png",
-				"res://assets/art/source/boss_pollution_source/boss_pollution_source-9.png",
-			]
-	return []
+	return PlayableContentPresenter.enemy_frame_paths(content_id)
 
 
 func _rarity_color(entry: Dictionary) -> Color:
-	match String(entry.get("rarity", "common")):
-		"legendary":
-			return Color(0.96, 0.62, 0.2)
-		"rare":
-			return Color(0.38, 0.6, 1.0)
-		_:
-			return Color(0.68, 0.82, 0.58)
+	return PlayableContentPresenter.rarity_color(entry)
 
 
 func _load_texture(path: String) -> Texture2D:
-	if path.is_empty():
-		return null
-	var texture = load(path)
-	if texture is Texture2D:
-		return texture
-	return null
+	return PlayableUiFactory.load_texture(path)
 
 
 func _ensure_input_actions() -> void:
-	_ensure_action("move_left", [KEY_A, KEY_LEFT])
-	_ensure_action("move_right", [KEY_D, KEY_RIGHT])
-	_ensure_action("move_up", [KEY_W, KEY_UP])
-	_ensure_action("move_down", [KEY_S, KEY_DOWN])
-	for i in range(4):
-		_ensure_action("cast_magic_%d" % i, [[KEY_Q, KEY_E, KEY_R, KEY_F][i]])
+	PlayableInputActions.ensure_defaults()
 
 
 func _ensure_action(action_name: String, keycodes: Array) -> void:
-	if not InputMap.has_action(action_name):
-		InputMap.add_action(action_name)
-	for keycode in keycodes:
-		var exists = false
-		for event in InputMap.action_get_events(action_name):
-			if event is InputEventKey and event.keycode == keycode:
-				exists = true
-				break
-		if not exists:
-			var key_event = InputEventKey.new()
-			key_event.keycode = keycode
-			InputMap.action_add_event(action_name, key_event)
+	PlayableInputActions.ensure_action(action_name, keycodes)

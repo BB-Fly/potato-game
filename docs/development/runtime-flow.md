@@ -86,7 +86,15 @@ const LOGICAL_VIEWPORT_SIZE = Vector2(1280, 720)
 
 ## UI 构建方式
 
-当前 UI 大多由代码直接创建 Godot `Control` 节点：
+当前 UI 大多由代码直接创建 Godot `Control` 节点。通用 UI 创建函数已经拆到：
+
+```text
+src/app/playable/playable_ui_factory.gd
+```
+
+`main.gd` 里保留了同名 wrapper，以降低第一阶段拆分风险。后续可以逐步把调用点直接改成 `PlayableUiFactory` 或继续提取屏幕控制器。
+
+常见节点类型：
 
 - `Button`
 - `Label`
