@@ -13,8 +13,11 @@ src/domain/combat/combat_runtime.gd
 但当前可运行战斗主要仍在：
 
 ```text
-src/app/main.gd
+scenes/combat_scene.tscn
+src/app/combat/playable_combat_scene.gd
 ```
+
+`src/app/main.gd` 负责局外流程和场景切换：进入战斗时实例化 `combat_scene.tscn`，监听 `combat_finished(result)`，战斗结束后销毁战斗场景，再回到地图或失败界面。
 
 `CombatRuntime` 目前更像长期目标的占位和固定 tick 系统接入点。不要误以为所有战斗逻辑都在 `src/domain/combat/`。
 
@@ -24,9 +27,15 @@ src/app/main.gd
 _start_combat()
 ```
 
-主要初始化：
+`main.gd::_start_combat()` 做：
 
 - 清空界面。
+- 实例化 `CombatScenePacked`。
+- 连接 `combat_finished` 信号。
+- 调用 `combat_scene.setup(registry, run_context, asset_catalog)`。
+
+`PlayableCombatScene.setup()` 做：
+
 - 添加背景、overlay、`combat_layer` 和 `combat_fx_layer`。
 - 初始化玩家生命、法力、位置。
 - 重置攻击计时、刷怪计时、Boss 状态和魔法冷却。
@@ -36,7 +45,7 @@ _start_combat()
 
 ## 更新顺序
 
-`_process(delta)` 在 `screen == "combat"` 时调用 `_update_combat(delta)`。
+`PlayableCombatScene._process(delta)` 调用 `_update_combat(delta)`。
 
 当前顺序：
 
@@ -56,6 +65,31 @@ _update_combat(delta)
 ```
 
 这不是最终架构，只是当前原型顺序。未来迁移到固定 tick 时，要明确哪些是逻辑、哪些是表现。
+
+## 生命周期边界
+
+每场战斗都是独立的 `PlayableCombatScene` 实例。
+
+战斗内状态只保存在战斗场景中：
+
+- `enemies`
+- `boss_projectiles`
+- `floating_texts`
+- `magic_cooldowns`
+- `combat_weapon_sprites`
+- `magic_slot_nodes`
+
+战斗结束时：
+
+```text
+PlayableCombatScene._end_combat(victory)
+  -> combat_finished.emit(result)
+  -> main.gd::_on_combat_finished(result)
+  -> combat_scene.cleanup()
+  -> combat_scene.queue_free()
+```
+
+因此，局内实体、局内 buff、弹幕、特效和 HUD 都应该挂在 `PlayableCombatScene` 下面。跨战斗状态只能写回 `RunContext`，例如金币、武器、魔法、背包和地图进度。
 
 ## 玩家
 
@@ -181,7 +215,7 @@ combat_elapsed >= MOB_PHASE_SECONDS
 boss.demo_pollution_source
 ```
 
-Boss 使用 `content/base/bosses/demo_pollution_source.json` 的基础属性，但技能行为仍硬编码在 `main.gd`。
+Boss 使用 `content/base/bosses/demo_pollution_source.json` 的基础属性，但技能行为仍硬编码在 `PlayableCombatScene`。
 
 ## Boss 16 向弹幕
 
@@ -237,9 +271,9 @@ Boss：
 
 ## 迁移建议
 
-后续要把战斗从 `main.gd` 拆出去时，建议顺序：
+后续要继续拆战斗内部时，建议顺序：
 
-1. 提取只读 combat view model，先不改玩法。
+1. 从 `PlayableCombatScene` 提取只读 combat view model，先不改玩法。
 2. 提取 spawn 系统。
 3. 提取 weapon attack 系统。
 4. 提取 magic cast 系统。

@@ -82,7 +82,7 @@ const LOGICAL_VIEWPORT_SIZE = Vector2(1280, 720)
 | `defeat` | `_show_defeat_screen()` | 失败重试 |
 | `victory` | `_show_victory_screen()` | 通关 |
 
-`_clear_screen()` 会清空 `ui_root` 的全部子节点，并清理战斗临时数组。切换界面时通常是“清空再重建”。
+`_clear_screen()` 会清空 `ui_root` 的全部子节点。战斗现在由 `scenes/combat_scene.tscn` 承载，进入战斗时创建独立 `PlayableCombatScene`，战斗结束后销毁整棵战斗场景。切换界面时通常是“清空再重建”。
 
 ## UI 构建方式
 

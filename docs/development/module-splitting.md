@@ -95,11 +95,9 @@ src/app/playable/
 - 应用启动和服务创建。
 - `ui_root` 缩放。
 - 界面状态切换。
-- starter/map/reward/shop/combat screen 构建。
+- starter/map/reward/shop screen 构建。
 - 地图、奖励、商店 UI 的具体创建。
-- 战斗实体数组和更新循环。
-- Boss 技能逻辑。
-- HUD 更新。
+- 创建和销毁独立战斗场景。
 
 这些逻辑互相引用较多，直接搬走风险较高，需要按功能边界逐步拆。
 
@@ -142,12 +140,39 @@ src/app/playable/playable_reward_controller.gd
 
 `main.gd` 暂时保留 `_grant_content()`、`_fill_offer_choices()` 等 wrapper，内部委托给 `PlayableRewardController`。这样 reward/shop/starter 共用同一套候选生成和发放逻辑。
 
-## 第三阶段建议：拆战斗状态和系统
+## 第三阶段：已开始的独立战斗场景拆分
+
+当前新增：
+
+```text
+scenes/combat_scene.tscn
+src/app/combat/playable_combat_scene.gd
+```
+
+### `playable_combat_scene.gd`
+
+职责：
+
+- 每场战斗创建一棵独立场景树。
+- 持有本场战斗的玩家状态、敌人、Boss、弹幕、浮字、HUD、局内计时器。
+- 通过 `combat_finished(result)` 把胜负结果返回给 `main.gd`。
+- 战斗结束后由 `main.gd` 销毁整棵战斗场景。
+
+`main.gd` 当前只负责：
+
+- 点击战斗节点后实例化 `CombatScenePacked`。
+- 传入 `registry`、`run_context`、`asset_catalog`。
+- 监听 `combat_finished`。
+- 胜利后推进地图，失败后显示失败界面。
+
+旧战斗 helper 已从 `main.gd` 清理。后续战斗内新增实体、buff、弹幕、掉落或计时器时，应优先放入 `PlayableCombatScene` 或它拆出的子系统，不要再回写到 `main.gd`。
+
+## 第四阶段建议：拆战斗内部系统
 
 建议新增：
 
 ```text
-src/app/playable/combat/
+src/app/combat/
   playable_combat_state.gd
   playable_spawn_system.gd
   playable_weapon_system.gd
