@@ -59,6 +59,12 @@
     "id": "boss.demo_pollution_source",
     "spawn_position": {"x": 640, "y": 176}
   },
+  "hud": {
+    "bar_loss_delay_seconds": 0.32,
+    "bar_loss_catchup_speed": 3.0,
+    "damage_heat_window_seconds": 0.85,
+    "damage_heat_decay_speed": 1.35
+  },
   "vfx": {
     "slash_size": {"x": 132, "y": 132},
     "magic_size": {"x": 96, "y": 96},
