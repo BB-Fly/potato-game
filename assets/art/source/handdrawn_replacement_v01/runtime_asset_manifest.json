@@ -1415,5 +1415,54 @@
       242,
       248
     ]
+  },
+  {
+    "path": "assets/art/map/backgrounds/full_run_route_background_v03_clean.png",
+    "width": 1280,
+    "height": 6480,
+    "mode": "RGB",
+    "has_alpha": false
+  },
+  {
+    "path": "assets/art/map/backgrounds/full_run_route_atmosphere_v03_clean.png",
+    "width": 1280,
+    "height": 6480,
+    "mode": "RGBA",
+    "has_alpha": true
+  },
+  {
+    "path": "assets/art/map/backgrounds/full_run_route_foreground_v03_clean.png",
+    "width": 1280,
+    "height": 6480,
+    "mode": "RGBA",
+    "has_alpha": true
+  },
+  {
+    "path": "assets/art/map/effects/future_pollution_fog_v03_clean.png",
+    "width": 1280,
+    "height": 720,
+    "mode": "RGBA",
+    "has_alpha": true
+  },
+  {
+    "path": "assets/art/map/effects/past_shadow_vignette_v03_clean.png",
+    "width": 1280,
+    "height": 720,
+    "mode": "RGBA",
+    "has_alpha": true
+  },
+  {
+    "path": "assets/art/map/effects/current_floor_spotlight_v03_clean.png",
+    "width": 1280,
+    "height": 720,
+    "mode": "RGBA",
+    "has_alpha": true
+  },
+  {
+    "path": "assets/art/map/effects/node_socket_glow_v03_clean.png",
+    "width": 160,
+    "height": 160,
+    "mode": "RGBA",
+    "has_alpha": true
   }
 ]

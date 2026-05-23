@@ -2,23 +2,25 @@
 
 ## Direction
 
-The route map is now a single scrollable run map instead of one small map slice per floor. The player can inspect the entire bottom-to-top route, while only the current floor accepts route, reward, and combat input.
+The route map is a single scrollable run map instead of one small map slice per floor. The player can inspect the entire bottom-to-top route, while only the current floor accepts route, reward, and combat input.
 
 Core layout:
 
+- The full demo run contains 3 major acts and 9 small stages on one 1280x6480 canvas.
 - Floor 1 begins near the bottom of the full map with two start reward nodes. Both can be claimed before the first combat gate.
-- Floors 2 and later split into left and right lanes. The player chooses one lane, then claims only the reward nodes on that lane before the shared combat gate unlocks.
-- All floors are visible on the same 1280x4320 canvas. The camera scrolls to the current floor and can be manually moved with mouse wheel, middle-drag, right stick, or PageUp/PageDown.
+- Floors 2-9 split into left and right lanes. The player chooses one lane, then claims only the reward nodes on that lane before the shared combat gate unlocks.
 - Passed floors are darkened read-only history. The current floor remains bright. Future floors are covered by pollution fog and locked.
+- Runtime-controlled rewards, selected states, claimed states, locks, route hotspots, icons, and tooltips stay separate from the background.
 
 ## Visual Language
 
 - Perspective: 3/4 top-down hand-painted route board, readable at a 1280x720 viewport.
-- Style: Puritato hand-drawn cel-animation map style, thick ink silhouettes, readable pads, warm garden colors shifting into toxic purple corruption.
-- Chapter 1: lush potato garden ruins, moss, stone walls, curly vines, warm leaves, mild purple mist.
-- Chapter 2: corrupted greenhouse and mushroom-crystal growth, darker soil, teal mushrooms, blue-purple crystals, heavier fog.
-- Small floor differences are produced by six distinct generated floor bands, with stronger corruption, denser ruin silhouettes, and heavier purple-green pollution toward the front line.
-- Route lanes and reward pads are baked into the background as scenery foundations. Runtime icons, selected markers, claimed state, lock state, route hotspots, and tooltips stay separate.
+- Style: Puritato watercolor/cel-animation map style, soft ink silhouettes, readable roads and pads, clean background color fields.
+- Background contract: foundation-only. The base image may contain terrain, roads, low floor marks, empty circular socket pads, cracks, stains, puddles, and pollution washes. It must not bake in buildings, shops, chests, characters, monsters, reward icons, large props, walls, factories, signs, labels, or foreground occluders.
+- Act 1, floors 1-3: clean rear potato fields, warm soil, pale stone roads, flat crop-field markings, irrigation curves.
+- Act 2, floors 4-6: abandoned greenhouse wetland, teal ground washes, shallow puddles, low violet crystal stains.
+- Act 3, floors 7-9: polluted front-line wasteland, ash-gray ground, industrial floor scars as flat markings, toxic purple-green contamination.
+- Pollution increases toward the front line, but the playable route remains open and readable.
 
 ## Runtime Assets
 
@@ -26,27 +28,29 @@ Runtime exports:
 
 | Asset ID | Path | Notes |
 | --- | --- | --- |
-| `map.full_run_route.v02.background` | `assets/art/map/backgrounds/full_run_route_background_v02.png` | 1280x4320 full route map base |
-| `map.full_run_route.v02.atmosphere` | `assets/art/map/backgrounds/full_run_route_atmosphere_v02.png` | 1280x4320 back-effect pollution atmosphere |
-| `map.full_run_route.v02.foreground` | `assets/art/map/backgrounds/full_run_route_foreground_v02.png` | 1280x4320 transparent edge foliage/fog layer |
-| `map.effect.future_pollution_fog.v02` | `assets/art/map/effects/future_pollution_fog_v02.png` | 1280x720 future-floor obstruction |
-| `map.effect.past_shadow.v02` | `assets/art/map/effects/past_shadow_vignette_v02.png` | 1280x720 passed-floor darkening |
-| `map.effect.current_spotlight.v02` | `assets/art/map/effects/current_floor_spotlight_v02.png` | 1280x720 current-floor focus |
-| `map.effect.node_socket_glow.v02` | `assets/art/map/effects/node_socket_glow_v02.png` | reusable node socket glow |
-| preview only | `assets/art/map/previews/full_run_route_preview_v02.png` | QA composite of runtime layers |
+| `map.full_run_route.v03_clean.background` | `assets/art/map/backgrounds/full_run_route_background_v03_clean.png` | 1280x6480 foundation-only full route map |
+| `map.full_run_route.v03_clean.atmosphere` | `assets/art/map/backgrounds/full_run_route_atmosphere_v03_clean.png` | 1280x6480 subtle pollution atmosphere |
+| `map.full_run_route.v03_clean.foreground` | `assets/art/map/backgrounds/full_run_route_foreground_v03_clean.png` | 1280x6480 transparent edge haze layer |
+| `map.effect.future_pollution_fog.v03_clean` | `assets/art/map/effects/future_pollution_fog_v03_clean.png` | 1280x720 future-floor obstruction |
+| `map.effect.past_shadow.v03_clean` | `assets/art/map/effects/past_shadow_vignette_v03_clean.png` | 1280x720 passed-floor darkening |
+| `map.effect.current_spotlight.v03_clean` | `assets/art/map/effects/current_floor_spotlight_v03_clean.png` | 1280x720 current-floor focus |
+| `map.effect.node_socket_glow.v03_clean` | `assets/art/map/effects/node_socket_glow_v03_clean.png` | reusable node socket glow |
+| preview only | `assets/art/map/previews/full_run_route_preview_v03_clean.png` | QA composite of runtime layers |
 
 Source and metadata:
 
 ```text
-assets/art/source/full_run_route_map_v02/
-  floor_*.prompt.txt
-  floor_*_raw.png
-  floor_*_band_1280x720.png
-  full_run_route_background_v02.prompt.txt
+assets/art/source/full_run_route_map_v03_clean/
+  act_1_garden_raw.png
+  act_2_greenhouse_raw.png
+  act_3_frontline_raw.png
+  act_*_1280x2160.png
+  floor_01_band_1280x720.png ... floor_09_band_1280x720.png
+  *.prompt.txt
   manifest.json
 ```
 
-Future higher-fidelity passes can replace the configured `v02` layers directly as long as the canvas stays 1280x4320 and the floor bands remain 720 px tall.
+The runtime consumes the complete 1280x6480 long map, not the individual source bands. The source bands are retained for review and future art replacement.
 
 ## Data Contract
 
@@ -61,30 +65,29 @@ Important fields:
 - `presentation.layout_style = "full_run_scroll_route_map"`
 - `presentation.canvas.width = 1280`
 - `presentation.canvas.floor_height = 720`
-- `presentation.canvas.height = 4320`
-- `presentation.art_layers.background_path`
-- `presentation.art_layers.foreground_path`
+- `presentation.canvas.height = 6480`
 - `presentation.art_layers.layers[]`
 - `presentation.state_effects`
 - `presentation.node_visual`
+- `areas[].chapter_id`
 - `areas[].selection_mode`
 
 Selection modes:
 
 - `collect_all`: used by Floor 1. Every reward node on every route can be claimed before combat.
-- `choose_one_route`: used by later floors. The player chooses one lane, then only that lane's reward nodes can be claimed.
+- `choose_one_route`: used by Floors 2-9. The player chooses one lane, then only that lane's reward nodes can be claimed.
 
 Reward node positions are fixed through `position_hint` in normalized floor coordinates. Reward type and reward payload can be randomized with `reward_options`:
 
 ```json
 {
-  "id": "floor_3_left_outer_upper",
+  "id": "floor_7_left_outer_upper",
   "side": "outer",
-  "position_hint": {"x": 0.23, "y": 0.32},
+  "position_hint": {"x": 0.24, "y": 0.24},
   "reward_options": [
-    {"type": "random_item", "reward_table_id": "reward.random_item.chapter_1", "weight": 3},
-    {"type": "coin", "gold": 315, "weight": 2},
-    {"type": "weapon_master", "shop_id": "shop.weapon_master.default", "weight": 1}
+    {"type": "weapon_shop", "shop_id": "shop.weapon.default", "weight": 3},
+    {"type": "weapon_master", "shop_id": "shop.weapon_master.default", "weight": 1},
+    {"type": "coin", "gold": 630, "weight": 1}
   ]
 }
 ```

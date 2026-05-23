@@ -66,6 +66,47 @@
       ]
     },
     {
+      "id": "reward.random_item.chapter_3",
+      "enabled": true,
+      "gold_base": 0,
+      "offers": [
+        {
+          "content_type": "item",
+          "count": 3,
+          "duplicate_policy": "avoid_same_offer",
+          "guarantees": [
+            {
+              "slot": 0,
+              "school": "character_primary"
+            }
+          ]
+        },
+        {
+          "content_type": "item",
+          "count": 3,
+          "duplicate_policy": "avoid_same_offer",
+          "guarantees": [
+            {
+              "slot": 0,
+              "school": "character_primary"
+            }
+          ]
+        },
+        {
+          "content_type": "item",
+          "count": 3,
+          "rarity": "legendary",
+          "duplicate_policy": "avoid_same_offer",
+          "guarantees": [
+            {
+              "slot": 0,
+              "school": "character_primary"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "reward.combat.default",
       "enabled": true,
       "gold_by_floor": {
@@ -74,7 +115,10 @@
         "3": 300,
         "4": 375,
         "5": 450,
-        "6": 525
+        "6": 525,
+        "7": 600,
+        "8": 675,
+        "9": 750
       },
       "gold_base": 150,
       "gold_per_floor": 75,

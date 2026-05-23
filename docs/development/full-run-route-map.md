@@ -19,17 +19,18 @@
    - future fog
    - front effects
    - foreground overlay
-3. The scene focuses the current floor but keeps the whole 1280x4320 map scrollable.
+3. The scene focuses the current floor but keeps the whole 1280x6480 map scrollable.
 4. Only nodes on the current floor can be clicked.
 5. Floor 1 uses `selection_mode: collect_all`, so both start reward nodes are active.
-6. Later floors use `selection_mode: choose_one_route`, so clicking a lane locks the other lane.
+6. Floors 2-9 use `selection_mode: choose_one_route`, so clicking a lane locks the other lane.
 7. Claimed rewards are stored in `run_context.reward_history` so passed floors render as dark read-only history.
 
 ## Authoring Notes
 
-- Keep full-run runtime art at `1280x4320` for the current six-floor demo.
-- Keep each floor band at `720` px high; floor 1 is the bottom band and floor 6 is the top band.
-- Current runtime art uses `assets/art/source/full_run_route_map_v02/`, with six distinct generated floor bands and separate atmosphere, foreground, state-effect, and node-glow textures.
+- Keep full-run runtime art at `1280x6480` for the current 3-act, 9-floor demo.
+- Keep each floor band at `720` px high; floor 1 is the bottom band and floor 9 is the top band.
+- Current runtime art uses `assets/art/source/full_run_route_map_v03_clean/`.
+- The base background is intentionally clean and foundation-only. Put reward icons, shops, interactables, buildings, heavy props, foreground occluders, and animated effects on separate runtime layers or future prop layers.
 - Store runtime-controlled reward icons and state markers as separate assets. Do not paint icons, labels, selected states, or locked states into the background.
 - To add a new floor, update `presentation.canvas.height`, add an `areas[]` entry, and regenerate or extend the full-run background and foreground art.
 - To vary a reward position without changing the art, edit the node `position_hint`.

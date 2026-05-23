@@ -1,0 +1,69 @@
+{
+  "id": "full_run_route_map_v03_clean",
+  "canvas": {
+    "width": 1280,
+    "height": 6480,
+    "floor_height": 720,
+    "floors": 9,
+    "acts": 3
+  },
+  "source_generated_images": {
+    "act_1_garden_raw.png": "C:\\Users\\LYZ\\.codex\\generated_images\\019e53a2-5670-7332-a58a-b7195e2197c5\\ig_06da628d7fe90454016a11c1c4d77c8191a57f89c9547dff0d.png",
+    "act_2_greenhouse_raw.png": "C:\\Users\\LYZ\\.codex\\generated_images\\019e53a2-5670-7332-a58a-b7195e2197c5\\ig_06da628d7fe90454016a11c217df0c8191863ce823c6901bb8.png",
+    "act_3_frontline_raw.png": "C:\\Users\\LYZ\\.codex\\generated_images\\019e53a2-5670-7332-a58a-b7195e2197c5\\ig_06da628d7fe90454016a11c27152f481919a8f9505c0709f47.png",
+    "full_run_reference_raw.png": "C:\\Users\\LYZ\\.codex\\generated_images\\019e53a2-5670-7332-a58a-b7195e2197c5\\ig_06da628d7fe90454016a11c03619c88191b6963fe9e38b7b1f.png"
+  },
+  "runtime_assets": [
+    {
+      "id": "map.full_run_route.v03_clean.background",
+      "path": "assets/art/map/backgrounds/full_run_route_background_v03_clean.png",
+      "width": 1280,
+      "height": 6480,
+      "has_alpha": false
+    },
+    {
+      "id": "map.full_run_route.v03_clean.atmosphere",
+      "path": "assets/art/map/backgrounds/full_run_route_atmosphere_v03_clean.png",
+      "width": 1280,
+      "height": 6480,
+      "has_alpha": true
+    },
+    {
+      "id": "map.full_run_route.v03_clean.foreground",
+      "path": "assets/art/map/backgrounds/full_run_route_foreground_v03_clean.png",
+      "width": 1280,
+      "height": 6480,
+      "has_alpha": true
+    },
+    {
+      "id": "map.effect.future_pollution_fog.v03_clean",
+      "path": "assets/art/map/effects/future_pollution_fog_v03_clean.png",
+      "width": 1280,
+      "height": 720,
+      "has_alpha": true
+    },
+    {
+      "id": "map.effect.past_shadow.v03_clean",
+      "path": "assets/art/map/effects/past_shadow_vignette_v03_clean.png",
+      "width": 1280,
+      "height": 720,
+      "has_alpha": true
+    },
+    {
+      "id": "map.effect.current_spotlight.v03_clean",
+      "path": "assets/art/map/effects/current_floor_spotlight_v03_clean.png",
+      "width": 1280,
+      "height": 720,
+      "has_alpha": true
+    },
+    {
+      "id": "map.effect.node_socket_glow.v03_clean",
+      "path": "assets/art/map/effects/node_socket_glow_v03_clean.png",
+      "width": 160,
+      "height": 160,
+      "has_alpha": true
+    }
+  ],
+  "preview": "assets/art/map/previews/full_run_route_preview_v03_clean.png",
+  "layer_contract": "foundation-only generated background plus separate runtime icons, reward randomization, state overlays, foreground haze and later prop overlays."
+}

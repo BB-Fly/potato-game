@@ -39,8 +39,11 @@ func _run() -> void:
 	var current_map = map_flow.get_current_map()
 	var presentation: Dictionary = current_map.get("presentation", {})
 	var canvas: Dictionary = presentation.get("canvas", {})
-	if int(canvas.get("height", 0)) != 4320:
-		_fail("Expected full-run canvas height 4320")
+	if int(canvas.get("height", 0)) != 6480:
+		_fail("Expected full-run canvas height 6480")
+		return
+	if map_flow.get_all_areas().size() != 9:
+		_fail("Expected 9 full-run map areas")
 		return
 
 	var area = map_flow.get_current_area()
@@ -72,7 +75,7 @@ func _run() -> void:
 	var route_map_scene = RouteMapScenePacked.instantiate()
 	get_root().add_child(route_map_scene)
 	route_map_scene.setup(map_flow, route_controller, run_context, AssetCatalog.new(registry))
-	if route_map_scene.total_map_height != 4320.0:
+	if route_map_scene.total_map_height != 6480.0:
 		_fail("Route map scene did not read full-run canvas height")
 		return
 	if route_map_scene.get_node("Generated").get_child_count() == 0:

@@ -415,6 +415,87 @@
       ]
     },
     {
+      "id": "map.full_run_route.v03_clean.background",
+      "kind": "background",
+      "path": "res://assets/art/map/backgrounds/full_run_route_background_v03_clean.png",
+      "tags": [
+        "map",
+        "route",
+        "full_run",
+        "background",
+        "v03_clean"
+      ]
+    },
+    {
+      "id": "map.full_run_route.v03_clean.atmosphere",
+      "kind": "overlay",
+      "path": "res://assets/art/map/backgrounds/full_run_route_atmosphere_v03_clean.png",
+      "tags": [
+        "map",
+        "route",
+        "full_run",
+        "atmosphere",
+        "v03_clean"
+      ]
+    },
+    {
+      "id": "map.full_run_route.v03_clean.foreground",
+      "kind": "foreground",
+      "path": "res://assets/art/map/backgrounds/full_run_route_foreground_v03_clean.png",
+      "tags": [
+        "map",
+        "route",
+        "full_run",
+        "foreground",
+        "v03_clean"
+      ]
+    },
+    {
+      "id": "map.effect.future_pollution_fog.v03_clean",
+      "kind": "overlay",
+      "path": "res://assets/art/map/effects/future_pollution_fog_v03_clean.png",
+      "tags": [
+        "map",
+        "route",
+        "fog",
+        "v03_clean"
+      ]
+    },
+    {
+      "id": "map.effect.past_shadow.v03_clean",
+      "kind": "overlay",
+      "path": "res://assets/art/map/effects/past_shadow_vignette_v03_clean.png",
+      "tags": [
+        "map",
+        "route",
+        "shadow",
+        "v03_clean"
+      ]
+    },
+    {
+      "id": "map.effect.current_spotlight.v03_clean",
+      "kind": "overlay",
+      "path": "res://assets/art/map/effects/current_floor_spotlight_v03_clean.png",
+      "tags": [
+        "map",
+        "route",
+        "spotlight",
+        "v03_clean"
+      ]
+    },
+    {
+      "id": "map.effect.node_socket_glow.v03_clean",
+      "kind": "overlay",
+      "path": "res://assets/art/map/effects/node_socket_glow_v03_clean.png",
+      "tags": [
+        "map",
+        "route",
+        "node",
+        "glow",
+        "v03_clean"
+      ]
+    },
+    {
       "id": "map.node.boss.icon",
       "kind": "icon",
       "path": "res://assets/art/map/nodes/node_boss.png",
