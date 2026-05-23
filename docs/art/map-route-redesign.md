@@ -17,7 +17,7 @@ Core layout:
 - Style: Puritato hand-drawn cel-animation map style, thick ink silhouettes, readable pads, warm garden colors shifting into toxic purple corruption.
 - Chapter 1: lush potato garden ruins, moss, stone walls, curly vines, warm leaves, mild purple mist.
 - Chapter 2: corrupted greenhouse and mushroom-crystal growth, darker soil, teal mushrooms, blue-purple crystals, heavier fog.
-- Small floor differences are produced by the assembled full-run background: each band has slightly different brightness, contrast, purple tint, and foreground haze.
+- Small floor differences are produced by six distinct generated floor bands, with stronger corruption, denser ruin silhouettes, and heavier purple-green pollution toward the front line.
 - Route lanes and reward pads are baked into the background as scenery foundations. Runtime icons, selected markers, claimed state, lock state, route hotspots, and tooltips stay separate.
 
 ## Runtime Assets
@@ -26,26 +26,27 @@ Runtime exports:
 
 | Asset ID | Path | Notes |
 | --- | --- | --- |
-| `map.full_run_route.background` | `assets/art/map/backgrounds/full_run_route_background.png` | 1280x4320 full route map base |
-| `map.full_run_route.foreground` | `assets/art/map/backgrounds/full_run_route_foreground.png` | 1280x4320 transparent edge foliage/fog layer |
-| preview only | `assets/art/map/previews/full_run_route_preview.png` | QA composite of background + foreground |
+| `map.full_run_route.v02.background` | `assets/art/map/backgrounds/full_run_route_background_v02.png` | 1280x4320 full route map base |
+| `map.full_run_route.v02.atmosphere` | `assets/art/map/backgrounds/full_run_route_atmosphere_v02.png` | 1280x4320 back-effect pollution atmosphere |
+| `map.full_run_route.v02.foreground` | `assets/art/map/backgrounds/full_run_route_foreground_v02.png` | 1280x4320 transparent edge foliage/fog layer |
+| `map.effect.future_pollution_fog.v02` | `assets/art/map/effects/future_pollution_fog_v02.png` | 1280x720 future-floor obstruction |
+| `map.effect.past_shadow.v02` | `assets/art/map/effects/past_shadow_vignette_v02.png` | 1280x720 passed-floor darkening |
+| `map.effect.current_spotlight.v02` | `assets/art/map/effects/current_floor_spotlight_v02.png` | 1280x720 current-floor focus |
+| `map.effect.node_socket_glow.v02` | `assets/art/map/effects/node_socket_glow_v02.png` | reusable node socket glow |
+| preview only | `assets/art/map/previews/full_run_route_preview_v02.png` | QA composite of runtime layers |
 
 Source and metadata:
 
 ```text
-assets/art/source/full_run_route_map_v01/
-  full_run_route_background.prompt.txt
+assets/art/source/full_run_route_map_v02/
+  floor_*.prompt.txt
+  floor_*_raw.png
+  floor_*_band_1280x720.png
+  full_run_route_background_v02.prompt.txt
   manifest.json
 ```
 
-The current full-run art is assembled from the approved chapter route backgrounds:
-
-```text
-assets/art/map/backgrounds/chapter_1_route_background.png
-assets/art/map/backgrounds/chapter_2_route_background.png
-```
-
-Future higher-fidelity passes can replace `full_run_route_background.png` and `full_run_route_foreground.png` directly as long as the canvas stays 1280x4320 and the floor bands remain 720 px tall.
+Future higher-fidelity passes can replace the configured `v02` layers directly as long as the canvas stays 1280x4320 and the floor bands remain 720 px tall.
 
 ## Data Contract
 
@@ -63,6 +64,9 @@ Important fields:
 - `presentation.canvas.height = 4320`
 - `presentation.art_layers.background_path`
 - `presentation.art_layers.foreground_path`
+- `presentation.art_layers.layers[]`
+- `presentation.state_effects`
+- `presentation.node_visual`
 - `areas[].selection_mode`
 
 Selection modes:

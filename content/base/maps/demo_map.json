@@ -12,9 +12,29 @@
       "height": 4320
     },
     "art_layers": {
-      "background_path": "res://assets/art/map/backgrounds/full_run_route_background.png",
-      "foreground_path": "res://assets/art/map/backgrounds/full_run_route_foreground.png",
-      "foreground_scroll_factor": 1.035
+      "background_path": "res://assets/art/map/backgrounds/full_run_route_background_v02.png",
+      "foreground_path": "res://assets/art/map/backgrounds/full_run_route_foreground_v02.png",
+      "foreground_scroll_factor": 1.035,
+      "layers": [
+        {
+          "id": "ground",
+          "path": "res://assets/art/map/backgrounds/full_run_route_background_v02.png",
+          "render_layer": "background",
+          "scroll_factor": 1.0
+        },
+        {
+          "id": "pollution_atmosphere",
+          "path": "res://assets/art/map/backgrounds/full_run_route_atmosphere_v02.png",
+          "render_layer": "back_effect",
+          "scroll_factor": 0.985
+        },
+        {
+          "id": "foreground_vines",
+          "path": "res://assets/art/map/backgrounds/full_run_route_foreground_v02.png",
+          "render_layer": "foreground",
+          "scroll_factor": 1.035
+        }
+      ]
     },
     "navigation": {
       "mouse_wheel": "scroll_entire_run_map",
@@ -28,10 +48,27 @@
       "future": "pollution_fog_locked"
     },
     "layout_hints": {
-      "entry": {"x": 0.5, "y": 0.92},
+      "entry": {
+        "x": 0.5,
+        "y": 0.92
+      },
       "left_route_x": 0.32,
       "right_route_x": 0.68,
-      "combat": {"x": 0.5, "y": 0.12}
+      "combat": {
+        "x": 0.5,
+        "y": 0.12
+      }
+    },
+    "state_effects": {
+      "past_texture_path": "res://assets/art/map/effects/past_shadow_vignette_v02.png",
+      "current_texture_path": "res://assets/art/map/effects/current_floor_spotlight_v02.png",
+      "future_texture_path": "res://assets/art/map/effects/future_pollution_fog_v02.png"
+    },
+    "node_visual": {
+      "hit_size": 96,
+      "icon_size": 64,
+      "combat_hit_size": 112,
+      "socket_glow_path": "res://assets/art/map/effects/node_socket_glow_v02.png"
     }
   },
   "areas": [
@@ -41,7 +78,13 @@
       "floor": 1,
       "selection_mode": "collect_all",
       "background_path": "res://assets/art/map/backgrounds/chapter_1_route_background.png",
-      "entry_node": {"type": "route_entry", "position_hint": {"x": 0.5, "y": 0.92}},
+      "entry_node": {
+        "type": "route_entry",
+        "position_hint": {
+          "x": 0.5,
+          "y": 0.92
+        }
+      },
       "routes": [
         {
           "id": "left",
@@ -50,11 +93,23 @@
             {
               "id": "floor_1_left_start_bonus",
               "side": "outer",
-              "position_hint": {"x": 0.36, "y": 0.78},
+              "position_hint": {
+                "x": 0.38,
+                "y": 0.56
+              },
               "reward_options": [
-                {"type": "free_weapon", "reward_table_id": "reward.free_weapon.start", "weight": 4},
-                {"type": "coin", "gold": 150, "weight": 1}
-              ]
+                {
+                  "type": "free_weapon",
+                  "reward_table_id": "reward.free_weapon.start",
+                  "weight": 4
+                },
+                {
+                  "type": "coin",
+                  "gold": 150,
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "garden_outer"
             }
           ]
         },
@@ -65,17 +120,37 @@
             {
               "id": "floor_1_right_start_bonus",
               "side": "outer",
-              "position_hint": {"x": 0.64, "y": 0.78},
+              "position_hint": {
+                "x": 0.62,
+                "y": 0.56
+              },
               "reward_options": [
-                {"type": "random_item", "reward_table_id": "reward.random_item.chapter_1", "weight": 4},
-                {"type": "coin", "gold": 180, "weight": 1}
-              ]
+                {
+                  "type": "random_item",
+                  "reward_table_id": "reward.random_item.chapter_1",
+                  "weight": 4
+                },
+                {
+                  "type": "coin",
+                  "gold": 180,
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "garden_outer"
             }
           ]
         }
       ],
       "shared_exit_nodes": [
-        {"id": "combat.floor_1", "type": "combat", "reward_table_id": "reward.combat.default", "position_hint": {"x": 0.5, "y": 0.14}}
+        {
+          "id": "combat.floor_1",
+          "type": "combat",
+          "reward_table_id": "reward.combat.default",
+          "position_hint": {
+            "x": 0.5,
+            "y": 0.14
+          }
+        }
       ]
     },
     {
@@ -84,7 +159,13 @@
       "floor": 2,
       "selection_mode": "choose_one_route",
       "background_path": "res://assets/art/map/backgrounds/chapter_1_route_background.png",
-      "entry_node": {"type": "route_entry", "position_hint": {"x": 0.5, "y": 0.92}},
+      "entry_node": {
+        "type": "route_entry",
+        "position_hint": {
+          "x": 0.5,
+          "y": 0.92
+        }
+      },
       "routes": [
         {
           "id": "left",
@@ -93,32 +174,80 @@
             {
               "id": "floor_2_left_outer_lower",
               "side": "outer",
-              "position_hint": {"x": 0.18, "y": 0.67},
+              "position_hint": {
+                "x": 0.18,
+                "y": 0.67
+              },
               "reward_options": [
-                {"type": "weapon_shop", "shop_id": "shop.weapon.default", "weight": 3},
-                {"type": "coin", "gold": 225, "weight": 2},
-                {"type": "encounter", "encounter_pool_id": "encounter_pool.default", "weight": 1}
-              ]
+                {
+                  "type": "weapon_shop",
+                  "shop_id": "shop.weapon.default",
+                  "weight": 3
+                },
+                {
+                  "type": "coin",
+                  "gold": 225,
+                  "weight": 2
+                },
+                {
+                  "type": "encounter",
+                  "encounter_pool_id": "encounter_pool.default",
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "garden_outer"
             },
             {
               "id": "floor_2_left_inner_mid",
               "side": "inner",
-              "position_hint": {"x": 0.42, "y": 0.50},
+              "position_hint": {
+                "x": 0.42,
+                "y": 0.5
+              },
               "reward_options": [
-                {"type": "item_shop", "shop_id": "shop.item.default", "weight": 3},
-                {"type": "random_item", "reward_table_id": "reward.random_item.chapter_1", "weight": 2},
-                {"type": "coin", "gold": 210, "weight": 1}
-              ]
+                {
+                  "type": "item_shop",
+                  "shop_id": "shop.item.default",
+                  "weight": 3
+                },
+                {
+                  "type": "random_item",
+                  "reward_table_id": "reward.random_item.chapter_1",
+                  "weight": 2
+                },
+                {
+                  "type": "coin",
+                  "gold": 210,
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "garden_inner"
             },
             {
               "id": "floor_2_left_outer_upper",
               "side": "outer",
-              "position_hint": {"x": 0.23, "y": 0.32},
+              "position_hint": {
+                "x": 0.23,
+                "y": 0.32
+              },
               "reward_options": [
-                {"type": "coin", "gold": 240, "weight": 3},
-                {"type": "magic_shop", "shop_id": "shop.magic.default", "weight": 2},
-                {"type": "random_item", "reward_table_id": "reward.random_item.chapter_1", "weight": 1}
-              ]
+                {
+                  "type": "coin",
+                  "gold": 240,
+                  "weight": 3
+                },
+                {
+                  "type": "magic_shop",
+                  "shop_id": "shop.magic.default",
+                  "weight": 2
+                },
+                {
+                  "type": "random_item",
+                  "reward_table_id": "reward.random_item.chapter_1",
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "garden_outer"
             }
           ]
         },
@@ -129,38 +258,94 @@
             {
               "id": "floor_2_right_inner_lower",
               "side": "inner",
-              "position_hint": {"x": 0.58, "y": 0.67},
+              "position_hint": {
+                "x": 0.58,
+                "y": 0.67
+              },
               "reward_options": [
-                {"type": "weapon_shop", "shop_id": "shop.weapon.default", "weight": 3},
-                {"type": "coin", "gold": 225, "weight": 2},
-                {"type": "encounter", "encounter_pool_id": "encounter_pool.default", "weight": 1}
-              ]
+                {
+                  "type": "weapon_shop",
+                  "shop_id": "shop.weapon.default",
+                  "weight": 3
+                },
+                {
+                  "type": "coin",
+                  "gold": 225,
+                  "weight": 2
+                },
+                {
+                  "type": "encounter",
+                  "encounter_pool_id": "encounter_pool.default",
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "garden_inner"
             },
             {
               "id": "floor_2_right_outer_mid",
               "side": "outer",
-              "position_hint": {"x": 0.82, "y": 0.50},
+              "position_hint": {
+                "x": 0.82,
+                "y": 0.5
+              },
               "reward_options": [
-                {"type": "magic_shop", "shop_id": "shop.magic.default", "weight": 3},
-                {"type": "random_item", "reward_table_id": "reward.random_item.chapter_1", "weight": 2},
-                {"type": "coin", "gold": 210, "weight": 1}
-              ]
+                {
+                  "type": "magic_shop",
+                  "shop_id": "shop.magic.default",
+                  "weight": 3
+                },
+                {
+                  "type": "random_item",
+                  "reward_table_id": "reward.random_item.chapter_1",
+                  "weight": 2
+                },
+                {
+                  "type": "coin",
+                  "gold": 210,
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "garden_outer"
             },
             {
               "id": "floor_2_right_inner_upper",
               "side": "inner",
-              "position_hint": {"x": 0.77, "y": 0.32},
+              "position_hint": {
+                "x": 0.77,
+                "y": 0.32
+              },
               "reward_options": [
-                {"type": "coin", "gold": 240, "weight": 3},
-                {"type": "item_shop", "shop_id": "shop.item.default", "weight": 2},
-                {"type": "random_item", "reward_table_id": "reward.random_item.chapter_1", "weight": 1}
-              ]
+                {
+                  "type": "coin",
+                  "gold": 240,
+                  "weight": 3
+                },
+                {
+                  "type": "item_shop",
+                  "shop_id": "shop.item.default",
+                  "weight": 2
+                },
+                {
+                  "type": "random_item",
+                  "reward_table_id": "reward.random_item.chapter_1",
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "garden_inner"
             }
           ]
         }
       ],
       "shared_exit_nodes": [
-        {"id": "combat.floor_2", "type": "combat", "reward_table_id": "reward.combat.default", "position_hint": {"x": 0.5, "y": 0.14}}
+        {
+          "id": "combat.floor_2",
+          "type": "combat",
+          "reward_table_id": "reward.combat.default",
+          "position_hint": {
+            "x": 0.5,
+            "y": 0.14
+          }
+        }
       ]
     },
     {
@@ -169,7 +354,13 @@
       "floor": 3,
       "selection_mode": "choose_one_route",
       "background_path": "res://assets/art/map/backgrounds/chapter_1_route_background.png",
-      "entry_node": {"type": "route_entry", "position_hint": {"x": 0.5, "y": 0.92}},
+      "entry_node": {
+        "type": "route_entry",
+        "position_hint": {
+          "x": 0.5,
+          "y": 0.92
+        }
+      },
       "routes": [
         {
           "id": "left",
@@ -178,32 +369,80 @@
             {
               "id": "floor_3_left_outer_lower",
               "side": "outer",
-              "position_hint": {"x": 0.18, "y": 0.67},
+              "position_hint": {
+                "x": 0.18,
+                "y": 0.67
+              },
               "reward_options": [
-                {"type": "weapon_shop", "shop_id": "shop.weapon.default", "weight": 3},
-                {"type": "encounter", "encounter_pool_id": "encounter_pool.default", "weight": 2},
-                {"type": "coin", "gold": 300, "weight": 1}
-              ]
+                {
+                  "type": "weapon_shop",
+                  "shop_id": "shop.weapon.default",
+                  "weight": 3
+                },
+                {
+                  "type": "encounter",
+                  "encounter_pool_id": "encounter_pool.default",
+                  "weight": 2
+                },
+                {
+                  "type": "coin",
+                  "gold": 300,
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "garden_outer"
             },
             {
               "id": "floor_3_left_inner_mid",
               "side": "inner",
-              "position_hint": {"x": 0.42, "y": 0.50},
+              "position_hint": {
+                "x": 0.42,
+                "y": 0.5
+              },
               "reward_options": [
-                {"type": "item_shop", "shop_id": "shop.item.default", "weight": 3},
-                {"type": "random_item", "reward_table_id": "reward.random_item.chapter_1", "weight": 2},
-                {"type": "magic_shop", "shop_id": "shop.magic.default", "weight": 1}
-              ]
+                {
+                  "type": "item_shop",
+                  "shop_id": "shop.item.default",
+                  "weight": 3
+                },
+                {
+                  "type": "random_item",
+                  "reward_table_id": "reward.random_item.chapter_1",
+                  "weight": 2
+                },
+                {
+                  "type": "magic_shop",
+                  "shop_id": "shop.magic.default",
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "garden_inner"
             },
             {
               "id": "floor_3_left_outer_upper",
               "side": "outer",
-              "position_hint": {"x": 0.23, "y": 0.32},
+              "position_hint": {
+                "x": 0.23,
+                "y": 0.32
+              },
               "reward_options": [
-                {"type": "random_item", "reward_table_id": "reward.random_item.chapter_1", "weight": 3},
-                {"type": "coin", "gold": 315, "weight": 2},
-                {"type": "weapon_master", "shop_id": "shop.weapon_master.default", "weight": 1}
-              ]
+                {
+                  "type": "random_item",
+                  "reward_table_id": "reward.random_item.chapter_1",
+                  "weight": 3
+                },
+                {
+                  "type": "coin",
+                  "gold": 315,
+                  "weight": 2
+                },
+                {
+                  "type": "weapon_master",
+                  "shop_id": "shop.weapon_master.default",
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "garden_outer"
             }
           ]
         },
@@ -214,38 +453,94 @@
             {
               "id": "floor_3_right_inner_lower",
               "side": "inner",
-              "position_hint": {"x": 0.58, "y": 0.67},
+              "position_hint": {
+                "x": 0.58,
+                "y": 0.67
+              },
               "reward_options": [
-                {"type": "magic_shop", "shop_id": "shop.magic.default", "weight": 3},
-                {"type": "encounter", "encounter_pool_id": "encounter_pool.default", "weight": 2},
-                {"type": "coin", "gold": 300, "weight": 1}
-              ]
+                {
+                  "type": "magic_shop",
+                  "shop_id": "shop.magic.default",
+                  "weight": 3
+                },
+                {
+                  "type": "encounter",
+                  "encounter_pool_id": "encounter_pool.default",
+                  "weight": 2
+                },
+                {
+                  "type": "coin",
+                  "gold": 300,
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "garden_inner"
             },
             {
               "id": "floor_3_right_outer_mid",
               "side": "outer",
-              "position_hint": {"x": 0.82, "y": 0.50},
+              "position_hint": {
+                "x": 0.82,
+                "y": 0.5
+              },
               "reward_options": [
-                {"type": "item_shop", "shop_id": "shop.item.default", "weight": 3},
-                {"type": "random_item", "reward_table_id": "reward.random_item.chapter_1", "weight": 2},
-                {"type": "weapon_shop", "shop_id": "shop.weapon.default", "weight": 1}
-              ]
+                {
+                  "type": "item_shop",
+                  "shop_id": "shop.item.default",
+                  "weight": 3
+                },
+                {
+                  "type": "random_item",
+                  "reward_table_id": "reward.random_item.chapter_1",
+                  "weight": 2
+                },
+                {
+                  "type": "weapon_shop",
+                  "shop_id": "shop.weapon.default",
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "garden_outer"
             },
             {
               "id": "floor_3_right_inner_upper",
               "side": "inner",
-              "position_hint": {"x": 0.77, "y": 0.32},
+              "position_hint": {
+                "x": 0.77,
+                "y": 0.32
+              },
               "reward_options": [
-                {"type": "random_item", "reward_table_id": "reward.random_item.chapter_1", "weight": 3},
-                {"type": "coin", "gold": 315, "weight": 2},
-                {"type": "magic_master", "shop_id": "shop.magic_master.default", "weight": 1}
-              ]
+                {
+                  "type": "random_item",
+                  "reward_table_id": "reward.random_item.chapter_1",
+                  "weight": 3
+                },
+                {
+                  "type": "coin",
+                  "gold": 315,
+                  "weight": 2
+                },
+                {
+                  "type": "magic_master",
+                  "shop_id": "shop.magic_master.default",
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "garden_inner"
             }
           ]
         }
       ],
       "shared_exit_nodes": [
-        {"id": "combat.floor_3", "type": "combat", "reward_table_id": "reward.combat.default", "position_hint": {"x": 0.5, "y": 0.14}}
+        {
+          "id": "combat.floor_3",
+          "type": "combat",
+          "reward_table_id": "reward.combat.default",
+          "position_hint": {
+            "x": 0.5,
+            "y": 0.14
+          }
+        }
       ]
     },
     {
@@ -254,7 +549,13 @@
       "floor": 4,
       "selection_mode": "choose_one_route",
       "background_path": "res://assets/art/map/backgrounds/chapter_2_route_background.png",
-      "entry_node": {"type": "route_entry", "position_hint": {"x": 0.5, "y": 0.92}},
+      "entry_node": {
+        "type": "route_entry",
+        "position_hint": {
+          "x": 0.5,
+          "y": 0.92
+        }
+      },
       "routes": [
         {
           "id": "left",
@@ -263,32 +564,80 @@
             {
               "id": "floor_4_left_outer_lower",
               "side": "outer",
-              "position_hint": {"x": 0.18, "y": 0.67},
+              "position_hint": {
+                "x": 0.18,
+                "y": 0.67
+              },
               "reward_options": [
-                {"type": "coin", "gold": 375, "weight": 3},
-                {"type": "encounter", "encounter_pool_id": "encounter_pool.default", "weight": 2},
-                {"type": "weapon_shop", "shop_id": "shop.weapon.default", "weight": 1}
-              ]
+                {
+                  "type": "coin",
+                  "gold": 375,
+                  "weight": 3
+                },
+                {
+                  "type": "encounter",
+                  "encounter_pool_id": "encounter_pool.default",
+                  "weight": 2
+                },
+                {
+                  "type": "weapon_shop",
+                  "shop_id": "shop.weapon.default",
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "crystal_outer"
             },
             {
               "id": "floor_4_left_inner_mid",
               "side": "inner",
-              "position_hint": {"x": 0.42, "y": 0.50},
+              "position_hint": {
+                "x": 0.42,
+                "y": 0.5
+              },
               "reward_options": [
-                {"type": "encounter", "encounter_pool_id": "encounter_pool.default", "weight": 3},
-                {"type": "random_item", "reward_table_id": "reward.random_item.chapter_2", "weight": 2},
-                {"type": "item_shop", "shop_id": "shop.item.default", "weight": 1}
-              ]
+                {
+                  "type": "encounter",
+                  "encounter_pool_id": "encounter_pool.default",
+                  "weight": 3
+                },
+                {
+                  "type": "random_item",
+                  "reward_table_id": "reward.random_item.chapter_2",
+                  "weight": 2
+                },
+                {
+                  "type": "item_shop",
+                  "shop_id": "shop.item.default",
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "crystal_inner"
             },
             {
               "id": "floor_4_left_outer_upper",
               "side": "outer",
-              "position_hint": {"x": 0.23, "y": 0.32},
+              "position_hint": {
+                "x": 0.23,
+                "y": 0.32
+              },
               "reward_options": [
-                {"type": "weapon_shop", "shop_id": "shop.weapon.default", "weight": 3},
-                {"type": "weapon_master", "shop_id": "shop.weapon_master.default", "weight": 1},
-                {"type": "coin", "gold": 405, "weight": 1}
-              ]
+                {
+                  "type": "weapon_shop",
+                  "shop_id": "shop.weapon.default",
+                  "weight": 3
+                },
+                {
+                  "type": "weapon_master",
+                  "shop_id": "shop.weapon_master.default",
+                  "weight": 1
+                },
+                {
+                  "type": "coin",
+                  "gold": 405,
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "crystal_outer"
             }
           ]
         },
@@ -299,38 +648,94 @@
             {
               "id": "floor_4_right_inner_lower",
               "side": "inner",
-              "position_hint": {"x": 0.58, "y": 0.67},
+              "position_hint": {
+                "x": 0.58,
+                "y": 0.67
+              },
               "reward_options": [
-                {"type": "encounter", "encounter_pool_id": "encounter_pool.default", "weight": 3},
-                {"type": "coin", "gold": 375, "weight": 2},
-                {"type": "magic_shop", "shop_id": "shop.magic.default", "weight": 1}
-              ]
+                {
+                  "type": "encounter",
+                  "encounter_pool_id": "encounter_pool.default",
+                  "weight": 3
+                },
+                {
+                  "type": "coin",
+                  "gold": 375,
+                  "weight": 2
+                },
+                {
+                  "type": "magic_shop",
+                  "shop_id": "shop.magic.default",
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "crystal_inner"
             },
             {
               "id": "floor_4_right_outer_mid",
               "side": "outer",
-              "position_hint": {"x": 0.82, "y": 0.50},
+              "position_hint": {
+                "x": 0.82,
+                "y": 0.5
+              },
               "reward_options": [
-                {"type": "random_item", "reward_table_id": "reward.random_item.chapter_2", "weight": 3},
-                {"type": "item_shop", "shop_id": "shop.item.default", "weight": 2},
-                {"type": "coin", "gold": 390, "weight": 1}
-              ]
+                {
+                  "type": "random_item",
+                  "reward_table_id": "reward.random_item.chapter_2",
+                  "weight": 3
+                },
+                {
+                  "type": "item_shop",
+                  "shop_id": "shop.item.default",
+                  "weight": 2
+                },
+                {
+                  "type": "coin",
+                  "gold": 390,
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "crystal_outer"
             },
             {
               "id": "floor_4_right_inner_upper",
               "side": "inner",
-              "position_hint": {"x": 0.77, "y": 0.32},
+              "position_hint": {
+                "x": 0.77,
+                "y": 0.32
+              },
               "reward_options": [
-                {"type": "magic_shop", "shop_id": "shop.magic.default", "weight": 3},
-                {"type": "magic_master", "shop_id": "shop.magic_master.default", "weight": 1},
-                {"type": "coin", "gold": 405, "weight": 1}
-              ]
+                {
+                  "type": "magic_shop",
+                  "shop_id": "shop.magic.default",
+                  "weight": 3
+                },
+                {
+                  "type": "magic_master",
+                  "shop_id": "shop.magic_master.default",
+                  "weight": 1
+                },
+                {
+                  "type": "coin",
+                  "gold": 405,
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "crystal_inner"
             }
           ]
         }
       ],
       "shared_exit_nodes": [
-        {"id": "combat.floor_4", "type": "combat", "reward_table_id": "reward.combat.default", "position_hint": {"x": 0.5, "y": 0.14}}
+        {
+          "id": "combat.floor_4",
+          "type": "combat",
+          "reward_table_id": "reward.combat.default",
+          "position_hint": {
+            "x": 0.5,
+            "y": 0.14
+          }
+        }
       ]
     },
     {
@@ -339,7 +744,13 @@
       "floor": 5,
       "selection_mode": "choose_one_route",
       "background_path": "res://assets/art/map/backgrounds/chapter_2_route_background.png",
-      "entry_node": {"type": "route_entry", "position_hint": {"x": 0.5, "y": 0.92}},
+      "entry_node": {
+        "type": "route_entry",
+        "position_hint": {
+          "x": 0.5,
+          "y": 0.92
+        }
+      },
       "routes": [
         {
           "id": "left",
@@ -348,32 +759,80 @@
             {
               "id": "floor_5_left_outer_lower",
               "side": "outer",
-              "position_hint": {"x": 0.18, "y": 0.67},
+              "position_hint": {
+                "x": 0.18,
+                "y": 0.67
+              },
               "reward_options": [
-                {"type": "weapon_shop", "shop_id": "shop.weapon.default", "weight": 3},
-                {"type": "encounter", "encounter_pool_id": "encounter_pool.default", "weight": 2},
-                {"type": "coin", "gold": 450, "weight": 1}
-              ]
+                {
+                  "type": "weapon_shop",
+                  "shop_id": "shop.weapon.default",
+                  "weight": 3
+                },
+                {
+                  "type": "encounter",
+                  "encounter_pool_id": "encounter_pool.default",
+                  "weight": 2
+                },
+                {
+                  "type": "coin",
+                  "gold": 450,
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "crystal_outer"
             },
             {
               "id": "floor_5_left_inner_mid",
               "side": "inner",
-              "position_hint": {"x": 0.42, "y": 0.50},
+              "position_hint": {
+                "x": 0.42,
+                "y": 0.5
+              },
               "reward_options": [
-                {"type": "encounter", "encounter_pool_id": "encounter_pool.default", "weight": 3},
-                {"type": "random_item", "reward_table_id": "reward.random_item.chapter_2", "weight": 2},
-                {"type": "item_shop", "shop_id": "shop.item.default", "weight": 1}
-              ]
+                {
+                  "type": "encounter",
+                  "encounter_pool_id": "encounter_pool.default",
+                  "weight": 3
+                },
+                {
+                  "type": "random_item",
+                  "reward_table_id": "reward.random_item.chapter_2",
+                  "weight": 2
+                },
+                {
+                  "type": "item_shop",
+                  "shop_id": "shop.item.default",
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "crystal_inner"
             },
             {
               "id": "floor_5_left_outer_upper",
               "side": "outer",
-              "position_hint": {"x": 0.23, "y": 0.32},
+              "position_hint": {
+                "x": 0.23,
+                "y": 0.32
+              },
               "reward_options": [
-                {"type": "weapon_master", "shop_id": "shop.weapon_master.default", "weight": 3},
-                {"type": "coin", "gold": 480, "weight": 2},
-                {"type": "random_item", "reward_table_id": "reward.random_item.chapter_2", "weight": 1}
-              ]
+                {
+                  "type": "weapon_master",
+                  "shop_id": "shop.weapon_master.default",
+                  "weight": 3
+                },
+                {
+                  "type": "coin",
+                  "gold": 480,
+                  "weight": 2
+                },
+                {
+                  "type": "random_item",
+                  "reward_table_id": "reward.random_item.chapter_2",
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "crystal_outer"
             }
           ]
         },
@@ -384,38 +843,94 @@
             {
               "id": "floor_5_right_inner_lower",
               "side": "inner",
-              "position_hint": {"x": 0.58, "y": 0.67},
+              "position_hint": {
+                "x": 0.58,
+                "y": 0.67
+              },
               "reward_options": [
-                {"type": "magic_shop", "shop_id": "shop.magic.default", "weight": 3},
-                {"type": "encounter", "encounter_pool_id": "encounter_pool.default", "weight": 2},
-                {"type": "coin", "gold": 450, "weight": 1}
-              ]
+                {
+                  "type": "magic_shop",
+                  "shop_id": "shop.magic.default",
+                  "weight": 3
+                },
+                {
+                  "type": "encounter",
+                  "encounter_pool_id": "encounter_pool.default",
+                  "weight": 2
+                },
+                {
+                  "type": "coin",
+                  "gold": 450,
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "crystal_inner"
             },
             {
               "id": "floor_5_right_outer_mid",
               "side": "outer",
-              "position_hint": {"x": 0.82, "y": 0.50},
+              "position_hint": {
+                "x": 0.82,
+                "y": 0.5
+              },
               "reward_options": [
-                {"type": "random_item", "reward_table_id": "reward.random_item.chapter_2", "weight": 3},
-                {"type": "item_shop", "shop_id": "shop.item.default", "weight": 2},
-                {"type": "encounter", "encounter_pool_id": "encounter_pool.default", "weight": 1}
-              ]
+                {
+                  "type": "random_item",
+                  "reward_table_id": "reward.random_item.chapter_2",
+                  "weight": 3
+                },
+                {
+                  "type": "item_shop",
+                  "shop_id": "shop.item.default",
+                  "weight": 2
+                },
+                {
+                  "type": "encounter",
+                  "encounter_pool_id": "encounter_pool.default",
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "crystal_outer"
             },
             {
               "id": "floor_5_right_inner_upper",
               "side": "inner",
-              "position_hint": {"x": 0.77, "y": 0.32},
+              "position_hint": {
+                "x": 0.77,
+                "y": 0.32
+              },
               "reward_options": [
-                {"type": "magic_master", "shop_id": "shop.magic_master.default", "weight": 3},
-                {"type": "coin", "gold": 480, "weight": 2},
-                {"type": "random_item", "reward_table_id": "reward.random_item.chapter_2", "weight": 1}
-              ]
+                {
+                  "type": "magic_master",
+                  "shop_id": "shop.magic_master.default",
+                  "weight": 3
+                },
+                {
+                  "type": "coin",
+                  "gold": 480,
+                  "weight": 2
+                },
+                {
+                  "type": "random_item",
+                  "reward_table_id": "reward.random_item.chapter_2",
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "crystal_inner"
             }
           ]
         }
       ],
       "shared_exit_nodes": [
-        {"id": "combat.floor_5", "type": "combat", "reward_table_id": "reward.combat.default", "position_hint": {"x": 0.5, "y": 0.14}}
+        {
+          "id": "combat.floor_5",
+          "type": "combat",
+          "reward_table_id": "reward.combat.default",
+          "position_hint": {
+            "x": 0.5,
+            "y": 0.14
+          }
+        }
       ]
     },
     {
@@ -424,7 +939,13 @@
       "floor": 6,
       "selection_mode": "choose_one_route",
       "background_path": "res://assets/art/map/backgrounds/chapter_2_route_background.png",
-      "entry_node": {"type": "route_entry", "position_hint": {"x": 0.5, "y": 0.92}},
+      "entry_node": {
+        "type": "route_entry",
+        "position_hint": {
+          "x": 0.5,
+          "y": 0.92
+        }
+      },
       "routes": [
         {
           "id": "left",
@@ -433,32 +954,80 @@
             {
               "id": "floor_6_left_outer_lower",
               "side": "outer",
-              "position_hint": {"x": 0.18, "y": 0.67},
+              "position_hint": {
+                "x": 0.18,
+                "y": 0.67
+              },
               "reward_options": [
-                {"type": "coin", "gold": 525, "weight": 3},
-                {"type": "encounter", "encounter_pool_id": "encounter_pool.default", "weight": 2},
-                {"type": "item_shop", "shop_id": "shop.item.default", "weight": 1}
-              ]
+                {
+                  "type": "coin",
+                  "gold": 525,
+                  "weight": 3
+                },
+                {
+                  "type": "encounter",
+                  "encounter_pool_id": "encounter_pool.default",
+                  "weight": 2
+                },
+                {
+                  "type": "item_shop",
+                  "shop_id": "shop.item.default",
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "crystal_outer"
             },
             {
               "id": "floor_6_left_inner_mid",
               "side": "inner",
-              "position_hint": {"x": 0.42, "y": 0.50},
+              "position_hint": {
+                "x": 0.42,
+                "y": 0.5
+              },
               "reward_options": [
-                {"type": "encounter", "encounter_pool_id": "encounter_pool.default", "weight": 3},
-                {"type": "random_item", "reward_table_id": "reward.random_item.chapter_2", "weight": 2},
-                {"type": "weapon_master", "shop_id": "shop.weapon_master.default", "weight": 1}
-              ]
+                {
+                  "type": "encounter",
+                  "encounter_pool_id": "encounter_pool.default",
+                  "weight": 3
+                },
+                {
+                  "type": "random_item",
+                  "reward_table_id": "reward.random_item.chapter_2",
+                  "weight": 2
+                },
+                {
+                  "type": "weapon_master",
+                  "shop_id": "shop.weapon_master.default",
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "crystal_inner"
             },
             {
               "id": "floor_6_left_outer_upper",
               "side": "outer",
-              "position_hint": {"x": 0.23, "y": 0.32},
+              "position_hint": {
+                "x": 0.23,
+                "y": 0.32
+              },
               "reward_options": [
-                {"type": "item_shop", "shop_id": "shop.item.default", "weight": 3},
-                {"type": "coin", "gold": 555, "weight": 2},
-                {"type": "random_item", "reward_table_id": "reward.random_item.chapter_2", "weight": 1}
-              ]
+                {
+                  "type": "item_shop",
+                  "shop_id": "shop.item.default",
+                  "weight": 3
+                },
+                {
+                  "type": "coin",
+                  "gold": 555,
+                  "weight": 2
+                },
+                {
+                  "type": "random_item",
+                  "reward_table_id": "reward.random_item.chapter_2",
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "crystal_outer"
             }
           ]
         },
@@ -469,38 +1038,94 @@
             {
               "id": "floor_6_right_inner_lower",
               "side": "inner",
-              "position_hint": {"x": 0.58, "y": 0.67},
+              "position_hint": {
+                "x": 0.58,
+                "y": 0.67
+              },
               "reward_options": [
-                {"type": "encounter", "encounter_pool_id": "encounter_pool.default", "weight": 3},
-                {"type": "coin", "gold": 525, "weight": 2},
-                {"type": "magic_shop", "shop_id": "shop.magic.default", "weight": 1}
-              ]
+                {
+                  "type": "encounter",
+                  "encounter_pool_id": "encounter_pool.default",
+                  "weight": 3
+                },
+                {
+                  "type": "coin",
+                  "gold": 525,
+                  "weight": 2
+                },
+                {
+                  "type": "magic_shop",
+                  "shop_id": "shop.magic.default",
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "crystal_inner"
             },
             {
               "id": "floor_6_right_outer_mid",
               "side": "outer",
-              "position_hint": {"x": 0.82, "y": 0.50},
+              "position_hint": {
+                "x": 0.82,
+                "y": 0.5
+              },
               "reward_options": [
-                {"type": "random_item", "reward_table_id": "reward.random_item.chapter_2", "weight": 3},
-                {"type": "weapon_shop", "shop_id": "shop.weapon.default", "weight": 2},
-                {"type": "encounter", "encounter_pool_id": "encounter_pool.default", "weight": 1}
-              ]
+                {
+                  "type": "random_item",
+                  "reward_table_id": "reward.random_item.chapter_2",
+                  "weight": 3
+                },
+                {
+                  "type": "weapon_shop",
+                  "shop_id": "shop.weapon.default",
+                  "weight": 2
+                },
+                {
+                  "type": "encounter",
+                  "encounter_pool_id": "encounter_pool.default",
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "crystal_outer"
             },
             {
               "id": "floor_6_right_inner_upper",
               "side": "inner",
-              "position_hint": {"x": 0.77, "y": 0.32},
+              "position_hint": {
+                "x": 0.77,
+                "y": 0.32
+              },
               "reward_options": [
-                {"type": "weapon_shop", "shop_id": "shop.weapon.default", "weight": 3},
-                {"type": "coin", "gold": 555, "weight": 2},
-                {"type": "magic_master", "shop_id": "shop.magic_master.default", "weight": 1}
-              ]
+                {
+                  "type": "weapon_shop",
+                  "shop_id": "shop.weapon.default",
+                  "weight": 3
+                },
+                {
+                  "type": "coin",
+                  "gold": 555,
+                  "weight": 2
+                },
+                {
+                  "type": "magic_master",
+                  "shop_id": "shop.magic_master.default",
+                  "weight": 1
+                }
+              ],
+              "socket_variant": "crystal_inner"
             }
           ]
         }
       ],
       "shared_exit_nodes": [
-        {"id": "combat.floor_6", "type": "combat", "reward_table_id": "reward.combat.default", "position_hint": {"x": 0.5, "y": 0.14}}
+        {
+          "id": "combat.floor_6",
+          "type": "combat",
+          "reward_table_id": "reward.combat.default",
+          "position_hint": {
+            "x": 0.5,
+            "y": 0.14
+          }
+        }
       ],
       "run_victory_on_clear": true
     }

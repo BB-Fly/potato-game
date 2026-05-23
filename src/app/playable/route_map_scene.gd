@@ -23,15 +23,23 @@ var floor_height = DEFAULT_FLOOR_HEIGHT
 var total_map_height = DEFAULT_FLOOR_HEIGHT
 var scroll_offset = 0.0
 var target_scroll_offset = 0.0
+var back_effect_scroll_factor = 0.985
 var foreground_scroll_factor = 1.035
+var node_hit_size = 96.0
+var node_icon_size = 64.0
+var combat_hit_size = 112.0
+var node_socket_glow_path = ""
 var route_history_by_floor: Dictionary = {}
 var reward_history_by_key: Dictionary = {}
 
 var background_layer: Control
+var back_effect_layer: Control
 var state_layer: Control
 var content_layer: Control
 var fog_layer: Control
+var front_effect_layer: Control
 var foreground_layer: Control
+var scroll_layers: Array = []
 
 @onready var background: TextureRect = $Background
 @onready var overlay: ColorRect = $Overlay
@@ -90,12 +98,13 @@ func render(previous_area_index: int = -1) -> void:
 	_read_layout()
 	_index_histories()
 	_make_layers()
-	_add_map_background()
+	_add_configured_art_layers()
 
 	var areas = _areas()
 	for area_index in range(areas.size()):
 		var area: Dictionary = areas[area_index]
 		_add_area_state_underlay(area_index)
+		_add_current_spotlight(area_index)
 		_add_floor_badge(area, area_index)
 		for route_index in range(area.get("routes", []).size()):
 			var route: Dictionary = area.get("routes", [])[route_index]
@@ -105,7 +114,6 @@ func render(previous_area_index: int = -1) -> void:
 	for area_index in range(areas.size()):
 		_add_area_fog(area_index)
 
-	_add_map_foreground()
 	_focus_current_area(previous_area_index)
 
 
@@ -134,10 +142,13 @@ func _clear_generated() -> void:
 		generated.remove_child(child)
 		child.queue_free()
 	background_layer = null
+	back_effect_layer = null
 	state_layer = null
 	content_layer = null
 	fog_layer = null
+	front_effect_layer = null
 	foreground_layer = null
+	scroll_layers.clear()
 
 
 func _read_layout() -> void:
@@ -149,7 +160,13 @@ func _read_layout() -> void:
 	floor_height = float(canvas.get("floor_height", DEFAULT_FLOOR_HEIGHT))
 	total_map_height = float(canvas.get("height", max(1, areas.size()) * floor_height))
 	var art_layers: Dictionary = presentation.get("art_layers", {})
-	foreground_scroll_factor = float(art_layers.get("foreground_scroll_factor", 1.035))
+	back_effect_scroll_factor = _art_layer_scroll_factor("back_effect", 0.985)
+	foreground_scroll_factor = _art_layer_scroll_factor("foreground", float(art_layers.get("foreground_scroll_factor", 1.035)))
+	var node_visual: Dictionary = presentation.get("node_visual", {})
+	node_hit_size = float(node_visual.get("hit_size", 96.0))
+	node_icon_size = float(node_visual.get("icon_size", 64.0))
+	combat_hit_size = float(node_visual.get("combat_hit_size", 112.0))
+	node_socket_glow_path = String(node_visual.get("socket_glow_path", ""))
 
 
 func _index_histories() -> void:
@@ -166,47 +183,60 @@ func _index_histories() -> void:
 
 
 func _make_layers() -> void:
-	for layer_name in ["BackgroundLayer", "StateLayer", "ContentLayer", "FogLayer", "ForegroundLayer"]:
+	for layer_name in ["BackgroundLayer", "BackEffectLayer", "StateLayer", "ContentLayer", "FogLayer", "FrontEffectLayer", "ForegroundLayer"]:
 		var layer = Control.new()
 		layer.name = layer_name
 		layer.position = Vector2.ZERO
 		layer.size = Vector2(map_width, total_map_height)
 		layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		generated.add_child(layer)
+		var scroll_factor = 1.0
 		match layer_name:
 			"BackgroundLayer":
 				background_layer = layer
+			"BackEffectLayer":
+				back_effect_layer = layer
+				scroll_factor = back_effect_scroll_factor
 			"StateLayer":
 				state_layer = layer
 			"ContentLayer":
 				content_layer = layer
 			"FogLayer":
 				fog_layer = layer
+			"FrontEffectLayer":
+				front_effect_layer = layer
 			"ForegroundLayer":
 				foreground_layer = layer
+				scroll_factor = foreground_scroll_factor
+		scroll_layers.append({
+			"node": layer,
+			"factor": scroll_factor,
+		})
 
 
-func _add_map_background() -> void:
+func _add_configured_art_layers() -> void:
 	var presentation: Dictionary = _current_map().get("presentation", {})
 	var art_layers: Dictionary = presentation.get("art_layers", {})
+	var layers: Array = art_layers.get("layers", [])
+	if not layers.is_empty():
+		for layer_data in layers:
+			if typeof(layer_data) == TYPE_DICTIONARY:
+				_add_art_layer(layer_data)
+		return
+
 	var full_path = String(art_layers.get("background_path", ""))
 	if not full_path.is_empty():
 		var full_background = _make_texture_rect(full_path, Vector2(map_width, total_map_height))
 		background_layer.add_child(full_background)
-		return
+	else:
+		var areas = _areas()
+		for area_index in range(areas.size()):
+			var area: Dictionary = areas[area_index]
+			var rect = _area_rect(area_index)
+			var band = _make_texture_rect(_background_path_for_area(area), rect.size)
+			band.position = rect.position
+			background_layer.add_child(band)
 
-	var areas = _areas()
-	for area_index in range(areas.size()):
-		var area: Dictionary = areas[area_index]
-		var rect = _area_rect(area_index)
-		var band = _make_texture_rect(_background_path_for_area(area), rect.size)
-		band.position = rect.position
-		background_layer.add_child(band)
-
-
-func _add_map_foreground() -> void:
-	var presentation: Dictionary = _current_map().get("presentation", {})
-	var art_layers: Dictionary = presentation.get("art_layers", {})
 	var foreground_path = String(art_layers.get("foreground_path", ""))
 	if foreground_path.is_empty():
 		return
@@ -215,18 +245,52 @@ func _add_map_foreground() -> void:
 	foreground_layer.add_child(front)
 
 
+func _add_art_layer(layer_data: Dictionary) -> void:
+	var path = String(layer_data.get("path", ""))
+	if path.is_empty():
+		return
+	var render_layer = String(layer_data.get("render_layer", "background"))
+	var target = _target_render_layer(render_layer)
+	if target == null:
+		return
+	var texture_rect = _make_texture_rect(path, Vector2(map_width, total_map_height))
+	texture_rect.modulate = _color_from_data(layer_data.get("modulate", Color.WHITE), Color.WHITE)
+	target.add_child(texture_rect)
+
+
+func _target_render_layer(render_layer: String) -> Control:
+	match render_layer:
+		"background":
+			return background_layer
+		"back_effect":
+			return back_effect_layer
+		"state":
+			return state_layer
+		"content":
+			return content_layer
+		"fog":
+			return fog_layer
+		"front_effect":
+			return front_effect_layer
+		"foreground":
+			return foreground_layer
+	return background_layer
+
+
 func _add_area_state_underlay(area_index: int) -> void:
 	var state = _area_state(area_index)
 	if state == "current":
 		return
 	var rect = _area_rect(area_index)
-	var color = Color(0.01, 0.01, 0.012, 0.46) if state == "past" else Color(0.045, 0.025, 0.075, 0.35)
+	var color = Color(0.01, 0.01, 0.012, 0.34) if state == "past" else Color(0.045, 0.025, 0.075, 0.24)
 	var tint = ColorRect.new()
 	tint.position = rect.position
 	tint.size = rect.size
 	tint.color = color
 	tint.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	state_layer.add_child(tint)
+	if state == "past":
+		_add_state_texture(state_layer, "past_texture_path", rect, Color(1, 1, 1, 0.82))
 
 
 func _add_area_fog(area_index: int) -> void:
@@ -236,9 +300,27 @@ func _add_area_fog(area_index: int) -> void:
 	var fog = ColorRect.new()
 	fog.position = rect.position
 	fog.size = rect.size
-	fog.color = Color(0.075, 0.045, 0.12, 0.48)
+	fog.color = Color(0.075, 0.045, 0.12, 0.26)
 	fog.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	fog_layer.add_child(fog)
+	_add_state_texture(fog_layer, "future_texture_path", rect, Color(1, 1, 1, 0.95))
+
+
+func _add_current_spotlight(area_index: int) -> void:
+	if _area_state(area_index) != "current":
+		return
+	_add_state_texture(state_layer, "current_texture_path", _area_rect(area_index), Color(1, 1, 1, 0.88))
+
+
+func _add_state_texture(parent: Control, key: String, rect: Rect2, tint: Color) -> void:
+	var effects: Dictionary = _current_map().get("presentation", {}).get("state_effects", {})
+	var path = String(effects.get(key, ""))
+	if path.is_empty():
+		return
+	var texture = _make_texture_rect(path, rect.size)
+	texture.position = rect.position
+	texture.modulate = tint
+	parent.add_child(texture)
 
 
 func _add_floor_badge(area: Dictionary, area_index: int) -> void:
@@ -298,6 +380,7 @@ func _add_route_reward_nodes(area: Dictionary, area_index: int, route: Dictionar
 	for node_index in range(nodes.size()):
 		var node_data: Dictionary = nodes[node_index]
 		var pos = _node_world_position(area_index, node_data)
+		_add_node_socket_glow(pos, false, _node_modulate(area, area_index, route_id, node_index))
 		var button = _make_map_node_button(
 			String(node_data.get("type", "")),
 			pos,
@@ -319,10 +402,26 @@ func _add_combat_node(area: Dictionary, area_index: int) -> void:
 	var node_data: Dictionary = exits[0]
 	var pos = _node_world_position(area_index, node_data, Vector2(0.5, 0.12))
 	var locked = _area_state(area_index) != "current" or route_controller.combat_locked(area)
+	_add_node_socket_glow(pos, true, Color(1, 1, 1, 1) if not locked else Color(0.62, 0.58, 0.68, 0.54))
 	var button = _make_map_node_button("combat", pos, locked, _emit_combat_requested)
 	button.tooltip_text = "Combat gate" if not locked else "Claim route rewards first"
 	button.modulate = Color(1, 1, 1, 1) if _area_state(area_index) == "current" else Color(0.52, 0.52, 0.52, 0.54)
 	content_layer.add_child(button)
+
+
+func _add_node_socket_glow(pos: Vector2, combat: bool, tint: Color) -> void:
+	if node_socket_glow_path.is_empty():
+		return
+	var glow_size = Vector2(combat_hit_size + 26.0, combat_hit_size + 26.0) if combat else Vector2(node_hit_size + 22.0, node_hit_size + 22.0)
+	var glow = TextureRect.new()
+	glow.position = pos - glow_size * 0.5
+	glow.size = glow_size
+	glow.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	glow.stretch_mode = TextureRect.STRETCH_SCALE
+	glow.texture = _load_texture(node_socket_glow_path)
+	glow.modulate = Color(tint.r, tint.g, tint.b, min(0.72, max(0.18, tint.a)))
+	glow.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	content_layer.add_child(glow)
 
 
 func _add_claim_marker(pos: Vector2) -> void:
@@ -425,11 +524,12 @@ func _snap_to_relative_floor(direction: int) -> void:
 func _apply_scroll() -> void:
 	scroll_offset = clamp(scroll_offset, 0.0, _max_scroll())
 	target_scroll_offset = clamp(target_scroll_offset, 0.0, _max_scroll())
-	for layer in [background_layer, state_layer, content_layer, fog_layer]:
+	for entry in scroll_layers:
+		if typeof(entry) != TYPE_DICTIONARY:
+			continue
+		var layer = entry.get("node", null)
 		if layer != null:
-			layer.position = Vector2(0, -scroll_offset)
-	if foreground_layer != null:
-		foreground_layer.position = Vector2(0, -scroll_offset * foreground_scroll_factor)
+			layer.position = Vector2(0, -scroll_offset * float(entry.get("factor", 1.0)))
 
 
 func _scroll_for_area_index(area_index: int) -> float:
@@ -488,6 +588,29 @@ func _background_path_for_area(area: Dictionary) -> String:
 	return "res://assets/art/map/backgrounds/chapter_2_route_background.png" if chapter == "chapter_2" else "res://assets/art/map/backgrounds/chapter_1_route_background.png"
 
 
+func _art_layer_scroll_factor(render_layer: String, default_value: float) -> float:
+	var presentation: Dictionary = _current_map().get("presentation", {})
+	var art_layers: Dictionary = presentation.get("art_layers", {})
+	var layers: Array = art_layers.get("layers", [])
+	for layer_data in layers:
+		if typeof(layer_data) == TYPE_DICTIONARY and String(layer_data.get("render_layer", "")) == render_layer:
+			return float(layer_data.get("scroll_factor", default_value))
+	return default_value
+
+
+func _color_from_data(value, default_value: Color) -> Color:
+	if value is Color:
+		return value
+	if typeof(value) == TYPE_DICTIONARY:
+		return Color(
+			float(value.get("r", default_value.r)),
+			float(value.get("g", default_value.g)),
+			float(value.get("b", default_value.b)),
+			float(value.get("a", default_value.a))
+		)
+	return default_value
+
+
 func _make_texture_rect(path: String, rect_size: Vector2) -> TextureRect:
 	var texture_rect = TextureRect.new()
 	texture_rect.size = rect_size
@@ -500,17 +623,33 @@ func _make_texture_rect(path: String, rect_size: Vector2) -> TextureRect:
 
 func _make_map_node_button(node_type: String, pos: Vector2, disabled: bool, on_pressed: Callable) -> Button:
 	var button = Button.new()
-	button.position = pos - Vector2(38, 38)
-	button.size = Vector2(76, 76)
+	var hit_size = combat_hit_size if node_type == "combat" else node_hit_size
+	button.position = pos - Vector2(hit_size, hit_size) * 0.5
+	button.size = Vector2(hit_size, hit_size)
 	button.icon = _load_texture(_node_icon_path(node_type))
 	button.expand_icon = true
 	button.disabled = disabled
-	button.add_theme_stylebox_override("normal", _style_box(Color(0.08, 0.055, 0.03, 0.42), Color(1.0, 0.82, 0.32, 0.78), 2, 38))
-	button.add_theme_stylebox_override("hover", _style_box(Color(0.36, 0.24, 0.08, 0.7), Color(1.0, 0.92, 0.42, 1.0), 3, 38))
-	button.add_theme_stylebox_override("pressed", _style_box(Color(0.52, 0.34, 0.08, 0.78), Color(1.0, 0.92, 0.42, 1.0), 3, 38))
-	button.add_theme_stylebox_override("disabled", _style_box(Color(0.02, 0.018, 0.02, 0.34), Color(0.38, 0.34, 0.30, 0.36), 1, 38))
+	var radius = int(hit_size * 0.5)
+	var icon_margin = int(max(10.0, (hit_size - node_icon_size) * 0.5))
+	button.add_theme_stylebox_override("normal", _node_button_box(Color(0.07, 0.045, 0.025, 0.18), Color(1.0, 0.82, 0.32, 0.28), 1, radius, icon_margin))
+	button.add_theme_stylebox_override("hover", _node_button_box(Color(0.35, 0.23, 0.08, 0.34), Color(1.0, 0.92, 0.42, 0.92), 3, radius, icon_margin))
+	button.add_theme_stylebox_override("pressed", _node_button_box(Color(0.52, 0.34, 0.08, 0.45), Color(1.0, 0.92, 0.42, 1.0), 3, radius, icon_margin))
+	button.add_theme_stylebox_override("disabled", _node_button_box(Color(0.02, 0.018, 0.02, 0.12), Color(0.38, 0.34, 0.30, 0.18), 1, radius, icon_margin))
 	button.pressed.connect(on_pressed)
 	return button
+
+
+func _node_button_box(fill: Color, border: Color, border_width: int, corner_radius: int, icon_margin: int) -> StyleBoxFlat:
+	var box = StyleBoxFlat.new()
+	box.bg_color = fill
+	box.border_color = border
+	box.set_border_width_all(border_width)
+	box.set_corner_radius_all(corner_radius)
+	box.content_margin_left = icon_margin
+	box.content_margin_right = icon_margin
+	box.content_margin_top = icon_margin
+	box.content_margin_bottom = icon_margin
+	return box
 
 
 func _emit_route_selected(route_id: String) -> void:

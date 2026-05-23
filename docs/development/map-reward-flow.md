@@ -22,10 +22,12 @@ src/app/main.gd
 Runtime art:
 
 ```text
-assets/art/map/backgrounds/full_run_route_background.png
-assets/art/map/backgrounds/full_run_route_foreground.png
-assets/art/map/previews/full_run_route_preview.png
-assets/art/source/full_run_route_map_v01/
+assets/art/map/backgrounds/full_run_route_background_v02.png
+assets/art/map/backgrounds/full_run_route_atmosphere_v02.png
+assets/art/map/backgrounds/full_run_route_foreground_v02.png
+assets/art/map/effects/
+assets/art/map/previews/full_run_route_preview_v02.png
+assets/art/source/full_run_route_map_v02/
 ```
 
 `scenes/route_map_scene.tscn` is still the Godot scene entry point, but route data now comes from `demo_map.json`. The old `AreaDefinitions` nodes are kept as editor context/fallback scaffolding and should not be treated as the source of truth.
@@ -47,10 +49,11 @@ Floor bands are stacked bottom to top:
 The map scene renders these layers:
 
 1. full-run background
-2. past/current/future state underlays
-3. route hotspots and reward/combat node buttons
-4. future pollution fog
-5. full-run foreground overlay with a slight parallax scroll factor
+2. back-effect pollution atmosphere
+3. past/current/future state underlays and textures
+4. route hotspots, reward/combat node buttons, and node socket glow
+5. future pollution fog
+6. foreground foliage/fog overlay with a slight parallax scroll factor
 
 ## Reward Slot Realization
 

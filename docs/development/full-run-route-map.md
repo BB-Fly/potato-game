@@ -11,11 +11,13 @@
 ## Runtime Flow
 
 1. `MapFlow.start_map("map.demo")` duplicates the map config and resolves every node's `reward_options` with the run RNG.
-2. `RouteMapScene.setup(...)` creates layered runtime controls:
+2. `RouteMapScene.setup(...)` creates configured layered runtime controls:
    - background
+   - back effect atmosphere
    - state underlay
    - route/node content
    - future fog
+   - front effects
    - foreground overlay
 3. The scene focuses the current floor but keeps the whole 1280x4320 map scrollable.
 4. Only nodes on the current floor can be clicked.
@@ -27,10 +29,12 @@
 
 - Keep full-run runtime art at `1280x4320` for the current six-floor demo.
 - Keep each floor band at `720` px high; floor 1 is the bottom band and floor 6 is the top band.
+- Current runtime art uses `assets/art/source/full_run_route_map_v02/`, with six distinct generated floor bands and separate atmosphere, foreground, state-effect, and node-glow textures.
 - Store runtime-controlled reward icons and state markers as separate assets. Do not paint icons, labels, selected states, or locked states into the background.
 - To add a new floor, update `presentation.canvas.height`, add an `areas[]` entry, and regenerate or extend the full-run background and foreground art.
 - To vary a reward position without changing the art, edit the node `position_hint`.
 - To vary the generated reward type, edit `reward_options` and weights.
+- To add another visual layer, add it to `presentation.art_layers.layers[]` and choose one of the render layers supported by `RouteMapScene`: `background`, `back_effect`, `state`, `content`, `fog`, `front_effect`, or `foreground`.
 
 ## Controls
 
