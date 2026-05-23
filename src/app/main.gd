@@ -190,36 +190,45 @@ func _choose_route(route_id: String) -> void:
 	_show_map_screen()
 
 
-func _click_route_reward_node(node_index: int) -> void:
-	if not route_controller.can_click_reward_node(node_index):
+func _click_route_reward_node(route_id: String, node_index: int) -> void:
+	var area = map_flow.get_current_area()
+	if not route_controller.can_click_reward_node(area, route_id, node_index):
 		return
-	var node_data = route_controller.get_active_node(node_index)
+	var node_data = route_controller.get_active_node(area, route_id, node_index)
 	if node_data.is_empty():
 		return
 	match String(node_data.get("type", "")):
 		"coin":
 			run_context.grant_gold(int(node_data.get("gold", 0)))
-			_complete_route_reward_node(node_index)
+			_complete_route_reward_node(route_id, node_index, node_data)
 		"free_weapon":
-			_show_reward_choices(String(node_data.get("reward_table_id", "reward.free_weapon.start")), _complete_route_reward_node.bind(node_index))
+			_show_reward_choices(String(node_data.get("reward_table_id", "reward.free_weapon.start")), _complete_route_reward_node.bind(route_id, node_index, node_data))
 		"random_item":
-			_show_reward_choices(String(node_data.get("reward_table_id", "reward.random_item.chapter_1")), _complete_route_reward_node.bind(node_index))
+			_show_reward_choices(String(node_data.get("reward_table_id", "reward.random_item.chapter_1")), _complete_route_reward_node.bind(route_id, node_index, node_data))
 		"weapon_shop", "magic_shop", "item_shop", "weapon_master", "magic_master":
-			_show_shop_screen(node_data, _complete_route_reward_node.bind(node_index))
+			_show_shop_screen(node_data, _complete_route_reward_node.bind(route_id, node_index, node_data))
 		"encounter":
 			run_context.grant_gold(80 + run_context.floor * 20)
-			_complete_route_reward_node(node_index)
+			_complete_route_reward_node(route_id, node_index, node_data)
 		_:
-			_complete_route_reward_node(node_index)
+			_complete_route_reward_node(route_id, node_index, node_data)
 
 
-func _complete_route_reward_node(node_index: int) -> void:
-	route_controller.claim_node(node_index)
+func _complete_route_reward_node(route_id: String, node_index: int, node_data: Dictionary = {}) -> void:
+	route_controller.claim_node(route_id, node_index)
+	var area = map_flow.get_current_area()
+	run_context.reward_history.append({
+		"area_id": String(area.get("id", "")),
+		"floor": run_context.floor,
+		"route_id": route_id,
+		"node_index": node_index,
+		"node_type": String(node_data.get("type", "")),
+	})
 	_show_map_screen()
 
 
 func _route_rewards_complete() -> bool:
-	return route_controller.rewards_complete()
+	return route_controller.rewards_complete(map_flow.get_current_area())
 
 
 func _show_reward_choices(reward_id: String, on_done: Callable) -> void:

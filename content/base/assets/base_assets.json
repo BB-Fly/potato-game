@@ -312,6 +312,28 @@
       ]
     },
     {
+      "id": "map.full_run_route.background",
+      "kind": "background",
+      "path": "res://assets/art/map/backgrounds/full_run_route_background.png",
+      "tags": [
+        "map",
+        "route",
+        "full_run",
+        "background"
+      ]
+    },
+    {
+      "id": "map.full_run_route.foreground",
+      "kind": "foreground",
+      "path": "res://assets/art/map/backgrounds/full_run_route_foreground.png",
+      "tags": [
+        "map",
+        "route",
+        "full_run",
+        "foreground"
+      ]
+    },
+    {
       "id": "map.node.boss.icon",
       "kind": "icon",
       "path": "res://assets/art/map/nodes/node_boss.png",

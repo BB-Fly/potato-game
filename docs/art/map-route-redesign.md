@@ -1,67 +1,88 @@
-# Route Map Art Redesign
+# Full-Run Route Map Redesign
 
 ## Direction
 
-The route selection map should use an original vertical rail-board composition with the same usability goals as modern roguelike route maps, without copying Monster Train 2 assets, UI, icons, palettes, or exact proportions.
+The route map is now a single scrollable run map instead of one small map slice per floor. The player can inspect the entire bottom-to-top route, while only the current floor accepts route, reward, and combat input.
 
 Core layout:
 
-- Player enters each floor from the bottom center.
-- The map splits into two readable routes: left lane and right lane.
-- Each route can place reward nodes on both sides of the lane, using `side: inner` and `side: outer` metadata.
-- Both routes converge into one shared combat gate near the top center.
-- After combat victory, the camera scrolls upward to the next floor map.
-- Mouse wheel and gamepad right stick can scroll back to revealed floors for read-only inspection.
+- Floor 1 begins near the bottom of the full map with two start reward nodes. Both can be claimed before the first combat gate.
+- Floors 2 and later split into left and right lanes. The player chooses one lane, then claims only the reward nodes on that lane before the shared combat gate unlocks.
+- All floors are visible on the same 1280x4320 canvas. The camera scrolls to the current floor and can be manually moved with mouse wheel, middle-drag, right stick, or PageUp/PageDown.
+- Passed floors are darkened read-only history. The current floor remains bright. Future floors are covered by pollution fog and locked.
 
 ## Visual Language
 
-- Perspective: 3/4 top-down route board, readable on a 1920x1080 screen.
-- Chapter 1: overgrown potato-field ruins, green growth, stone retaining walls, mild purple pollution mist at the edges.
-- Chapter 2: deeper corrupted greenhouse/underground garden, stronger blue-purple crystals, darker soil, sharper magical highlights.
-- Route lanes: rail-like or root-like tracks embedded in terrain, clearly branching from bottom and joining at top.
-- Reward pads: small circular or shield-like platforms beside the lanes; leave enough negative space for node icons.
-- Shared combat gate: larger top-center gate/emblem/pad that reads as the mandatory fight.
+- Perspective: 3/4 top-down hand-painted route board, readable at a 1280x720 viewport.
+- Style: Puritato hand-drawn cel-animation map style, thick ink silhouettes, readable pads, warm garden colors shifting into toxic purple corruption.
+- Chapter 1: lush potato garden ruins, moss, stone walls, curly vines, warm leaves, mild purple mist.
+- Chapter 2: corrupted greenhouse and mushroom-crystal growth, darker soil, teal mushrooms, blue-purple crystals, heavier fog.
+- Small floor differences are produced by the assembled full-run background: each band has slightly different brightness, contrast, purple tint, and foreground haze.
+- Route lanes and reward pads are baked into the background as scenery foundations. Runtime icons, selected markers, claimed state, lock state, route hotspots, and tooltips stay separate.
 
-## Runtime Split
-
-Route backgrounds are scenery and lane foundation only. Runtime-controlled node icons, selected markers, route arrows, tooltips, and completed/locked states stay separate UI/object layers.
-
-The background may include:
-
-- terrain, walls, rails/roots, decorative non-interactive plants, mist, lighting;
-- empty reward pads and the shared combat gate base;
-- bottom entrance and top continuation hint.
-
-The background must not bake in:
-
-- actual reward icons;
-- text labels;
-- selected/completed/locked states;
-- player character, enemies, boss, or combat actors;
-- UI counters or HUD.
-
-## Suggested Image Prompts
-
-Runtime source folders:
-
-- `assets/art/source/route_map_chapter_1_vertical/`
-- `assets/art/source/route_map_chapter_2_vertical/`
+## Runtime Assets
 
 Runtime exports:
 
 | Asset ID | Path | Notes |
 | --- | --- | --- |
-| `map.chapter_1_route.background` | `assets/art/map/backgrounds/chapter_1_route_background.png` | overgrown potato-field route board |
-| `map.chapter_2_route.background` | `assets/art/map/backgrounds/chapter_2_route_background.png` | corrupted greenhouse route board |
+| `map.full_run_route.background` | `assets/art/map/backgrounds/full_run_route_background.png` | 1280x4320 full route map base |
+| `map.full_run_route.foreground` | `assets/art/map/backgrounds/full_run_route_foreground.png` | 1280x4320 transparent edge foliage/fog layer |
+| preview only | `assets/art/map/previews/full_run_route_preview.png` | QA composite of background + foreground |
 
-Chapter 1 route background:
-
-```text
-Original 3/4 top-down fantasy roguelike route selection map background for a vegetable-themed survivor game, 1920x1080. Bottom-center entrance gate, two branching rail-like root tracks curving upward through overgrown potato-field ruins, small empty circular reward pads on both sides of each route, both routes converge into one larger top-center combat gate. Green moss, potato leaves, stone retaining walls, subtle purple pollution mist at the edges, clean HD hand-painted game asset, sharp readable silhouettes, no text, no UI, no characters, no icons.
-```
-
-Chapter 2 route background:
+Source and metadata:
 
 ```text
-Original 3/4 top-down fantasy roguelike route selection map background for a vegetable-themed survivor game, 1920x1080. Bottom-center entrance, two branching rail-like root tracks through a corrupted underground greenhouse, empty reward pads beside both lanes, both routes join at a large top-center combat gate. Dark fertile soil, blue-purple crystals, strange vines, broken stone rails, magical fog around the edges, clean HD hand-painted game asset, sharp readable silhouettes, no text, no UI, no characters, no icons.
+assets/art/source/full_run_route_map_v01/
+  full_run_route_background.prompt.txt
+  manifest.json
 ```
+
+The current full-run art is assembled from the approved chapter route backgrounds:
+
+```text
+assets/art/map/backgrounds/chapter_1_route_background.png
+assets/art/map/backgrounds/chapter_2_route_background.png
+```
+
+Future higher-fidelity passes can replace `full_run_route_background.png` and `full_run_route_foreground.png` directly as long as the canvas stays 1280x4320 and the floor bands remain 720 px tall.
+
+## Data Contract
+
+Map data lives in:
+
+```text
+content/base/maps/demo_map.json
+```
+
+Important fields:
+
+- `presentation.layout_style = "full_run_scroll_route_map"`
+- `presentation.canvas.width = 1280`
+- `presentation.canvas.floor_height = 720`
+- `presentation.canvas.height = 4320`
+- `presentation.art_layers.background_path`
+- `presentation.art_layers.foreground_path`
+- `areas[].selection_mode`
+
+Selection modes:
+
+- `collect_all`: used by Floor 1. Every reward node on every route can be claimed before combat.
+- `choose_one_route`: used by later floors. The player chooses one lane, then only that lane's reward nodes can be claimed.
+
+Reward node positions are fixed through `position_hint` in normalized floor coordinates. Reward type and reward payload can be randomized with `reward_options`:
+
+```json
+{
+  "id": "floor_3_left_outer_upper",
+  "side": "outer",
+  "position_hint": {"x": 0.23, "y": 0.32},
+  "reward_options": [
+    {"type": "random_item", "reward_table_id": "reward.random_item.chapter_1", "weight": 3},
+    {"type": "coin", "gold": 315, "weight": 2},
+    {"type": "weapon_master", "shop_id": "shop.weapon_master.default", "weight": 1}
+  ]
+}
+```
+
+`MapFlow.start_map()` realizes these slots once per run using the deterministic run RNG, so the full map can show the run's generated reward layout immediately.

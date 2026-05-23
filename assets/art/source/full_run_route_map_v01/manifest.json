@@ -1,0 +1,50 @@
+{
+  "source_assets": {
+    "chapter_1": "assets/art/map/backgrounds/chapter_1_route_background.png",
+    "chapter_2": "assets/art/map/backgrounds/chapter_2_route_background.png"
+  },
+  "canvas": {
+    "width": 1280,
+    "floor_height": 720,
+    "height": 4320
+  },
+  "floors": [
+    {
+      "floor": 6,
+      "chapter_id": "chapter_2",
+      "y": 0,
+      "pollution_tint": 1.0
+    },
+    {
+      "floor": 5,
+      "chapter_id": "chapter_2",
+      "y": 720,
+      "pollution_tint": 0.8
+    },
+    {
+      "floor": 4,
+      "chapter_id": "chapter_2",
+      "y": 1440,
+      "pollution_tint": 0.6
+    },
+    {
+      "floor": 3,
+      "chapter_id": "chapter_1",
+      "y": 2160,
+      "pollution_tint": 0.4
+    },
+    {
+      "floor": 2,
+      "chapter_id": "chapter_1",
+      "y": 2880,
+      "pollution_tint": 0.2
+    },
+    {
+      "floor": 1,
+      "chapter_id": "chapter_1",
+      "y": 3600,
+      "pollution_tint": 0.0
+    }
+  ],
+  "notes": "Derived layered full-run map assembled from existing generated chapter backgrounds. Runtime reward icons and state overlays remain separate."
+}

@@ -1,0 +1,48 @@
+# Full-Run Route Map Runtime
+
+## Files
+
+- `content/base/maps/demo_map.json`: full-run map data, canvas, art layer paths, floor areas, reward slots.
+- `src/domain/map/map_flow.gd`: starts the map, realizes randomized reward slots, tracks current and previous area index.
+- `src/app/playable/route_map_scene.gd`: renders the scrollable full map, node buttons, route hotspots, state overlays, and foreground parallax.
+- `src/app/playable/playable_map_controller.gd`: enforces collect-all vs choose-one-route reward rules.
+- `src/app/main.gd`: records claimed reward history and advances floors after combat.
+
+## Runtime Flow
+
+1. `MapFlow.start_map("map.demo")` duplicates the map config and resolves every node's `reward_options` with the run RNG.
+2. `RouteMapScene.setup(...)` creates layered runtime controls:
+   - background
+   - state underlay
+   - route/node content
+   - future fog
+   - foreground overlay
+3. The scene focuses the current floor but keeps the whole 1280x4320 map scrollable.
+4. Only nodes on the current floor can be clicked.
+5. Floor 1 uses `selection_mode: collect_all`, so both start reward nodes are active.
+6. Later floors use `selection_mode: choose_one_route`, so clicking a lane locks the other lane.
+7. Claimed rewards are stored in `run_context.reward_history` so passed floors render as dark read-only history.
+
+## Authoring Notes
+
+- Keep full-run runtime art at `1280x4320` for the current six-floor demo.
+- Keep each floor band at `720` px high; floor 1 is the bottom band and floor 6 is the top band.
+- Store runtime-controlled reward icons and state markers as separate assets. Do not paint icons, labels, selected states, or locked states into the background.
+- To add a new floor, update `presentation.canvas.height`, add an `areas[]` entry, and regenerate or extend the full-run background and foreground art.
+- To vary a reward position without changing the art, edit the node `position_hint`.
+- To vary the generated reward type, edit `reward_options` and weights.
+
+## Controls
+
+- Mouse wheel: scroll the whole run map.
+- Middle mouse drag: pan the map.
+- Gamepad right stick Y: scroll.
+- PageUp/PageDown: snap between floor bands.
+
+## Validation
+
+```powershell
+python tools\validate_art_assets.py
+godot --headless --path . --script res://tools/validate_route_map_runtime.gd
+godot --headless --path . --quit
+```

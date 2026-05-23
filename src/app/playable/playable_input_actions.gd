@@ -10,6 +10,8 @@ static func ensure_defaults() -> void:
 	var magic_keys = [KEY_Q, KEY_E, KEY_R, KEY_F]
 	for i in range(magic_keys.size()):
 		ensure_action("cast_magic_%d" % i, [magic_keys[i]])
+	ensure_action("map_snap_up", [KEY_PAGEUP])
+	ensure_action("map_snap_down", [KEY_PAGEDOWN])
 
 
 static func ensure_action(action_name: String, keycodes: Array) -> void:
