@@ -1,0 +1,56 @@
+{
+  "style_anchor": "assets/art/style_preview/handdrawn_cel_v01/",
+  "runtime_copies": [
+    {
+      "source": "assets/art/style_preview/handdrawn_cel_v01/potato_hero_idle.png",
+      "runtime": "assets/art/sprites/characters/potato_hero.png",
+      "note": "preview reuse"
+    },
+    {
+      "source": "assets/art/source/handdrawn_replacement_v01/sprites_vfx/potato_hero_walk/sheet-transparent.png",
+      "runtime": "assets/art/sprites/characters/potato_hero_walk.png",
+      "note": "generated"
+    },
+    {
+      "source": "assets/art/source/handdrawn_replacement_v01/sprites_vfx/potato_hero_attack_fries/sheet-transparent.png",
+      "runtime": "assets/art/sprites/characters/potato_hero_attack_fries.png",
+      "note": "generated"
+    },
+    {
+      "source": "assets/art/style_preview/handdrawn_cel_v01/sprouting_potato.png",
+      "runtime": "assets/art/sprites/monsters/sprouting_potato.png",
+      "note": "preview reuse"
+    },
+    {
+      "source": "assets/art/style_preview/handdrawn_cel_v01/mushroom_spore.png",
+      "runtime": "assets/art/sprites/monsters/mushroom_spore.png",
+      "note": "preview reuse"
+    },
+    {
+      "source": "assets/art/style_preview/handdrawn_cel_v01/bomb_fruitling.png",
+      "runtime": "assets/art/sprites/monsters/bomb_fruitling.png",
+      "note": "preview reuse"
+    },
+    {
+      "source": "assets/art/source/handdrawn_replacement_v01/sprites_vfx/demo_pollution_source/sheet-transparent.png",
+      "runtime": "assets/art/sprites/bosses/demo_pollution_source.png",
+      "note": "generated"
+    },
+    {
+      "source": "assets/art/source/handdrawn_replacement_v01/sprites_vfx/fries_weapon/clean.png",
+      "runtime": "assets/art/sprites/weapons/fries.png",
+      "note": "generated"
+    },
+    {
+      "source": "assets/art/source/handdrawn_replacement_v01/sprites_vfx/weapon_fries_slash/sheet-transparent.png",
+      "runtime": "assets/art/vfx/weapon_fries_slash.png",
+      "note": "generated conservative scale after raw edge touch"
+    },
+    {
+      "source": "assets/art/source/handdrawn_replacement_v01/sprites_vfx/comprehensive_development/sheet-transparent.png",
+      "runtime": "assets/art/vfx/comprehensive_development.png",
+      "note": "generated conservative scale after raw edge touch"
+    }
+  ],
+  "not_modified": []
+}

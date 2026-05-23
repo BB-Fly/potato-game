@@ -1,0 +1,315 @@
+{
+  "target": "creature",
+  "mode": "idle",
+  "prompt": "handdrawn cel Demo Pollution Source corrupted root potato boss 3x3 idle sheet, generated with style_preview handdrawn_cel_v01 as style anchor.",
+  "role": "",
+  "input": "C:\\Users\\LYZ\\.codex\\generated_images\\019e533e-366a-7571-be4a-b947471ac9fb\\ig_064f26eab1b25cc7016a1137e81e50819086cd516cc3c3fc8a.png",
+  "threshold": 100,
+  "edge_threshold": 150,
+  "duration": 200,
+  "rows": 3,
+  "cols": 3,
+  "cell_size": 128,
+  "fit_scale": 0.92,
+  "trim_border": 4,
+  "edge_clean_depth": 2,
+  "align": "bottom",
+  "shared_scale": true,
+  "component_mode": "all",
+  "component_padding": 0,
+  "min_component_area": 1,
+  "edge_touch_margin": 0,
+  "frame_labels": [
+    "demo_pollution_source-1",
+    "demo_pollution_source-2",
+    "demo_pollution_source-3",
+    "demo_pollution_source-4",
+    "demo_pollution_source-5",
+    "demo_pollution_source-6",
+    "demo_pollution_source-7",
+    "demo_pollution_source-8",
+    "demo_pollution_source-9"
+  ],
+  "frames": [
+    {
+      "grid": [
+        0,
+        0
+      ],
+      "source_box": [
+        0,
+        0,
+        418,
+        418
+      ],
+      "component_mode": "all",
+      "component_count": 1,
+      "selected_component_area": null,
+      "selected_component_bbox": null,
+      "crop_bbox": [
+        42,
+        49,
+        405,
+        382
+      ],
+      "edge_touch": false,
+      "output_size": [
+        116,
+        107
+      ],
+      "paste_position": [
+        6,
+        16
+      ]
+    },
+    {
+      "grid": [
+        0,
+        1
+      ],
+      "source_box": [
+        418,
+        0,
+        836,
+        418
+      ],
+      "component_mode": "all",
+      "component_count": 1,
+      "selected_component_area": null,
+      "selected_component_bbox": null,
+      "crop_bbox": [
+        35,
+        57,
+        381,
+        380
+      ],
+      "edge_touch": false,
+      "output_size": [
+        111,
+        103
+      ],
+      "paste_position": [
+        8,
+        20
+      ]
+    },
+    {
+      "grid": [
+        0,
+        2
+      ],
+      "source_box": [
+        836,
+        0,
+        1254,
+        418
+      ],
+      "component_mode": "all",
+      "component_count": 1,
+      "selected_component_area": null,
+      "selected_component_bbox": null,
+      "crop_bbox": [
+        15,
+        52,
+        367,
+        384
+      ],
+      "edge_touch": false,
+      "output_size": [
+        113,
+        106
+      ],
+      "paste_position": [
+        7,
+        17
+      ]
+    },
+    {
+      "grid": [
+        1,
+        0
+      ],
+      "source_box": [
+        0,
+        418,
+        418,
+        836
+      ],
+      "component_mode": "all",
+      "component_count": 1,
+      "selected_component_area": null,
+      "selected_component_bbox": null,
+      "crop_bbox": [
+        38,
+        42,
+        404,
+        361
+      ],
+      "edge_touch": false,
+      "output_size": [
+        117,
+        102
+      ],
+      "paste_position": [
+        5,
+        21
+      ]
+    },
+    {
+      "grid": [
+        1,
+        1
+      ],
+      "source_box": [
+        418,
+        418,
+        836,
+        836
+      ],
+      "component_mode": "all",
+      "component_count": 1,
+      "selected_component_area": null,
+      "selected_component_bbox": null,
+      "crop_bbox": [
+        28,
+        48,
+        382,
+        362
+      ],
+      "edge_touch": false,
+      "output_size": [
+        113,
+        101
+      ],
+      "paste_position": [
+        7,
+        22
+      ]
+    },
+    {
+      "grid": [
+        1,
+        2
+      ],
+      "source_box": [
+        836,
+        418,
+        1254,
+        836
+      ],
+      "component_mode": "all",
+      "component_count": 1,
+      "selected_component_area": null,
+      "selected_component_bbox": null,
+      "crop_bbox": [
+        9,
+        45,
+        370,
+        362
+      ],
+      "edge_touch": false,
+      "output_size": [
+        116,
+        101
+      ],
+      "paste_position": [
+        6,
+        22
+      ]
+    },
+    {
+      "grid": [
+        2,
+        0
+      ],
+      "source_box": [
+        0,
+        836,
+        418,
+        1254
+      ],
+      "component_mode": "all",
+      "component_count": 1,
+      "selected_component_area": null,
+      "selected_component_bbox": null,
+      "crop_bbox": [
+        41,
+        23,
+        398,
+        342
+      ],
+      "edge_touch": false,
+      "output_size": [
+        114,
+        102
+      ],
+      "paste_position": [
+        7,
+        21
+      ]
+    },
+    {
+      "grid": [
+        2,
+        1
+      ],
+      "source_box": [
+        418,
+        836,
+        836,
+        1254
+      ],
+      "component_mode": "all",
+      "component_count": 1,
+      "selected_component_area": null,
+      "selected_component_bbox": null,
+      "crop_bbox": [
+        20,
+        21,
+        383,
+        346
+      ],
+      "edge_touch": false,
+      "output_size": [
+        116,
+        104
+      ],
+      "paste_position": [
+        6,
+        19
+      ]
+    },
+    {
+      "grid": [
+        2,
+        2
+      ],
+      "source_box": [
+        836,
+        836,
+        1254,
+        1254
+      ],
+      "component_mode": "all",
+      "component_count": 1,
+      "selected_component_area": null,
+      "selected_component_bbox": null,
+      "crop_bbox": [
+        6,
+        23,
+        371,
+        345
+      ],
+      "edge_touch": false,
+      "output_size": [
+        117,
+        103
+      ],
+      "paste_position": [
+        5,
+        20
+      ]
+    }
+  ],
+  "edge_touch_frames": []
+}

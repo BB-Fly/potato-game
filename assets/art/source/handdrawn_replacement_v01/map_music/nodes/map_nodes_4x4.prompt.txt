@@ -1,0 +1,29 @@
+Use case: stylized-concept
+Asset type: transparent runtime map node icon pack, 4 columns by 4 rows, each icon will be split into an equal square cell.
+Input images: use the visible handdrawn_cel_v01 preview images as the style reference.
+Primary request: create sixteen small map-node icons in one clean 4x4 contact sheet, centered one icon per cell.
+Style: thick black ink outlines, smooth cel shading, simple lively Cuphead-like shapes, slightly uneven Don't Starve-like hand-drawn texture, readable at 96px, cohesive potato-adventure fantasy UI.
+Background: perfectly flat solid #FF00FF chroma-key background across the whole sheet. No shadows on the background, no gradients, no texture, no cell borders, no visible grid, no labels, no letters, no numbers, no watermark. Do not use #FF00FF anywhere inside the icons.
+Layout order:
+Row 1: coin; combat; encounter; free_weapon.
+Row 2: item_shop; magic_master; magic_shop; random_item.
+Row 3: weapon_master; weapon_shop; node_boss; node_elite_combat.
+Row 4: node_locked; node_rest; node_route_arrow; node_selected_marker.
+Icon designs:
+coin: a chunky stack of golden coins with a tiny potato sprout stamped on the front coin.
+combat: crossed fork-spear and short wooden sword over a small leaf shield.
+encounter: a mysterious sprout-shaped sign with a curled question-mark silhouette.
+free_weapon: an open gift pouch with a little fork-sword and bright leaf ribbon.
+item_shop: a tiny wooden market crate with potion bottle, seed bag, and coin.
+magic_master: a wise wizard hat with potato-sprout clasp and small magic sparks.
+magic_shop: a bubbling cauldron-potion shop symbol with leaves and a crystal bottle.
+random_item: a wrapped mystery seed bundle with a question-mark silhouette tag.
+weapon_master: a training dummy badge with crossed weapons and a stern tiny potato face mark.
+weapon_shop: a wooden shop plank with hammer, fork-sword, and green leaf trim, no text.
+node_boss: a crowned red bomb-fruit boss emblem with angry eyes.
+node_elite_combat: crossed weapons with a purple elite flame burst behind them.
+node_locked: chunky padlock wrapped in vines with a small leaf keyhole.
+node_rest: cozy campfire beside a folded green leaf bedroll.
+node_route_arrow: a hand-painted curved route arrow with teal body and warm red accent, no text.
+node_selected_marker: a leafy circular selection ring with small golden sparks and transparent center.
+Hard constraints: every icon must stay fully inside its cell with generous padding; icons must not touch each other or the image edge; no pixel art; no photorealism.

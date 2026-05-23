@@ -1,0 +1,485 @@
+[
+  {
+    "path": "assets/art/map/backgrounds/chapter_1_route_background.png",
+    "mode": "RGB",
+    "size": [
+      1672,
+      941
+    ],
+    "alpha_minmax": [
+      255,
+      255
+    ],
+    "transparent_lt255": 0,
+    "opaque_255": 1573352,
+    "bbox": [
+      0,
+      0,
+      1672,
+      941
+    ],
+    "sha256_12": "0549a7ea9883"
+  },
+  {
+    "path": "assets/art/map/backgrounds/chapter_2_route_background.png",
+    "mode": "RGB",
+    "size": [
+      1672,
+      941
+    ],
+    "alpha_minmax": [
+      255,
+      255
+    ],
+    "transparent_lt255": 0,
+    "opaque_255": 1573352,
+    "bbox": [
+      0,
+      0,
+      1672,
+      941
+    ],
+    "sha256_12": "8e6054b28b9c"
+  },
+  {
+    "path": "assets/art/map/nodes/coin.png",
+    "mode": "RGBA",
+    "size": [
+      96,
+      96
+    ],
+    "alpha_minmax": [
+      0,
+      255
+    ],
+    "transparent_lt255": 4009,
+    "opaque_255": 5207,
+    "bbox": [
+      1,
+      4,
+      94,
+      92
+    ],
+    "sha256_12": "3f92cacefbf9"
+  },
+  {
+    "path": "assets/art/map/nodes/combat.png",
+    "mode": "RGBA",
+    "size": [
+      96,
+      96
+    ],
+    "alpha_minmax": [
+      0,
+      255
+    ],
+    "transparent_lt255": 5591,
+    "opaque_255": 3625,
+    "bbox": [
+      4,
+      1,
+      92,
+      94
+    ],
+    "sha256_12": "c5024f6245fe"
+  },
+  {
+    "path": "assets/art/map/nodes/encounter.png",
+    "mode": "RGBA",
+    "size": [
+      96,
+      96
+    ],
+    "alpha_minmax": [
+      0,
+      255
+    ],
+    "transparent_lt255": 6778,
+    "opaque_255": 2438,
+    "bbox": [
+      19,
+      1,
+      76,
+      94
+    ],
+    "sha256_12": "864b433617ef"
+  },
+  {
+    "path": "assets/art/map/nodes/free_weapon.png",
+    "mode": "RGBA",
+    "size": [
+      96,
+      96
+    ],
+    "alpha_minmax": [
+      0,
+      255
+    ],
+    "transparent_lt255": 5041,
+    "opaque_255": 4175,
+    "bbox": [
+      1,
+      7,
+      94,
+      89
+    ],
+    "sha256_12": "e9104fb92601"
+  },
+  {
+    "path": "assets/art/map/nodes/item_shop.png",
+    "mode": "RGBA",
+    "size": [
+      96,
+      96
+    ],
+    "alpha_minmax": [
+      0,
+      255
+    ],
+    "transparent_lt255": 5029,
+    "opaque_255": 4187,
+    "bbox": [
+      1,
+      5,
+      94,
+      90
+    ],
+    "sha256_12": "a22f9a1a340e"
+  },
+  {
+    "path": "assets/art/map/nodes/magic_master.png",
+    "mode": "RGBA",
+    "size": [
+      96,
+      96
+    ],
+    "alpha_minmax": [
+      0,
+      255
+    ],
+    "transparent_lt255": 6010,
+    "opaque_255": 3206,
+    "bbox": [
+      1,
+      5,
+      94,
+      89
+    ],
+    "sha256_12": "a5a83e6e077b"
+  },
+  {
+    "path": "assets/art/map/nodes/magic_shop.png",
+    "mode": "RGBA",
+    "size": [
+      96,
+      96
+    ],
+    "alpha_minmax": [
+      0,
+      255
+    ],
+    "transparent_lt255": 5166,
+    "opaque_255": 4050,
+    "bbox": [
+      1,
+      2,
+      94,
+      92
+    ],
+    "sha256_12": "c230d3320e87"
+  },
+  {
+    "path": "assets/art/map/nodes/node_boss.png",
+    "mode": "RGBA",
+    "size": [
+      128,
+      128
+    ],
+    "alpha_minmax": [
+      0,
+      255
+    ],
+    "transparent_lt255": 10672,
+    "opaque_255": 5712,
+    "bbox": [
+      5,
+      13,
+      108,
+      114
+    ],
+    "sha256_12": "62d6ca76f77f"
+  },
+  {
+    "path": "assets/art/map/nodes/node_elite_combat.png",
+    "mode": "RGBA",
+    "size": [
+      128,
+      128
+    ],
+    "alpha_minmax": [
+      0,
+      255
+    ],
+    "transparent_lt255": 10089,
+    "opaque_255": 6295,
+    "bbox": [
+      5,
+      5,
+      122,
+      122
+    ],
+    "sha256_12": "9a72eba0accf"
+  },
+  {
+    "path": "assets/art/map/nodes/node_locked.png",
+    "mode": "RGBA",
+    "size": [
+      128,
+      128
+    ],
+    "alpha_minmax": [
+      0,
+      255
+    ],
+    "transparent_lt255": 9394,
+    "opaque_255": 6990,
+    "bbox": [
+      14,
+      5,
+      113,
+      122
+    ],
+    "sha256_12": "3500c4bde275"
+  },
+  {
+    "path": "assets/art/map/nodes/node_rest.png",
+    "mode": "RGBA",
+    "size": [
+      128,
+      128
+    ],
+    "alpha_minmax": [
+      0,
+      255
+    ],
+    "transparent_lt255": 10225,
+    "opaque_255": 6159,
+    "bbox": [
+      5,
+      10,
+      122,
+      117
+    ],
+    "sha256_12": "1dd621a66e06"
+  },
+  {
+    "path": "assets/art/map/nodes/node_route_arrow.png",
+    "mode": "RGBA",
+    "size": [
+      128,
+      128
+    ],
+    "alpha_minmax": [
+      0,
+      255
+    ],
+    "transparent_lt255": 10229,
+    "opaque_255": 6155,
+    "bbox": [
+      7,
+      5,
+      121,
+      122
+    ],
+    "sha256_12": "5a388a983724"
+  },
+  {
+    "path": "assets/art/map/nodes/node_selected_marker.png",
+    "mode": "RGBA",
+    "size": [
+      128,
+      128
+    ],
+    "alpha_minmax": [
+      0,
+      255
+    ],
+    "transparent_lt255": 12241,
+    "opaque_255": 4143,
+    "bbox": [
+      5,
+      10,
+      122,
+      118
+    ],
+    "sha256_12": "83ee9b461de1"
+  },
+  {
+    "path": "assets/art/map/nodes/random_item.png",
+    "mode": "RGBA",
+    "size": [
+      96,
+      96
+    ],
+    "alpha_minmax": [
+      0,
+      255
+    ],
+    "transparent_lt255": 4704,
+    "opaque_255": 4512,
+    "bbox": [
+      1,
+      3,
+      94,
+      92
+    ],
+    "sha256_12": "ee0ba4b1b80a"
+  },
+  {
+    "path": "assets/art/map/nodes/weapon_master.png",
+    "mode": "RGBA",
+    "size": [
+      96,
+      96
+    ],
+    "alpha_minmax": [
+      0,
+      255
+    ],
+    "transparent_lt255": 5082,
+    "opaque_255": 4134,
+    "bbox": [
+      2,
+      1,
+      94,
+      94
+    ],
+    "sha256_12": "5ba36a4f1448"
+  },
+  {
+    "path": "assets/art/map/nodes/weapon_shop.png",
+    "mode": "RGBA",
+    "size": [
+      96,
+      96
+    ],
+    "alpha_minmax": [
+      0,
+      255
+    ],
+    "transparent_lt255": 4927,
+    "opaque_255": 4289,
+    "bbox": [
+      1,
+      4,
+      94,
+      77
+    ],
+    "sha256_12": "7572c9be4d38"
+  },
+  {
+    "path": "assets/art/music_states/combat_boss.png",
+    "mode": "RGBA",
+    "size": [
+      96,
+      96
+    ],
+    "alpha_minmax": [
+      0,
+      255
+    ],
+    "transparent_lt255": 5524,
+    "opaque_255": 3692,
+    "bbox": [
+      6,
+      7,
+      90,
+      88
+    ],
+    "sha256_12": "45364d351f0a"
+  },
+  {
+    "path": "assets/art/music_states/combat_chapter_1_mob.png",
+    "mode": "RGBA",
+    "size": [
+      96,
+      96
+    ],
+    "alpha_minmax": [
+      0,
+      255
+    ],
+    "transparent_lt255": 5230,
+    "opaque_255": 3986,
+    "bbox": [
+      6,
+      7,
+      90,
+      89
+    ],
+    "sha256_12": "eac70a895bca"
+  },
+  {
+    "path": "assets/art/music_states/map_chapter_1.png",
+    "mode": "RGBA",
+    "size": [
+      96,
+      96
+    ],
+    "alpha_minmax": [
+      0,
+      255
+    ],
+    "transparent_lt255": 5420,
+    "opaque_255": 3796,
+    "bbox": [
+      6,
+      11,
+      90,
+      84
+    ],
+    "sha256_12": "fb52b017998d"
+  },
+  {
+    "path": "assets/art/music_states/menu.png",
+    "mode": "RGBA",
+    "size": [
+      96,
+      96
+    ],
+    "alpha_minmax": [
+      0,
+      255
+    ],
+    "transparent_lt255": 5131,
+    "opaque_255": 4085,
+    "bbox": [
+      6,
+      6,
+      90,
+      90
+    ],
+    "sha256_12": "8b84e940a5dd"
+  },
+  {
+    "path": "assets/art/music_states/victory.png",
+    "mode": "RGBA",
+    "size": [
+      96,
+      96
+    ],
+    "alpha_minmax": [
+      0,
+      255
+    ],
+    "transparent_lt255": 5796,
+    "opaque_255": 3420,
+    "bbox": [
+      6,
+      6,
+      89,
+      90
+    ],
+    "sha256_12": "b86380a9b65f"
+  }
+]

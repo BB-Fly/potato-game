@@ -1,0 +1,11 @@
+{
+  "target": "asset",
+  "mode": "single",
+  "prompt": "handdrawn cel single oversized french-fry staff weapon, generated with style_preview handdrawn_cel_v01 as style anchor.",
+  "role": "",
+  "input": "C:\\Users\\LYZ\\.codex\\generated_images\\019e533e-366a-7571-be4a-b947471ac9fb\\ig_064f26eab1b25cc7016a11382b12ac8190a024cea99c301169.png",
+  "threshold": 100,
+  "edge_threshold": 150,
+  "duration": 200,
+  "single_size": 96
+}

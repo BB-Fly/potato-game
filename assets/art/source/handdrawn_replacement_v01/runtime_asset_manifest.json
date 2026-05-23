@@ -1,0 +1,1419 @@
+[
+  {
+    "path": "assets/art/icons/boss_demo_pollution_source.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      7,
+      8,
+      88,
+      88
+    ]
+  },
+  {
+    "path": "assets/art/icons/boss_pollution_source_warning.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      9,
+      6,
+      118,
+      121
+    ]
+  },
+  {
+    "path": "assets/art/icons/buff_bruise.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      7,
+      8,
+      88,
+      88
+    ]
+  },
+  {
+    "path": "assets/art/icons/buff_burning.png",
+    "width": 64,
+    "height": 64,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      10,
+      3,
+      53,
+      60
+    ]
+  },
+  {
+    "path": "assets/art/icons/buff_comprehensive_development.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      8,
+      10,
+      87,
+      86
+    ]
+  },
+  {
+    "path": "assets/art/icons/buff_frost.png",
+    "width": 64,
+    "height": 64,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      5,
+      3,
+      58,
+      60
+    ]
+  },
+  {
+    "path": "assets/art/icons/buff_haste.png",
+    "width": 64,
+    "height": 64,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      6,
+      3,
+      57,
+      60
+    ]
+  },
+  {
+    "path": "assets/art/icons/buff_healing_sprout.png",
+    "width": 64,
+    "height": 64,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      5,
+      3,
+      59,
+      60
+    ]
+  },
+  {
+    "path": "assets/art/icons/buff_poison.png",
+    "width": 64,
+    "height": 64,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      8,
+      3,
+      56,
+      60
+    ]
+  },
+  {
+    "path": "assets/art/icons/buff_potato_enhancement.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      13,
+      7,
+      83,
+      89
+    ]
+  },
+  {
+    "path": "assets/art/icons/buff_shield.png",
+    "width": 64,
+    "height": 64,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      12,
+      3,
+      52,
+      60
+    ]
+  },
+  {
+    "path": "assets/art/icons/buff_stun.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      8,
+      8,
+      87,
+      87
+    ]
+  },
+  {
+    "path": "assets/art/icons/character_potato_hero.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      12,
+      7,
+      115,
+      122
+    ]
+  },
+  {
+    "path": "assets/art/icons/item_alchemy_flower.png",
+    "width": 64,
+    "height": 64,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      8,
+      3,
+      56,
+      60
+    ]
+  },
+  {
+    "path": "assets/art/icons/item_assassin_garlic.png",
+    "width": 64,
+    "height": 64,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      3,
+      6,
+      60,
+      58
+    ]
+  },
+  {
+    "path": "assets/art/icons/item_battle_bamboo.png",
+    "width": 64,
+    "height": 64,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      5,
+      3,
+      59,
+      60
+    ]
+  },
+  {
+    "path": "assets/art/icons/item_potato_enhancement.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      13,
+      7,
+      83,
+      89
+    ]
+  },
+  {
+    "path": "assets/art/icons/item_thorn_potato_charm.png",
+    "width": 64,
+    "height": 64,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      7,
+      3,
+      57,
+      60
+    ]
+  },
+  {
+    "path": "assets/art/icons/magic_comprehensive_development.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      8,
+      10,
+      87,
+      86
+    ]
+  },
+  {
+    "path": "assets/art/icons/monster_bomb_fruitling.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      23,
+      10,
+      105,
+      122
+    ]
+  },
+  {
+    "path": "assets/art/icons/monster_mushroom_spore.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      10,
+      26,
+      118,
+      122
+    ]
+  },
+  {
+    "path": "assets/art/icons/monster_sprouting_potato.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      6,
+      5,
+      90,
+      91
+    ]
+  },
+  {
+    "path": "assets/art/icons/reward_free_fusion.png",
+    "width": 64,
+    "height": 64,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      5,
+      3,
+      59,
+      60
+    ]
+  },
+  {
+    "path": "assets/art/icons/reward_free_upgrade.png",
+    "width": 64,
+    "height": 64,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      5,
+      3,
+      58,
+      60
+    ]
+  },
+  {
+    "path": "assets/art/icons/reward_gold_bonus.png",
+    "width": 64,
+    "height": 64,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      3,
+      5,
+      60,
+      59
+    ]
+  },
+  {
+    "path": "assets/art/icons/reward_legendary_choice.png",
+    "width": 64,
+    "height": 64,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      4,
+      3,
+      60,
+      60
+    ]
+  },
+  {
+    "path": "assets/art/icons/reward_luck_clover.png",
+    "width": 64,
+    "height": 64,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      3,
+      6,
+      60,
+      58
+    ]
+  },
+  {
+    "path": "assets/art/icons/reward_reroll.png",
+    "width": 64,
+    "height": 64,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      3,
+      4,
+      60,
+      59
+    ]
+  },
+  {
+    "path": "assets/art/icons/ui_card_common_frame.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      35,
+      35,
+      92,
+      92
+    ]
+  },
+  {
+    "path": "assets/art/icons/ui_card_legendary_frame.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      34,
+      33,
+      93,
+      95
+    ]
+  },
+  {
+    "path": "assets/art/icons/ui_card_rare_frame.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      33,
+      35,
+      95,
+      93
+    ]
+  },
+  {
+    "path": "assets/art/icons/ui_cursor_select.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      44,
+      39,
+      83,
+      89
+    ]
+  },
+  {
+    "path": "assets/art/icons/ui_panel_wood_small.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      39,
+      46,
+      88,
+      81
+    ]
+  },
+  {
+    "path": "assets/art/icons/ui_panel_wood_wide.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      8,
+      43,
+      120,
+      85
+    ]
+  },
+  {
+    "path": "assets/art/icons/weapon_fries.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      18,
+      7,
+      77,
+      89
+    ]
+  },
+  {
+    "path": "assets/art/icons/weapon_fries_slash.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      13,
+      13,
+      114,
+      115
+    ]
+  },
+  {
+    "path": "assets/art/icons/weapon_skill_heavy_fries_slam.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      5,
+      8,
+      91,
+      87
+    ]
+  },
+  {
+    "path": "assets/art/map/backgrounds/chapter_1_route_background.png",
+    "width": 1672,
+    "height": 941,
+    "mode": "RGB",
+    "has_alpha": false,
+    "nontransparent_bbox": [
+      0,
+      0,
+      1672,
+      941
+    ]
+  },
+  {
+    "path": "assets/art/map/backgrounds/chapter_2_route_background.png",
+    "width": 1672,
+    "height": 941,
+    "mode": "RGB",
+    "has_alpha": false,
+    "nontransparent_bbox": [
+      0,
+      0,
+      1672,
+      941
+    ]
+  },
+  {
+    "path": "assets/art/map/nodes/coin.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      8,
+      11,
+      87,
+      84
+    ]
+  },
+  {
+    "path": "assets/art/map/nodes/combat.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      8,
+      8,
+      87,
+      87
+    ]
+  },
+  {
+    "path": "assets/art/map/nodes/encounter.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      8,
+      8,
+      87,
+      88
+    ]
+  },
+  {
+    "path": "assets/art/map/nodes/free_weapon.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      8,
+      5,
+      88,
+      91
+    ]
+  },
+  {
+    "path": "assets/art/map/nodes/item_shop.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      8,
+      8,
+      88,
+      88
+    ]
+  },
+  {
+    "path": "assets/art/map/nodes/magic_master.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      11,
+      8,
+      85,
+      88
+    ]
+  },
+  {
+    "path": "assets/art/map/nodes/magic_shop.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      7,
+      5,
+      88,
+      91
+    ]
+  },
+  {
+    "path": "assets/art/map/nodes/node_boss.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      31,
+      36,
+      96,
+      91
+    ]
+  },
+  {
+    "path": "assets/art/map/nodes/node_elite_combat.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      34,
+      37,
+      94,
+      90
+    ]
+  },
+  {
+    "path": "assets/art/map/nodes/node_locked.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      40,
+      31,
+      88,
+      96
+    ]
+  },
+  {
+    "path": "assets/art/map/nodes/node_rest.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      32,
+      40,
+      96,
+      87
+    ]
+  },
+  {
+    "path": "assets/art/map/nodes/node_route_arrow.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      50,
+      52,
+      78,
+      75
+    ]
+  },
+  {
+    "path": "assets/art/map/nodes/node_selected_marker.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      36,
+      34,
+      92,
+      93
+    ]
+  },
+  {
+    "path": "assets/art/map/nodes/random_item.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      9,
+      9,
+      86,
+      87
+    ]
+  },
+  {
+    "path": "assets/art/map/nodes/weapon_master.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      5,
+      8,
+      91,
+      87
+    ]
+  },
+  {
+    "path": "assets/art/map/nodes/weapon_shop.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      7,
+      6,
+      89,
+      89
+    ]
+  },
+  {
+    "path": "assets/art/music_states/combat_boss.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      7,
+      8,
+      88,
+      88
+    ]
+  },
+  {
+    "path": "assets/art/music_states/combat_chapter_1_mob.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      8,
+      8,
+      87,
+      87
+    ]
+  },
+  {
+    "path": "assets/art/music_states/map_chapter_1.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      15,
+      11,
+      81,
+      85
+    ]
+  },
+  {
+    "path": "assets/art/music_states/menu.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      6,
+      6,
+      89,
+      90
+    ]
+  },
+  {
+    "path": "assets/art/music_states/victory.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      15,
+      11,
+      81,
+      85
+    ]
+  },
+  {
+    "path": "assets/art/sprites/bosses/demo_pollution_source.png",
+    "width": 384,
+    "height": 384,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      10,
+      12,
+      374,
+      375
+    ]
+  },
+  {
+    "path": "assets/art/sprites/characters/potato_hero.png",
+    "width": 256,
+    "height": 256,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      19,
+      9,
+      241,
+      247
+    ]
+  },
+  {
+    "path": "assets/art/sprites/characters/potato_hero_attack_fries.png",
+    "width": 256,
+    "height": 256,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      15,
+      10,
+      241,
+      249
+    ]
+  },
+  {
+    "path": "assets/art/sprites/characters/potato_hero_walk.png",
+    "width": 384,
+    "height": 384,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      11,
+      6,
+      373,
+      377
+    ]
+  },
+  {
+    "path": "assets/art/sprites/monsters/bomb_fruitling.png",
+    "width": 256,
+    "height": 256,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      23,
+      7,
+      233,
+      250
+    ]
+  },
+  {
+    "path": "assets/art/sprites/monsters/mushroom_spore.png",
+    "width": 256,
+    "height": 256,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      10,
+      7,
+      243,
+      250
+    ]
+  },
+  {
+    "path": "assets/art/sprites/monsters/sprouting_potato.png",
+    "width": 256,
+    "height": 256,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      14,
+      7,
+      241,
+      250
+    ]
+  },
+  {
+    "path": "assets/art/sprites/weapons/fries.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      18,
+      6,
+      78,
+      90
+    ]
+  },
+  {
+    "path": "assets/art/ui/button_center.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      6,
+      39,
+      121,
+      89
+    ]
+  },
+  {
+    "path": "assets/art/ui/button_fusion.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      11,
+      8,
+      85,
+      88
+    ]
+  },
+  {
+    "path": "assets/art/ui/button_left.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      18,
+      34,
+      109,
+      93
+    ]
+  },
+  {
+    "path": "assets/art/ui/button_refresh.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      9,
+      9,
+      86,
+      87
+    ]
+  },
+  {
+    "path": "assets/art/ui/button_right.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      18,
+      34,
+      110,
+      93
+    ]
+  },
+  {
+    "path": "assets/art/ui/button_upgrade.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      5,
+      8,
+      91,
+      87
+    ]
+  },
+  {
+    "path": "assets/art/ui/card_common_frame.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      35,
+      35,
+      92,
+      92
+    ]
+  },
+  {
+    "path": "assets/art/ui/card_legendary_frame.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      34,
+      33,
+      93,
+      95
+    ]
+  },
+  {
+    "path": "assets/art/ui/card_rare_frame.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      33,
+      35,
+      95,
+      93
+    ]
+  },
+  {
+    "path": "assets/art/ui/combat_boss_hp_frame.png",
+    "width": 114,
+    "height": 46,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      0,
+      0,
+      114,
+      46
+    ]
+  },
+  {
+    "path": "assets/art/ui/combat_boss_loss_glow.png",
+    "width": 97,
+    "height": 27,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      0,
+      0,
+      97,
+      27
+    ]
+  },
+  {
+    "path": "assets/art/ui/combat_cast_forbidden.png",
+    "width": 71,
+    "height": 72,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      0,
+      0,
+      71,
+      72
+    ]
+  },
+  {
+    "path": "assets/art/ui/combat_damage_burst.png",
+    "width": 97,
+    "height": 117,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      0,
+      0,
+      97,
+      117
+    ]
+  },
+  {
+    "path": "assets/art/ui/combat_hp_frame.png",
+    "width": 114,
+    "height": 116,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      0,
+      0,
+      114,
+      116
+    ]
+  },
+  {
+    "path": "assets/art/ui/combat_hp_frame_slim.png",
+    "width": 104,
+    "height": 45,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      0,
+      0,
+      104,
+      45
+    ]
+  },
+  {
+    "path": "assets/art/ui/combat_magic_slot.png",
+    "width": 103,
+    "height": 117,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      0,
+      0,
+      103,
+      117
+    ]
+  },
+  {
+    "path": "assets/art/ui/combat_magic_slot_disabled.png",
+    "width": 86,
+    "height": 83,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      0,
+      0,
+      86,
+      83
+    ]
+  },
+  {
+    "path": "assets/art/ui/combat_mana_frame.png",
+    "width": 104,
+    "height": 45,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      0,
+      0,
+      104,
+      45
+    ]
+  },
+  {
+    "path": "assets/art/ui/combat_player_loss_glow.png",
+    "width": 95,
+    "height": 31,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      0,
+      0,
+      95,
+      31
+    ]
+  },
+  {
+    "path": "assets/art/ui/currency_gold.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      30,
+      25,
+      98,
+      103
+    ]
+  },
+  {
+    "path": "assets/art/ui/cursor_select.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      44,
+      39,
+      83,
+      89
+    ]
+  },
+  {
+    "path": "assets/art/ui/health_badge.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      27,
+      26,
+      101,
+      102
+    ]
+  },
+  {
+    "path": "assets/art/ui/mana_badge.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      35,
+      23,
+      92,
+      104
+    ]
+  },
+  {
+    "path": "assets/art/ui/panel_wood_small.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      39,
+      46,
+      88,
+      81
+    ]
+  },
+  {
+    "path": "assets/art/ui/panel_wood_wide.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      8,
+      43,
+      120,
+      85
+    ]
+  },
+  {
+    "path": "assets/art/ui/reward_free_fusion.png",
+    "width": 64,
+    "height": 64,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      5,
+      3,
+      59,
+      60
+    ]
+  },
+  {
+    "path": "assets/art/ui/reward_free_upgrade.png",
+    "width": 64,
+    "height": 64,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      5,
+      3,
+      58,
+      60
+    ]
+  },
+  {
+    "path": "assets/art/ui/reward_gold_bonus.png",
+    "width": 64,
+    "height": 64,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      3,
+      5,
+      60,
+      59
+    ]
+  },
+  {
+    "path": "assets/art/ui/reward_legendary_choice.png",
+    "width": 64,
+    "height": 64,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      4,
+      3,
+      60,
+      60
+    ]
+  },
+  {
+    "path": "assets/art/ui/reward_luck_clover.png",
+    "width": 64,
+    "height": 64,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      3,
+      6,
+      60,
+      58
+    ]
+  },
+  {
+    "path": "assets/art/ui/reward_reroll.png",
+    "width": 64,
+    "height": 64,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      3,
+      4,
+      60,
+      59
+    ]
+  },
+  {
+    "path": "assets/art/ui/shop_item.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      8,
+      8,
+      88,
+      88
+    ]
+  },
+  {
+    "path": "assets/art/ui/shop_magic.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      7,
+      5,
+      88,
+      91
+    ]
+  },
+  {
+    "path": "assets/art/ui/shop_magic_master.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      11,
+      8,
+      85,
+      88
+    ]
+  },
+  {
+    "path": "assets/art/ui/shop_weapon.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      7,
+      6,
+      89,
+      89
+    ]
+  },
+  {
+    "path": "assets/art/ui/shop_weapon_master.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      5,
+      8,
+      91,
+      87
+    ]
+  },
+  {
+    "path": "assets/art/ui/slot_disabled.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      28,
+      26,
+      100,
+      102
+    ]
+  },
+  {
+    "path": "assets/art/ui/slot_magic.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      25,
+      23,
+      103,
+      105
+    ]
+  },
+  {
+    "path": "assets/art/ui/slot_weapon.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      28,
+      26,
+      100,
+      101
+    ]
+  },
+  {
+    "path": "assets/art/vfx/comprehensive_development.png",
+    "width": 256,
+    "height": 256,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      6,
+      19,
+      240,
+      244
+    ]
+  },
+  {
+    "path": "assets/art/vfx/weapon_fries_slash.png",
+    "width": 256,
+    "height": 256,
+    "mode": "RGBA",
+    "has_alpha": true,
+    "nontransparent_bbox": [
+      6,
+      13,
+      242,
+      248
+    ]
+  }
+]

@@ -1,0 +1,8 @@
+Use case: stylized-concept
+Asset type: runtime route-map background, opaque PNG, final target 1672x941.
+Input images: use the visible handdrawn_cel_v01 preview images as the style reference.
+Primary request: create a hand-drawn cel-shaded route map background for Chapter 2 of a potato adventure game.
+Scene/backdrop: a spooky moonlit fungal ruin route with twisting black vines, teal mushrooms, purple crystals, broken stone walls, small glasshouse ruins, damp soil, and faint magical lantern glow.
+Composition: wide 16:9 three-quarter top-down map, lower ruined arch leading through a winding branching route to an upper boss clearing, with 9 to 11 empty circular node pads integrated into the terrain. Leave clear negative space around each node pad for separate runtime icons. Use dark purple atmosphere at the border, but keep the route and node pads readable.
+Style: thick black ink outlines, smooth simple cel shading, lively rubber-hose animation feel close to Cuphead, with a little Don't Starve-like hand-drawn texture and uneven ink. Clean silhouette design; violet shadows balanced with teal, lime, and warm lamp accents.
+Hard constraints: no pixel art, no realistic rendering, no UI, no labels, no numbers, no arrows, no icons, no characters, no enemies, no text, no watermark. Full-bleed opaque illustration, no transparent background.

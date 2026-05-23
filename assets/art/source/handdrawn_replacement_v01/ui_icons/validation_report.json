@@ -1,0 +1,4038 @@
+{
+  "style_anchor": "assets/art/style_preview/handdrawn_cel_v01",
+  "changed_count": 76,
+  "skipped": [],
+  "failures": [],
+  "before": {
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/boss_demo_pollution_source.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        7,
+        8,
+        88,
+        88
+      ],
+      "opaque_pixels": 3451,
+      "transparent_pixels": 3854,
+      "partial_alpha_pixels": 1911,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/boss_pollution_source_warning.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        9,
+        6,
+        118,
+        121
+      ],
+      "opaque_pixels": 9396,
+      "transparent_pixels": 5795,
+      "partial_alpha_pixels": 1193,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/buff_bruise.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        7,
+        8,
+        88,
+        88
+      ],
+      "opaque_pixels": 3451,
+      "transparent_pixels": 3854,
+      "partial_alpha_pixels": 1911,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/buff_burning.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        10,
+        3,
+        53,
+        60
+      ],
+      "opaque_pixels": 1143,
+      "transparent_pixels": 2308,
+      "partial_alpha_pixels": 645,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/buff_comprehensive_development.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        8,
+        10,
+        87,
+        86
+      ],
+      "opaque_pixels": 3693,
+      "transparent_pixels": 4189,
+      "partial_alpha_pixels": 1334,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/buff_frost.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        5,
+        3,
+        58,
+        60
+      ],
+      "opaque_pixels": 1136,
+      "transparent_pixels": 2042,
+      "partial_alpha_pixels": 918,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/buff_haste.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        6,
+        3,
+        57,
+        60
+      ],
+      "opaque_pixels": 984,
+      "transparent_pixels": 2333,
+      "partial_alpha_pixels": 779,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/buff_healing_sprout.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        5,
+        3,
+        59,
+        60
+      ],
+      "opaque_pixels": 1345,
+      "transparent_pixels": 1815,
+      "partial_alpha_pixels": 936,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/buff_poison.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        8,
+        3,
+        56,
+        60
+      ],
+      "opaque_pixels": 1452,
+      "transparent_pixels": 1939,
+      "partial_alpha_pixels": 705,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/buff_potato_enhancement.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        13,
+        7,
+        83,
+        89
+      ],
+      "opaque_pixels": 4179,
+      "transparent_pixels": 4248,
+      "partial_alpha_pixels": 789,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/buff_shield.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        12,
+        3,
+        52,
+        60
+      ],
+      "opaque_pixels": 1262,
+      "transparent_pixels": 2492,
+      "partial_alpha_pixels": 342,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/buff_stun.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        8,
+        8,
+        87,
+        87
+      ],
+      "opaque_pixels": 2778,
+      "transparent_pixels": 4926,
+      "partial_alpha_pixels": 1512,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/character_potato_hero.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        12,
+        7,
+        115,
+        122
+      ],
+      "opaque_pixels": 6453,
+      "transparent_pixels": 8594,
+      "partial_alpha_pixels": 1337,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/item_alchemy_flower.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        8,
+        3,
+        56,
+        60
+      ],
+      "opaque_pixels": 1158,
+      "transparent_pixels": 1855,
+      "partial_alpha_pixels": 1083,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/item_assassin_garlic.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        3,
+        6,
+        60,
+        58
+      ],
+      "opaque_pixels": 1463,
+      "transparent_pixels": 1988,
+      "partial_alpha_pixels": 645,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/item_battle_bamboo.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        5,
+        3,
+        59,
+        60
+      ],
+      "opaque_pixels": 1104,
+      "transparent_pixels": 1982,
+      "partial_alpha_pixels": 1010,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/item_potato_enhancement.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        13,
+        7,
+        83,
+        89
+      ],
+      "opaque_pixels": 4179,
+      "transparent_pixels": 4248,
+      "partial_alpha_pixels": 789,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/item_thorn_potato_charm.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        7,
+        3,
+        57,
+        60
+      ],
+      "opaque_pixels": 1100,
+      "transparent_pixels": 2254,
+      "partial_alpha_pixels": 742,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/magic_comprehensive_development.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        8,
+        10,
+        87,
+        86
+      ],
+      "opaque_pixels": 3693,
+      "transparent_pixels": 4189,
+      "partial_alpha_pixels": 1334,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/monster_bomb_fruitling.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        23,
+        10,
+        105,
+        122
+      ],
+      "opaque_pixels": 5320,
+      "transparent_pixels": 10060,
+      "partial_alpha_pixels": 1004,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/monster_mushroom_spore.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        10,
+        26,
+        118,
+        122
+      ],
+      "opaque_pixels": 7161,
+      "transparent_pixels": 8136,
+      "partial_alpha_pixels": 1087,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/monster_sprouting_potato.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        6,
+        5,
+        90,
+        91
+      ],
+      "opaque_pixels": 3518,
+      "transparent_pixels": 3896,
+      "partial_alpha_pixels": 1802,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/reward_free_fusion.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        5,
+        3,
+        59,
+        60
+      ],
+      "opaque_pixels": 961,
+      "transparent_pixels": 1609,
+      "partial_alpha_pixels": 1526,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/reward_free_upgrade.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        5,
+        3,
+        58,
+        60
+      ],
+      "opaque_pixels": 1301,
+      "transparent_pixels": 1895,
+      "partial_alpha_pixels": 900,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/reward_gold_bonus.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        3,
+        5,
+        60,
+        59
+      ],
+      "opaque_pixels": 1648,
+      "transparent_pixels": 1858,
+      "partial_alpha_pixels": 590,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/reward_legendary_choice.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        4,
+        3,
+        60,
+        60
+      ],
+      "opaque_pixels": 1324,
+      "transparent_pixels": 1842,
+      "partial_alpha_pixels": 930,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/reward_luck_clover.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        3,
+        6,
+        60,
+        58
+      ],
+      "opaque_pixels": 1516,
+      "transparent_pixels": 1931,
+      "partial_alpha_pixels": 649,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/reward_reroll.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        3,
+        4,
+        60,
+        59
+      ],
+      "opaque_pixels": 1116,
+      "transparent_pixels": 1861,
+      "partial_alpha_pixels": 1119,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/ui_card_common_frame.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        35,
+        35,
+        92,
+        92
+      ],
+      "opaque_pixels": 922,
+      "transparent_pixels": 14397,
+      "partial_alpha_pixels": 1065,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/ui_card_legendary_frame.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        34,
+        33,
+        93,
+        95
+      ],
+      "opaque_pixels": 1074,
+      "transparent_pixels": 14250,
+      "partial_alpha_pixels": 1060,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/ui_card_rare_frame.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        33,
+        35,
+        95,
+        93
+      ],
+      "opaque_pixels": 949,
+      "transparent_pixels": 14363,
+      "partial_alpha_pixels": 1072,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/ui_cursor_select.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        44,
+        39,
+        83,
+        89
+      ],
+      "opaque_pixels": 792,
+      "transparent_pixels": 15062,
+      "partial_alpha_pixels": 530,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/ui_panel_wood_small.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        39,
+        46,
+        88,
+        81
+      ],
+      "opaque_pixels": 1271,
+      "transparent_pixels": 14743,
+      "partial_alpha_pixels": 370,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/ui_panel_wood_wide.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        8,
+        43,
+        120,
+        85
+      ],
+      "opaque_pixels": 3390,
+      "transparent_pixels": 12242,
+      "partial_alpha_pixels": 752,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/weapon_fries.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        18,
+        7,
+        77,
+        89
+      ],
+      "opaque_pixels": 603,
+      "transparent_pixels": 8091,
+      "partial_alpha_pixels": 522,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/weapon_fries_slash.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        13,
+        13,
+        114,
+        115
+      ],
+      "opaque_pixels": 2406,
+      "transparent_pixels": 12251,
+      "partial_alpha_pixels": 1727,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/weapon_skill_heavy_fries_slam.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        5,
+        8,
+        91,
+        87
+      ],
+      "opaque_pixels": 3498,
+      "transparent_pixels": 4615,
+      "partial_alpha_pixels": 1103,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/button_center.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        6,
+        39,
+        121,
+        89
+      ],
+      "opaque_pixels": 4671,
+      "transparent_pixels": 10914,
+      "partial_alpha_pixels": 799,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/button_fusion.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        11,
+        8,
+        85,
+        88
+      ],
+      "opaque_pixels": 2875,
+      "transparent_pixels": 5248,
+      "partial_alpha_pixels": 1093,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/button_left.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        18,
+        34,
+        109,
+        93
+      ],
+      "opaque_pixels": 3589,
+      "transparent_pixels": 11973,
+      "partial_alpha_pixels": 822,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/button_refresh.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        9,
+        9,
+        86,
+        87
+      ],
+      "opaque_pixels": 4287,
+      "transparent_pixels": 4194,
+      "partial_alpha_pixels": 735,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/button_right.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        18,
+        34,
+        110,
+        93
+      ],
+      "opaque_pixels": 3654,
+      "transparent_pixels": 11924,
+      "partial_alpha_pixels": 806,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/button_upgrade.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        5,
+        8,
+        91,
+        87
+      ],
+      "opaque_pixels": 3498,
+      "transparent_pixels": 4615,
+      "partial_alpha_pixels": 1103,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/card_common_frame.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        35,
+        35,
+        92,
+        92
+      ],
+      "opaque_pixels": 922,
+      "transparent_pixels": 14397,
+      "partial_alpha_pixels": 1065,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/card_legendary_frame.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        34,
+        33,
+        93,
+        95
+      ],
+      "opaque_pixels": 1074,
+      "transparent_pixels": 14250,
+      "partial_alpha_pixels": 1060,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/card_rare_frame.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        33,
+        35,
+        95,
+        93
+      ],
+      "opaque_pixels": 949,
+      "transparent_pixels": 14363,
+      "partial_alpha_pixels": 1072,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/combat_boss_hp_frame.png": {
+      "size": [
+        114,
+        46
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        0,
+        0,
+        114,
+        46
+      ],
+      "opaque_pixels": 1325,
+      "transparent_pixels": 2405,
+      "partial_alpha_pixels": 1514,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/combat_boss_loss_glow.png": {
+      "size": [
+        97,
+        27
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        0,
+        0,
+        97,
+        27
+      ],
+      "opaque_pixels": 1036,
+      "transparent_pixels": 1014,
+      "partial_alpha_pixels": 569,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/combat_cast_forbidden.png": {
+      "size": [
+        71,
+        72
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        0,
+        0,
+        71,
+        72
+      ],
+      "opaque_pixels": 2520,
+      "transparent_pixels": 1851,
+      "partial_alpha_pixels": 741,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/combat_damage_burst.png": {
+      "size": [
+        97,
+        117
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        0,
+        0,
+        97,
+        117
+      ],
+      "opaque_pixels": 1138,
+      "transparent_pixels": 8684,
+      "partial_alpha_pixels": 1527,
+      "corner_alpha": [
+        0,
+        61,
+        0,
+        61
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/combat_hp_frame.png": {
+      "size": [
+        114,
+        116
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        0,
+        0,
+        114,
+        116
+      ],
+      "opaque_pixels": 1305,
+      "transparent_pixels": 10518,
+      "partial_alpha_pixels": 1401,
+      "corner_alpha": [
+        0,
+        61,
+        0,
+        15
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/combat_hp_frame_slim.png": {
+      "size": [
+        104,
+        45
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        0,
+        0,
+        104,
+        45
+      ],
+      "opaque_pixels": 1117,
+      "transparent_pixels": 2398,
+      "partial_alpha_pixels": 1165,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/combat_magic_slot.png": {
+      "size": [
+        103,
+        117
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        0,
+        0,
+        103,
+        117
+      ],
+      "opaque_pixels": 1936,
+      "transparent_pixels": 8058,
+      "partial_alpha_pixels": 2057,
+      "corner_alpha": [
+        0,
+        61,
+        0,
+        61
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/combat_magic_slot_disabled.png": {
+      "size": [
+        86,
+        83
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        0,
+        0,
+        86,
+        83
+      ],
+      "opaque_pixels": 1883,
+      "transparent_pixels": 3645,
+      "partial_alpha_pixels": 1610,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/combat_mana_frame.png": {
+      "size": [
+        104,
+        45
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        0,
+        0,
+        104,
+        45
+      ],
+      "opaque_pixels": 1117,
+      "transparent_pixels": 2398,
+      "partial_alpha_pixels": 1165,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/combat_player_loss_glow.png": {
+      "size": [
+        95,
+        31
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        0,
+        0,
+        95,
+        31
+      ],
+      "opaque_pixels": 988,
+      "transparent_pixels": 1275,
+      "partial_alpha_pixels": 682,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/currency_gold.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        30,
+        25,
+        98,
+        103
+      ],
+      "opaque_pixels": 3265,
+      "transparent_pixels": 12380,
+      "partial_alpha_pixels": 739,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/cursor_select.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        44,
+        39,
+        83,
+        89
+      ],
+      "opaque_pixels": 792,
+      "transparent_pixels": 15062,
+      "partial_alpha_pixels": 530,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/health_badge.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        27,
+        26,
+        101,
+        102
+      ],
+      "opaque_pixels": 3450,
+      "transparent_pixels": 12162,
+      "partial_alpha_pixels": 772,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/mana_badge.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        35,
+        23,
+        92,
+        104
+      ],
+      "opaque_pixels": 2682,
+      "transparent_pixels": 13027,
+      "partial_alpha_pixels": 675,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/panel_wood_small.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        39,
+        46,
+        88,
+        81
+      ],
+      "opaque_pixels": 1271,
+      "transparent_pixels": 14743,
+      "partial_alpha_pixels": 370,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/panel_wood_wide.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        8,
+        43,
+        120,
+        85
+      ],
+      "opaque_pixels": 3390,
+      "transparent_pixels": 12242,
+      "partial_alpha_pixels": 752,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/reward_free_fusion.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        5,
+        3,
+        59,
+        60
+      ],
+      "opaque_pixels": 961,
+      "transparent_pixels": 1609,
+      "partial_alpha_pixels": 1526,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/reward_free_upgrade.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        5,
+        3,
+        58,
+        60
+      ],
+      "opaque_pixels": 1301,
+      "transparent_pixels": 1895,
+      "partial_alpha_pixels": 900,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/reward_gold_bonus.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        3,
+        5,
+        60,
+        59
+      ],
+      "opaque_pixels": 1648,
+      "transparent_pixels": 1858,
+      "partial_alpha_pixels": 590,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/reward_legendary_choice.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        4,
+        3,
+        60,
+        60
+      ],
+      "opaque_pixels": 1324,
+      "transparent_pixels": 1842,
+      "partial_alpha_pixels": 930,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/reward_luck_clover.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        3,
+        6,
+        60,
+        58
+      ],
+      "opaque_pixels": 1516,
+      "transparent_pixels": 1931,
+      "partial_alpha_pixels": 649,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/reward_reroll.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        3,
+        4,
+        60,
+        59
+      ],
+      "opaque_pixels": 1116,
+      "transparent_pixels": 1861,
+      "partial_alpha_pixels": 1119,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/shop_item.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        8,
+        8,
+        88,
+        88
+      ],
+      "opaque_pixels": 4660,
+      "transparent_pixels": 3846,
+      "partial_alpha_pixels": 710,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/shop_magic.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        7,
+        5,
+        88,
+        91
+      ],
+      "opaque_pixels": 4397,
+      "transparent_pixels": 3591,
+      "partial_alpha_pixels": 1228,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/shop_magic_master.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        11,
+        8,
+        85,
+        88
+      ],
+      "opaque_pixels": 2875,
+      "transparent_pixels": 5248,
+      "partial_alpha_pixels": 1093,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/shop_weapon.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        7,
+        6,
+        89,
+        89
+      ],
+      "opaque_pixels": 4602,
+      "transparent_pixels": 3496,
+      "partial_alpha_pixels": 1118,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/shop_weapon_master.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        5,
+        8,
+        91,
+        87
+      ],
+      "opaque_pixels": 3498,
+      "transparent_pixels": 4615,
+      "partial_alpha_pixels": 1103,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/slot_disabled.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        28,
+        26,
+        100,
+        102
+      ],
+      "opaque_pixels": 4519,
+      "transparent_pixels": 11182,
+      "partial_alpha_pixels": 683,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/slot_magic.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        25,
+        23,
+        103,
+        105
+      ],
+      "opaque_pixels": 4959,
+      "transparent_pixels": 10454,
+      "partial_alpha_pixels": 971,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/slot_weapon.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        28,
+        26,
+        100,
+        101
+      ],
+      "opaque_pixels": 4539,
+      "transparent_pixels": 11201,
+      "partial_alpha_pixels": 644,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "after": {
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/boss_demo_pollution_source.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        8,
+        14,
+        91,
+        91
+      ],
+      "opaque_pixels": 3471,
+      "transparent_pixels": 4752,
+      "partial_alpha_pixels": 993,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "823ec17c6e139462"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/boss_pollution_source_warning.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        8,
+        20,
+        117,
+        120
+      ],
+      "opaque_pixels": 6118,
+      "transparent_pixels": 8972,
+      "partial_alpha_pixels": 1294,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "1018b6905d980d09"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/buff_bruise.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        11,
+        18,
+        84,
+        82
+      ],
+      "opaque_pixels": 2031,
+      "transparent_pixels": 6063,
+      "partial_alpha_pixels": 1122,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "77a88c776692fbee"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/buff_burning.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        10,
+        3,
+        47,
+        60
+      ],
+      "opaque_pixels": 379,
+      "transparent_pixels": 2815,
+      "partial_alpha_pixels": 902,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "32270963d2b58d3d"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/buff_comprehensive_development.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        9,
+        8,
+        89,
+        89
+      ],
+      "opaque_pixels": 2126,
+      "transparent_pixels": 5849,
+      "partial_alpha_pixels": 1241,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "950645c46544122c"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/buff_frost.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        8,
+        9,
+        57,
+        55
+      ],
+      "opaque_pixels": 473,
+      "transparent_pixels": 2902,
+      "partial_alpha_pixels": 721,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "6feda0fc62fb0d77"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/buff_haste.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        5,
+        9,
+        50,
+        48
+      ],
+      "opaque_pixels": 308,
+      "transparent_pixels": 3227,
+      "partial_alpha_pixels": 561,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "920d99586ef59887"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/buff_healing_sprout.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        6,
+        10,
+        58,
+        57
+      ],
+      "opaque_pixels": 594,
+      "transparent_pixels": 2839,
+      "partial_alpha_pixels": 663,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "4210545c3708d264"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/buff_poison.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        12,
+        2,
+        53,
+        59
+      ],
+      "opaque_pixels": 991,
+      "transparent_pixels": 2651,
+      "partial_alpha_pixels": 454,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "c2f53f697c11ddec"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/buff_potato_enhancement.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        14,
+        14,
+        81,
+        93
+      ],
+      "opaque_pixels": 1532,
+      "transparent_pixels": 5354,
+      "partial_alpha_pixels": 2330,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "dd597512370e8833"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/buff_shield.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        8,
+        2,
+        57,
+        61
+      ],
+      "opaque_pixels": 1431,
+      "transparent_pixels": 2176,
+      "partial_alpha_pixels": 489,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "4974e831a84da56a"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/buff_stun.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        11,
+        8,
+        85,
+        76
+      ],
+      "opaque_pixels": 826,
+      "transparent_pixels": 7113,
+      "partial_alpha_pixels": 1277,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "1610f635295d8fb1"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/character_potato_hero.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        14,
+        4,
+        112,
+        124
+      ],
+      "opaque_pixels": 5763,
+      "transparent_pixels": 8818,
+      "partial_alpha_pixels": 1803,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "f0c7fc1b81c3aa29"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/item_alchemy_flower.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        17,
+        5,
+        51,
+        58
+      ],
+      "opaque_pixels": 480,
+      "transparent_pixels": 3081,
+      "partial_alpha_pixels": 535,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "8d2d4ce68f7ceba5"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/item_assassin_garlic.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        5,
+        6,
+        59,
+        60
+      ],
+      "opaque_pixels": 1329,
+      "transparent_pixels": 2239,
+      "partial_alpha_pixels": 528,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "01c3822ec079376d"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/item_battle_bamboo.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        8,
+        11,
+        56,
+        56
+      ],
+      "opaque_pixels": 536,
+      "transparent_pixels": 2999,
+      "partial_alpha_pixels": 561,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "3664f5b4aa27a5f5"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/item_potato_enhancement.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        14,
+        14,
+        81,
+        93
+      ],
+      "opaque_pixels": 1532,
+      "transparent_pixels": 5354,
+      "partial_alpha_pixels": 2330,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "dd597512370e8833"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/item_thorn_potato_charm.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        11,
+        4,
+        55,
+        59
+      ],
+      "opaque_pixels": 286,
+      "transparent_pixels": 2734,
+      "partial_alpha_pixels": 1076,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "e9c180c7a5ab12bf"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/magic_comprehensive_development.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        9,
+        8,
+        89,
+        89
+      ],
+      "opaque_pixels": 2126,
+      "transparent_pixels": 5849,
+      "partial_alpha_pixels": 1241,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "950645c46544122c"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/monster_bomb_fruitling.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        17,
+        4,
+        110,
+        124
+      ],
+      "opaque_pixels": 5565,
+      "transparent_pixels": 9205,
+      "partial_alpha_pixels": 1614,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "6fb0121a121decab"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/monster_mushroom_spore.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        4,
+        6,
+        124,
+        122
+      ],
+      "opaque_pixels": 8335,
+      "transparent_pixels": 6422,
+      "partial_alpha_pixels": 1627,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "711aa44272a5ecbc"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/monster_sprouting_potato.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        4,
+        2,
+        92,
+        94
+      ],
+      "opaque_pixels": 3220,
+      "transparent_pixels": 4496,
+      "partial_alpha_pixels": 1500,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "939ef04130a02104"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/reward_free_fusion.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        8,
+        5,
+        56,
+        52
+      ],
+      "opaque_pixels": 316,
+      "transparent_pixels": 3098,
+      "partial_alpha_pixels": 682,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "d16ffb1303d2e36e"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/reward_free_upgrade.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        8,
+        6,
+        55,
+        57
+      ],
+      "opaque_pixels": 535,
+      "transparent_pixels": 2873,
+      "partial_alpha_pixels": 688,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "96e8563a8b2181d5"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/reward_gold_bonus.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        9,
+        13,
+        56,
+        57
+      ],
+      "opaque_pixels": 754,
+      "transparent_pixels": 2818,
+      "partial_alpha_pixels": 524,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "e7a6936b080047ea"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/reward_legendary_choice.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        9,
+        4,
+        54,
+        58
+      ],
+      "opaque_pixels": 551,
+      "transparent_pixels": 2568,
+      "partial_alpha_pixels": 977,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "eef37e96fe42b6e7"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/reward_luck_clover.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        16,
+        17,
+        48,
+        56
+      ],
+      "opaque_pixels": 249,
+      "transparent_pixels": 3354,
+      "partial_alpha_pixels": 493,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "3f67dc962b5de304"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/reward_reroll.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        9,
+        10,
+        59,
+        57
+      ],
+      "opaque_pixels": 728,
+      "transparent_pixels": 2479,
+      "partial_alpha_pixels": 889,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "cc66899e399f8b0a"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/ui_card_common_frame.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        29,
+        29,
+        99,
+        99
+      ],
+      "opaque_pixels": 2016,
+      "transparent_pixels": 12996,
+      "partial_alpha_pixels": 1372,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "68a627bd9652dd18"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/ui_card_legendary_frame.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        29,
+        26,
+        99,
+        101
+      ],
+      "opaque_pixels": 2039,
+      "transparent_pixels": 12963,
+      "partial_alpha_pixels": 1382,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "a9d1c6618749287e"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/ui_card_rare_frame.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        29,
+        29,
+        99,
+        99
+      ],
+      "opaque_pixels": 1805,
+      "transparent_pixels": 13015,
+      "partial_alpha_pixels": 1564,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "22d77eaf030bfae0"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/ui_cursor_select.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        38,
+        31,
+        87,
+        100
+      ],
+      "opaque_pixels": 1236,
+      "transparent_pixels": 14516,
+      "partial_alpha_pixels": 632,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "faaa56471b98fbc9"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/ui_panel_wood_small.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        32,
+        43,
+        96,
+        87
+      ],
+      "opaque_pixels": 1717,
+      "transparent_pixels": 14098,
+      "partial_alpha_pixels": 569,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "987d89472813c425"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/ui_panel_wood_wide.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        5,
+        38,
+        123,
+        91
+      ],
+      "opaque_pixels": 4297,
+      "transparent_pixels": 11057,
+      "partial_alpha_pixels": 1030,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "9264842f50d5259a"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/weapon_fries.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        38,
+        5,
+        58,
+        86
+      ],
+      "opaque_pixels": 499,
+      "transparent_pixels": 7906,
+      "partial_alpha_pixels": 811,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "d10beca42459982f"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/weapon_fries_slash.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        14,
+        23,
+        113,
+        107
+      ],
+      "opaque_pixels": 1615,
+      "transparent_pixels": 13548,
+      "partial_alpha_pixels": 1221,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "4e4b7676ec83127b"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/icons/weapon_skill_heavy_fries_slam.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        12,
+        11,
+        82,
+        95
+      ],
+      "opaque_pixels": 1427,
+      "transparent_pixels": 6423,
+      "partial_alpha_pixels": 1366,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "e767f44d1d52cee1"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/button_center.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        5,
+        38,
+        123,
+        91
+      ],
+      "opaque_pixels": 4297,
+      "transparent_pixels": 11057,
+      "partial_alpha_pixels": 1030,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "9264842f50d5259a"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/button_fusion.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        13,
+        9,
+        83,
+        77
+      ],
+      "opaque_pixels": 919,
+      "transparent_pixels": 7183,
+      "partial_alpha_pixels": 1114,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "b678e3e682f8a63f"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/button_left.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        5,
+        35,
+        123,
+        94
+      ],
+      "opaque_pixels": 4954,
+      "transparent_pixels": 10448,
+      "partial_alpha_pixels": 982,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "735050bb9861cc73"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/button_refresh.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        16,
+        17,
+        87,
+        84
+      ],
+      "opaque_pixels": 1841,
+      "transparent_pixels": 5804,
+      "partial_alpha_pixels": 1571,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "50cb35d55d9a882d"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/button_right.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        5,
+        35,
+        123,
+        94
+      ],
+      "opaque_pixels": 4954,
+      "transparent_pixels": 10448,
+      "partial_alpha_pixels": 982,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "c4cc9ab02be365d7"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/button_upgrade.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        12,
+        11,
+        82,
+        84
+      ],
+      "opaque_pixels": 1414,
+      "transparent_pixels": 6770,
+      "partial_alpha_pixels": 1032,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "e4cbdaef61d3eee4"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/card_common_frame.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        29,
+        29,
+        99,
+        99
+      ],
+      "opaque_pixels": 2016,
+      "transparent_pixels": 12996,
+      "partial_alpha_pixels": 1372,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "68a627bd9652dd18"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/card_legendary_frame.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        29,
+        26,
+        99,
+        101
+      ],
+      "opaque_pixels": 2039,
+      "transparent_pixels": 12963,
+      "partial_alpha_pixels": 1382,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "a9d1c6618749287e"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/card_rare_frame.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        29,
+        29,
+        99,
+        99
+      ],
+      "opaque_pixels": 1805,
+      "transparent_pixels": 13015,
+      "partial_alpha_pixels": 1564,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "22d77eaf030bfae0"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/combat_boss_hp_frame.png": {
+      "size": [
+        114,
+        46
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        0,
+        1,
+        114,
+        44
+      ],
+      "opaque_pixels": 2896,
+      "transparent_pixels": 825,
+      "partial_alpha_pixels": 1523,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "532eed9881994314"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/combat_boss_loss_glow.png": {
+      "size": [
+        97,
+        27
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        0,
+        6,
+        97,
+        21
+      ],
+      "opaque_pixels": 64,
+      "transparent_pixels": 1764,
+      "partial_alpha_pixels": 791,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "095d2b223cd8a0b8"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/combat_cast_forbidden.png": {
+      "size": [
+        71,
+        72
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        6,
+        6,
+        65,
+        66
+      ],
+      "opaque_pixels": 642,
+      "transparent_pixels": 2487,
+      "partial_alpha_pixels": 1983,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "f10193efe25a4792"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/combat_damage_burst.png": {
+      "size": [
+        97,
+        117
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        1,
+        13,
+        91,
+        101
+      ],
+      "opaque_pixels": 454,
+      "transparent_pixels": 7799,
+      "partial_alpha_pixels": 3096,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "6a6142a802fe6214"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/combat_hp_frame.png": {
+      "size": [
+        114,
+        116
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        22,
+        21,
+        92,
+        95
+      ],
+      "opaque_pixels": 2712,
+      "transparent_pixels": 8445,
+      "partial_alpha_pixels": 2067,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "b5e8bbcc736de61c"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/combat_hp_frame_slim.png": {
+      "size": [
+        104,
+        45
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        0,
+        2,
+        104,
+        43
+      ],
+      "opaque_pixels": 1800,
+      "transparent_pixels": 1313,
+      "partial_alpha_pixels": 1567,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "586d556505e3b6cb"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/combat_magic_slot.png": {
+      "size": [
+        103,
+        117
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        0,
+        2,
+        103,
+        116
+      ],
+      "opaque_pixels": 6460,
+      "transparent_pixels": 817,
+      "partial_alpha_pixels": 4774,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "a712b3229cf2912f"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/combat_magic_slot_disabled.png": {
+      "size": [
+        86,
+        83
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        0,
+        2,
+        86,
+        82
+      ],
+      "opaque_pixels": 3040,
+      "transparent_pixels": 664,
+      "partial_alpha_pixels": 3434,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "fc4692bf8caaac57"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/combat_mana_frame.png": {
+      "size": [
+        104,
+        45
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        0,
+        2,
+        104,
+        43
+      ],
+      "opaque_pixels": 1691,
+      "transparent_pixels": 1313,
+      "partial_alpha_pixels": 1676,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "a0f8019d5a4f50a1"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/combat_player_loss_glow.png": {
+      "size": [
+        95,
+        31
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        0,
+        7,
+        95,
+        23
+      ],
+      "opaque_pixels": 1,
+      "transparent_pixels": 2013,
+      "partial_alpha_pixels": 931,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "3c42fda645dd29c5"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/currency_gold.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        20,
+        27,
+        108,
+        112
+      ],
+      "opaque_pixels": 3507,
+      "transparent_pixels": 11802,
+      "partial_alpha_pixels": 1075,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "b5844e220cd057d6"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/cursor_select.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        38,
+        31,
+        87,
+        100
+      ],
+      "opaque_pixels": 1236,
+      "transparent_pixels": 14516,
+      "partial_alpha_pixels": 632,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "faaa56471b98fbc9"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/health_badge.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        26,
+        18,
+        103,
+        112
+      ],
+      "opaque_pixels": 2405,
+      "transparent_pixels": 12771,
+      "partial_alpha_pixels": 1208,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "cbee7d9113648508"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/mana_badge.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        35,
+        16,
+        93,
+        120
+      ],
+      "opaque_pixels": 2562,
+      "transparent_pixels": 13049,
+      "partial_alpha_pixels": 773,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "7ceda5916d33d748"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/panel_wood_small.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        32,
+        43,
+        96,
+        87
+      ],
+      "opaque_pixels": 1717,
+      "transparent_pixels": 14098,
+      "partial_alpha_pixels": 569,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "987d89472813c425"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/panel_wood_wide.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        5,
+        38,
+        123,
+        91
+      ],
+      "opaque_pixels": 4297,
+      "transparent_pixels": 11057,
+      "partial_alpha_pixels": 1030,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "9264842f50d5259a"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/reward_free_fusion.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        8,
+        5,
+        56,
+        52
+      ],
+      "opaque_pixels": 316,
+      "transparent_pixels": 3098,
+      "partial_alpha_pixels": 682,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "d16ffb1303d2e36e"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/reward_free_upgrade.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        8,
+        6,
+        55,
+        57
+      ],
+      "opaque_pixels": 535,
+      "transparent_pixels": 2873,
+      "partial_alpha_pixels": 688,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "96e8563a8b2181d5"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/reward_gold_bonus.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        9,
+        13,
+        56,
+        57
+      ],
+      "opaque_pixels": 754,
+      "transparent_pixels": 2818,
+      "partial_alpha_pixels": 524,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "e7a6936b080047ea"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/reward_legendary_choice.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        9,
+        4,
+        54,
+        58
+      ],
+      "opaque_pixels": 551,
+      "transparent_pixels": 2568,
+      "partial_alpha_pixels": 977,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "eef37e96fe42b6e7"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/reward_luck_clover.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        16,
+        17,
+        48,
+        56
+      ],
+      "opaque_pixels": 249,
+      "transparent_pixels": 3354,
+      "partial_alpha_pixels": 493,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "3f67dc962b5de304"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/reward_reroll.png": {
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        9,
+        10,
+        59,
+        57
+      ],
+      "opaque_pixels": 728,
+      "transparent_pixels": 2479,
+      "partial_alpha_pixels": 889,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "cc66899e399f8b0a"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/shop_item.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        19,
+        15,
+        82,
+        76
+      ],
+      "opaque_pixels": 2162,
+      "transparent_pixels": 6391,
+      "partial_alpha_pixels": 663,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "e3c629737225ed69"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/shop_magic.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        18,
+        19,
+        78,
+        80
+      ],
+      "opaque_pixels": 2415,
+      "transparent_pixels": 5872,
+      "partial_alpha_pixels": 929,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "19f6a021d670c71e"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/shop_magic_master.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        13,
+        16,
+        85,
+        79
+      ],
+      "opaque_pixels": 1009,
+      "transparent_pixels": 7244,
+      "partial_alpha_pixels": 963,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "7902e9312b44b52a"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/shop_weapon.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        16,
+        5,
+        78,
+        86
+      ],
+      "opaque_pixels": 2196,
+      "transparent_pixels": 5944,
+      "partial_alpha_pixels": 1076,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "419b1930cd1e3fba"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/shop_weapon_master.png": {
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        12,
+        11,
+        82,
+        95
+      ],
+      "opaque_pixels": 1427,
+      "transparent_pixels": 6423,
+      "partial_alpha_pixels": 1366,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "e767f44d1d52cee1"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/slot_disabled.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        22,
+        21,
+        106,
+        107
+      ],
+      "opaque_pixels": 2619,
+      "transparent_pixels": 9613,
+      "partial_alpha_pixels": 4152,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "a7295fa829643ccc"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/slot_magic.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        22,
+        19,
+        106,
+        109
+      ],
+      "opaque_pixels": 2420,
+      "transparent_pixels": 9556,
+      "partial_alpha_pixels": 4408,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "b4645ca408a4c97f"
+    },
+    "C:/Users/LYZ/Desktop/work/potato-game/assets/art/ui/slot_weapon.png": {
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bbox": [
+        22,
+        21,
+        106,
+        107
+      ],
+      "opaque_pixels": 2613,
+      "transparent_pixels": 9613,
+      "partial_alpha_pixels": 4158,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sha256_16": "0da47aff28566283"
+    }
+  }
+}

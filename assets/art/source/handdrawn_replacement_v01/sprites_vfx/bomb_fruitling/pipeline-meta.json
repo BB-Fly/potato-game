@@ -1,0 +1,175 @@
+{
+  "target": "creature",
+  "mode": "walk",
+  "prompt": "handdrawn cel style preview bomb_fruitling",
+  "role": "",
+  "input": "C:\\Users\\LYZ\\Desktop\\work\\potato-game\\assets\\art\\source\\style_preview_handdrawn_v01\\bomb_fruitling\\raw-sheet.png",
+  "threshold": 100,
+  "edge_threshold": 150,
+  "duration": 200,
+  "rows": 2,
+  "cols": 2,
+  "cell_size": 128,
+  "fit_scale": 0.9,
+  "trim_border": 4,
+  "edge_clean_depth": 3,
+  "align": "feet",
+  "shared_scale": true,
+  "component_mode": "largest",
+  "component_padding": 0,
+  "min_component_area": 100,
+  "edge_touch_margin": 2,
+  "frame_labels": [
+    "bomb_fruitling-1",
+    "bomb_fruitling-2",
+    "bomb_fruitling-3",
+    "bomb_fruitling-4"
+  ],
+  "frames": [
+    {
+      "grid": [
+        0,
+        0
+      ],
+      "source_box": [
+        0,
+        0,
+        627,
+        627
+      ],
+      "component_mode": "largest",
+      "component_count": 1,
+      "selected_component_area": 102852,
+      "selected_component_bbox": [
+        174,
+        85,
+        523,
+        544
+      ],
+      "crop_bbox": [
+        174,
+        85,
+        523,
+        544
+      ],
+      "edge_touch": false,
+      "output_size": [
+        87,
+        114
+      ],
+      "paste_position": [
+        20,
+        8
+      ]
+    },
+    {
+      "grid": [
+        0,
+        1
+      ],
+      "source_box": [
+        627,
+        0,
+        1254,
+        627
+      ],
+      "component_mode": "largest",
+      "component_count": 1,
+      "selected_component_area": 102390,
+      "selected_component_bbox": [
+        99,
+        77,
+        442,
+        539
+      ],
+      "crop_bbox": [
+        99,
+        77,
+        442,
+        539
+      ],
+      "edge_touch": false,
+      "output_size": [
+        85,
+        115
+      ],
+      "paste_position": [
+        21,
+        7
+      ]
+    },
+    {
+      "grid": [
+        1,
+        0
+      ],
+      "source_box": [
+        0,
+        627,
+        627,
+        1254
+      ],
+      "component_mode": "largest",
+      "component_count": 1,
+      "selected_component_area": 103088,
+      "selected_component_bbox": [
+        176,
+        29,
+        522,
+        487
+      ],
+      "crop_bbox": [
+        176,
+        29,
+        522,
+        487
+      ],
+      "edge_touch": false,
+      "output_size": [
+        86,
+        114
+      ],
+      "paste_position": [
+        21,
+        8
+      ]
+    },
+    {
+      "grid": [
+        1,
+        1
+      ],
+      "source_box": [
+        627,
+        627,
+        1254,
+        1254
+      ],
+      "component_mode": "largest",
+      "component_count": 1,
+      "selected_component_area": 96885,
+      "selected_component_bbox": [
+        90,
+        57,
+        429,
+        483
+      ],
+      "crop_bbox": [
+        90,
+        57,
+        429,
+        483
+      ],
+      "edge_touch": false,
+      "output_size": [
+        84,
+        106
+      ],
+      "paste_position": [
+        22,
+        16
+      ]
+    }
+  ],
+  "edge_touch_frames": []
+}

@@ -1,0 +1,1 @@
+handdrawn cel Potato Hero four-direction walk 4x4 sheet, generated with style_preview handdrawn_cel_v01 as style anchor.

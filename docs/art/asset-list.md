@@ -8,20 +8,21 @@ Scope for this pass:
 - keep gameplay/domain code untouched.
 
 Current implementation note:
-- this pass generated and installed the Demo-critical pixel art for the player, first monster, Demo Boss, fries weapon, comprehensive development magic VFX, potato enhancement item, map nodes, shop/UI icons, and basic UI skin pieces;
+- this pass generated and installed the Demo-critical hand-drawn runtime art for the player, monsters, Demo Boss, fries weapon, comprehensive development magic VFX, item/buff/reward icons, map nodes, route backgrounds, shop/UI icons, music-state icons, and basic UI skin pieces;
 - source sheets, processed frames, GIF previews, prompts, and QC metadata are kept under `assets/art/source/`;
 - runtime-ready PNGs are mapped through `content/base/assets/base_assets.json`.
 
 ## Style Constraints
 
-- Visual direction: top-down survivor arena readability, chunky silhouettes, clear rarity/status icon language, and fast recognition at small sizes.
-- Inspiration boundary: may share the broad genre ergonomics of Brotato, but must be original. Do not copy its character shapes, enemy designs, UI frames, icon compositions, palettes, or exact proportions.
-- Potato theme: use playful vegetable/fried-food motifs, but keep outlines, facial details, weapons, and effects unique to Puritato.
+- The detailed runtime style contract lives in `docs/art/style-guide.md`.
+- Current visual direction: original hand-drawn cel-animation art with thick ink outlines, clean painted fills, light brush texture, and lively squash-and-stretch silhouettes.
+- Inspiration boundary: references such as vintage rubber-hose animation, dark whimsical survival-game illustration, and compact survivor-like mascot design are mood/craft references only. Do not copy specific characters, UI frames, icon compositions, palettes, poses, or proportions from any source game.
+- Potato theme: use playful vegetable, fried-food, garden, mushroom, crystal, and corruption motifs, but keep outlines, facial details, weapons, and effects unique to Puritato.
 - Combat readability: player, mob, boss, weapon hit area, magic VFX, and pickups must stay distinguishable under motion and overlapping effects.
-- Combat character rig: the potato body can be handless in combat. Use small round floating hands / weapon sockets around the potato to hold equipped weapons; weapon attacks animate the floating hand, weapon sprite, projectile, hit area, and VFX instead of requiring a body attack animation.
-- Concept-art boundary: portraits, concept sheets, story art, and marketing-style illustrations may still show the potato hero with hands. Runtime combat sprites should treat those hands as reference-only and keep the body silhouette simple.
-- Route map direction: route selection art should use an original vertical rail/track-board composition inspired by roguelike route maps: player entrance at the bottom, two readable branching lanes, reward pads on both sides of each lane, one shared combat gate at the top, and visual room for camera scrolling between floors.
-- UI readability: icons should remain legible at 32 px and 64 px. Prefer strong silhouettes over fine texture.
+- Combat character rig: the potato body can be handless in combat. Use small feet, sprout, scarf, facial expression, floating hands, weapon sockets, weapon sprites, projectiles, hit areas, and VFX instead of complex humanoid body anatomy.
+- Concept-art boundary: portraits, concept sheets, story art, and marketing-style illustrations may show richer anatomy. Runtime combat sprites should keep the body silhouette simple.
+- Route map direction: route selection art should use original 3/4 top-down hand-painted board layouts with clear circular pads, readable branching paths, and decorative biome edges. Node icons remain separate transparent assets.
+- UI readability: icons should remain legible at 32 px and 64 px. Prefer strong silhouettes over fine texture, and keep transparent interiors for frames/slots that hold content.
 
 ## Path Conventions
 

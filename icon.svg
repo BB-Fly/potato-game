@@ -1,8 +1,18 @@
 <svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
-  <rect width="128" height="128" rx="24" fill="#2f5d50"/>
-  <ellipse cx="64" cy="70" rx="34" ry="42" fill="#d8a85a"/>
-  <circle cx="52" cy="58" r="4" fill="#6b4423"/>
-  <circle cx="76" cy="58" r="4" fill="#6b4423"/>
-  <path d="M50 82c8 8 20 8 28 0" fill="none" stroke="#6b4423" stroke-width="5" stroke-linecap="round"/>
+  <rect width="128" height="128" rx="22" fill="#f0dfb8"/>
+  <path d="M18 24c20-13 58-16 87 3 13 9 12 27 5 45-9 24-31 39-56 37-24-2-43-17-49-39-5-19-1-37 13-46z" fill="#6f8b3f" opacity=".18"/>
+  <path d="M63 17c1-9 7-13 15-13-1 9-7 14-15 13z" fill="#87a83a" stroke="#17120e" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M62 17c-6-7-5-14 1-20 6 7 7 14-1 20z" fill="#6f9b35" stroke="#17120e" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M26 72c0-29 15-51 39-51 25 0 39 22 39 51 0 26-16 42-39 42-24 0-39-16-39-42z" fill="#dda744" stroke="#17120e" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M35 73c16 12 39 15 60 4l1 14c-17 13-45 15-62 1z" fill="#739a32" stroke="#17120e" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M36 73c16 8 40 10 58 2-16 14-43 18-58 2z" fill="#a2bd47"/>
+  <path d="M91 77c9-8 18-10 26-6-5 8-13 12-26 11z" fill="#87a83a" stroke="#17120e" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M91 88c12-1 20 3 24 11-10 3-19 0-25-8z" fill="#739a32" stroke="#17120e" stroke-width="5" stroke-linejoin="round"/>
+  <circle cx="52" cy="61" r="7" fill="#17120e"/>
+  <circle cx="77" cy="61" r="7" fill="#17120e"/>
+  <circle cx="55" cy="58" r="2.2" fill="#fff8df"/>
+  <circle cx="80" cy="58" r="2.2" fill="#fff8df"/>
+  <path d="M55 79c7 6 14 6 21 0" fill="none" stroke="#17120e" stroke-width="4" stroke-linecap="round"/>
+  <path d="M39 42c9-8 20-11 33-9" fill="none" stroke="#f7d27a" stroke-width="5" stroke-linecap="round" opacity=".75"/>
+  <path d="M44 34l4-3M83 39l5-2M38 58l-5 2M90 55l5 3M50 99l-5 4M80 101l5 3" fill="none" stroke="#8d6229" stroke-width="4" stroke-linecap="round" opacity=".55"/>
 </svg>
-

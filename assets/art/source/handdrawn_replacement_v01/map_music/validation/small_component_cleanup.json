@@ -1,0 +1,603 @@
+[
+  {
+    "runtime": "assets/art/map/nodes/coin.png",
+    "removed_alpha_pixels": 32,
+    "removed_components": [
+      {
+        "area": 18,
+        "bbox": [
+          36,
+          3,
+          54,
+          4
+        ]
+      },
+      {
+        "area": 14,
+        "bbox": [
+          58,
+          92,
+          72,
+          93
+        ]
+      }
+    ],
+    "cleaned_source_copy": "assets/art/source/handdrawn_replacement_v01/map_music/nodes/final_runtime_cleaned/coin.png"
+  },
+  {
+    "runtime": "assets/art/map/nodes/combat.png",
+    "removed_alpha_pixels": 4,
+    "removed_components": [
+      {
+        "area": 4,
+        "bbox": [
+          70,
+          92,
+          74,
+          93
+        ]
+      }
+    ],
+    "cleaned_source_copy": "assets/art/source/handdrawn_replacement_v01/map_music/nodes/final_runtime_cleaned/combat.png"
+  },
+  {
+    "runtime": "assets/art/map/nodes/encounter.png",
+    "removed_alpha_pixels": 0,
+    "removed_components": [],
+    "cleaned_source_copy": "assets/art/source/handdrawn_replacement_v01/map_music/nodes/final_runtime_cleaned/encounter.png"
+  },
+  {
+    "runtime": "assets/art/map/nodes/free_weapon.png",
+    "removed_alpha_pixels": 32,
+    "removed_components": [
+      {
+        "area": 5,
+        "bbox": [
+          59,
+          6,
+          64,
+          7
+        ]
+      },
+      {
+        "area": 27,
+        "bbox": [
+          25,
+          89,
+          52,
+          90
+        ]
+      }
+    ],
+    "cleaned_source_copy": "assets/art/source/handdrawn_replacement_v01/map_music/nodes/final_runtime_cleaned/free_weapon.png"
+  },
+  {
+    "runtime": "assets/art/map/nodes/item_shop.png",
+    "removed_alpha_pixels": 0,
+    "removed_components": [],
+    "cleaned_source_copy": "assets/art/source/handdrawn_replacement_v01/map_music/nodes/final_runtime_cleaned/item_shop.png"
+  },
+  {
+    "runtime": "assets/art/map/nodes/magic_master.png",
+    "removed_alpha_pixels": 29,
+    "removed_components": [
+      {
+        "area": 2,
+        "bbox": [
+          22,
+          12,
+          24,
+          13
+        ]
+      },
+      {
+        "area": 2,
+        "bbox": [
+          15,
+          22,
+          16,
+          24
+        ]
+      },
+      {
+        "area": 1,
+        "bbox": [
+          23,
+          31,
+          24,
+          32
+        ]
+      },
+      {
+        "area": 2,
+        "bbox": [
+          16,
+          32,
+          18,
+          33
+        ]
+      },
+      {
+        "area": 1,
+        "bbox": [
+          80,
+          37,
+          81,
+          38
+        ]
+      },
+      {
+        "area": 1,
+        "bbox": [
+          10,
+          41,
+          11,
+          42
+        ]
+      },
+      {
+        "area": 2,
+        "bbox": [
+          17,
+          48,
+          19,
+          49
+        ]
+      },
+      {
+        "area": 18,
+        "bbox": [
+          32,
+          89,
+          50,
+          90
+        ]
+      }
+    ],
+    "cleaned_source_copy": "assets/art/source/handdrawn_replacement_v01/map_music/nodes/final_runtime_cleaned/magic_master.png"
+  },
+  {
+    "runtime": "assets/art/map/nodes/magic_shop.png",
+    "removed_alpha_pixels": 11,
+    "removed_components": [
+      {
+        "area": 6,
+        "bbox": [
+          34,
+          92,
+          40,
+          93
+        ]
+      },
+      {
+        "area": 5,
+        "bbox": [
+          41,
+          92,
+          46,
+          93
+        ]
+      }
+    ],
+    "cleaned_source_copy": "assets/art/source/handdrawn_replacement_v01/map_music/nodes/final_runtime_cleaned/magic_shop.png"
+  },
+  {
+    "runtime": "assets/art/map/nodes/node_boss.png",
+    "removed_alpha_pixels": 51,
+    "removed_components": [
+      {
+        "area": 5,
+        "bbox": [
+          25,
+          23,
+          30,
+          24
+        ]
+      },
+      {
+        "area": 2,
+        "bbox": [
+          120,
+          45,
+          122,
+          46
+        ]
+      },
+      {
+        "area": 32,
+        "bbox": [
+          117,
+          47,
+          122,
+          57
+        ]
+      },
+      {
+        "area": 2,
+        "bbox": [
+          9,
+          55,
+          11,
+          56
+        ]
+      },
+      {
+        "area": 4,
+        "bbox": [
+          101,
+          74,
+          105,
+          75
+        ]
+      },
+      {
+        "area": 6,
+        "bbox": [
+          81,
+          109,
+          87,
+          110
+        ]
+      }
+    ],
+    "cleaned_source_copy": "assets/art/source/handdrawn_replacement_v01/map_music/nodes/final_runtime_cleaned/node_boss.png"
+  },
+  {
+    "runtime": "assets/art/map/nodes/node_elite_combat.png",
+    "removed_alpha_pixels": 9,
+    "removed_components": [
+      {
+        "area": 3,
+        "bbox": [
+          89,
+          34,
+          92,
+          35
+        ]
+      },
+      {
+        "area": 4,
+        "bbox": [
+          94,
+          39,
+          95,
+          43
+        ]
+      },
+      {
+        "area": 2,
+        "bbox": [
+          11,
+          99,
+          12,
+          101
+        ]
+      }
+    ],
+    "cleaned_source_copy": "assets/art/source/handdrawn_replacement_v01/map_music/nodes/final_runtime_cleaned/node_elite_combat.png"
+  },
+  {
+    "runtime": "assets/art/map/nodes/node_locked.png",
+    "removed_alpha_pixels": 5,
+    "removed_components": [
+      {
+        "area": 3,
+        "bbox": [
+          105,
+          109,
+          108,
+          110
+        ]
+      },
+      {
+        "area": 2,
+        "bbox": [
+          84,
+          117,
+          86,
+          118
+        ]
+      }
+    ],
+    "cleaned_source_copy": "assets/art/source/handdrawn_replacement_v01/map_music/nodes/final_runtime_cleaned/node_locked.png"
+  },
+  {
+    "runtime": "assets/art/map/nodes/node_rest.png",
+    "removed_alpha_pixels": 5,
+    "removed_components": [
+      {
+        "area": 3,
+        "bbox": [
+          57,
+          22,
+          60,
+          23
+        ]
+      },
+      {
+        "area": 2,
+        "bbox": [
+          102,
+          46,
+          103,
+          48
+        ]
+      }
+    ],
+    "cleaned_source_copy": "assets/art/source/handdrawn_replacement_v01/map_music/nodes/final_runtime_cleaned/node_rest.png"
+  },
+  {
+    "runtime": "assets/art/map/nodes/node_route_arrow.png",
+    "removed_alpha_pixels": 0,
+    "removed_components": [],
+    "cleaned_source_copy": "assets/art/source/handdrawn_replacement_v01/map_music/nodes/final_runtime_cleaned/node_route_arrow.png"
+  },
+  {
+    "runtime": "assets/art/map/nodes/node_selected_marker.png",
+    "removed_alpha_pixels": 20,
+    "removed_components": [
+      {
+        "area": 3,
+        "bbox": [
+          49,
+          12,
+          52,
+          13
+        ]
+      },
+      {
+        "area": 3,
+        "bbox": [
+          107,
+          17,
+          110,
+          18
+        ]
+      },
+      {
+        "area": 2,
+        "bbox": [
+          101,
+          24,
+          102,
+          26
+        ]
+      },
+      {
+        "area": 3,
+        "bbox": [
+          9,
+          37,
+          12,
+          38
+        ]
+      },
+      {
+        "area": 4,
+        "bbox": [
+          53,
+          90,
+          57,
+          91
+        ]
+      },
+      {
+        "area": 2,
+        "bbox": [
+          109,
+          95,
+          111,
+          96
+        ]
+      },
+      {
+        "area": 1,
+        "bbox": [
+          110,
+          111,
+          111,
+          112
+        ]
+      },
+      {
+        "area": 2,
+        "bbox": [
+          13,
+          117,
+          15,
+          118
+        ]
+      }
+    ],
+    "cleaned_source_copy": "assets/art/source/handdrawn_replacement_v01/map_music/nodes/final_runtime_cleaned/node_selected_marker.png"
+  },
+  {
+    "runtime": "assets/art/map/nodes/random_item.png",
+    "removed_alpha_pixels": 0,
+    "removed_components": [],
+    "cleaned_source_copy": "assets/art/source/handdrawn_replacement_v01/map_music/nodes/final_runtime_cleaned/random_item.png"
+  },
+  {
+    "runtime": "assets/art/map/nodes/weapon_master.png",
+    "removed_alpha_pixels": 3,
+    "removed_components": [
+      {
+        "area": 3,
+        "bbox": [
+          33,
+          10,
+          34,
+          13
+        ]
+      }
+    ],
+    "cleaned_source_copy": "assets/art/source/handdrawn_replacement_v01/map_music/nodes/final_runtime_cleaned/weapon_master.png"
+  },
+  {
+    "runtime": "assets/art/map/nodes/weapon_shop.png",
+    "removed_alpha_pixels": 33,
+    "removed_components": [
+      {
+        "area": 2,
+        "bbox": [
+          37,
+          84,
+          39,
+          85
+        ]
+      },
+      {
+        "area": 1,
+        "bbox": [
+          34,
+          85,
+          35,
+          86
+        ]
+      },
+      {
+        "area": 23,
+        "bbox": [
+          33,
+          86,
+          43,
+          89
+        ]
+      },
+      {
+        "area": 1,
+        "bbox": [
+          31,
+          88,
+          32,
+          89
+        ]
+      },
+      {
+        "area": 1,
+        "bbox": [
+          34,
+          90,
+          35,
+          91
+        ]
+      },
+      {
+        "area": 5,
+        "bbox": [
+          36,
+          90,
+          41,
+          91
+        ]
+      }
+    ],
+    "cleaned_source_copy": "assets/art/source/handdrawn_replacement_v01/map_music/nodes/final_runtime_cleaned/weapon_shop.png"
+  },
+  {
+    "runtime": "assets/art/music_states/combat_boss.png",
+    "removed_alpha_pixels": 8,
+    "removed_components": [
+      {
+        "area": 3,
+        "bbox": [
+          69,
+          10,
+          72,
+          11
+        ]
+      },
+      {
+        "area": 3,
+        "bbox": [
+          69,
+          16,
+          72,
+          17
+        ]
+      },
+      {
+        "area": 2,
+        "bbox": [
+          83,
+          25,
+          85,
+          26
+        ]
+      }
+    ],
+    "cleaned_source_copy": "assets/art/source/handdrawn_replacement_v01/map_music/music_states/final_runtime_cleaned/combat_boss.png"
+  },
+  {
+    "runtime": "assets/art/music_states/combat_chapter_1_mob.png",
+    "removed_alpha_pixels": 3,
+    "removed_components": [
+      {
+        "area": 2,
+        "bbox": [
+          30,
+          17,
+          32,
+          18
+        ]
+      },
+      {
+        "area": 1,
+        "bbox": [
+          87,
+          43,
+          88,
+          44
+        ]
+      }
+    ],
+    "cleaned_source_copy": "assets/art/source/handdrawn_replacement_v01/map_music/music_states/final_runtime_cleaned/combat_chapter_1_mob.png"
+  },
+  {
+    "runtime": "assets/art/music_states/map_chapter_1.png",
+    "removed_alpha_pixels": 2,
+    "removed_components": [
+      {
+        "area": 2,
+        "bbox": [
+          7,
+          39,
+          9,
+          40
+        ]
+      }
+    ],
+    "cleaned_source_copy": "assets/art/source/handdrawn_replacement_v01/map_music/music_states/final_runtime_cleaned/map_chapter_1.png"
+  },
+  {
+    "runtime": "assets/art/music_states/menu.png",
+    "removed_alpha_pixels": 0,
+    "removed_components": [],
+    "cleaned_source_copy": "assets/art/source/handdrawn_replacement_v01/map_music/music_states/final_runtime_cleaned/menu.png"
+  },
+  {
+    "runtime": "assets/art/music_states/victory.png",
+    "removed_alpha_pixels": 3,
+    "removed_components": [
+      {
+        "area": 1,
+        "bbox": [
+          16,
+          7,
+          17,
+          8
+        ]
+      },
+      {
+        "area": 2,
+        "bbox": [
+          76,
+          15,
+          78,
+          16
+        ]
+      }
+    ],
+    "cleaned_source_copy": "assets/art/source/handdrawn_replacement_v01/map_music/music_states/final_runtime_cleaned/victory.png"
+  }
+]
