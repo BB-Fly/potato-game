@@ -6,11 +6,15 @@ https://my.feishu.cn/wiki/ZcrZwvEffi0HEXkAkuRchFHGn2b
 
 整理范围聚焦于游戏体验、玩法循环、地图、战斗、流派、成长与内容样例，不包含 Godot 代码架构、资源管线或工程实现方案。
 
+具体数值、公式和单个 entity 的重设计值不在本目录重复维护。阅读数值时优先看 `@balance-design/stat-calculation-reference.md` 和 `@balance-design/entities/README.md`。
+
 ## 文档导航
 
 - [玩法总览](gameplay-overview.md)：游戏定位、玩家目标、单局流程、章节地图与节点规则。
 - [系统设计](systems.md)：流派池、战斗、角色、武器、魔法、道具、怪物与经济规则。
 - [待澄清问题](open-questions.md)：当前源文档中不完整、冲突或需要后续决策的内容。
+- `@balance-design/stat-calculation-reference.md`：速度、恢复、伤害、防御、冷却、稀有度等数值计算定义。
+- `@balance-design/entities/README.md`：现有角色、武器、法术、道具、怪物、Boss、Buff 的独立数值档案。
 
 ## 当前设计状态
 

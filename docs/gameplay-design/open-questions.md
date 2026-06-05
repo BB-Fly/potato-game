@@ -5,10 +5,10 @@
 ## 战斗
 
 1. 玩家碰撞体、怪物碰撞体、投射物碰撞体等碰撞规则尚未定义。
-2. Boss 的具体属性、行为、召唤物、刷怪联动、环境危险和机制尚未定义。
-3. 具体 buff 条目的最大层数、持续时间、结算频率、驱散/转化规则尚未配置。
+2. Demo Boss 已有 `@entities/bosses/demo-pollution-source.md` 数值档案；非 Demo Boss、长期 Boss 机制库和更多章节 Boss 仍待定义。
+3. 当前基础 Buff 已有 `@entities/buffs/bruise.md`、`@entities/buffs/stun.md`、`@entities/buffs/comprehensive-development.md`、`@entities/buffs/potato-enhancement.md` 档案；驱散、转化、免疫和更多异常状态仍待定义。
 
 ## 内容字段
 
 1. 武器/魔法融合的可转移词条类型和特殊条件尚未定义。
-2. 武器/魔法强化池和强化数值尚未定义。
+2. 武器/魔法强化池已有参考数值，见 `@balance-design/content-authoring-reference.md`；具体强化条目池和运行时配置仍待定义。

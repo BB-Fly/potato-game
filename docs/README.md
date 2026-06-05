@@ -15,8 +15,11 @@
 6. [资源、美术与导入](development/assets-and-art.md)
 7. [模块拆分路线](development/module-splitting.md)
 8. [调试、验证与 Git 规范](development/debugging-and-git.md)
+9. [Brotato 数值参考总结](balance-reference/README.md)
+10. [Puritato 数值设计](balance-design/README.md)
+11. [数值计算定义](balance-design/stat-calculation-reference.md)
 
-读完上面这些，基本就能接手当前可运行版本。需要理解长期系统设计时，再阅读 `architecture/` 和 `gameplay-design/`。
+读完前 8 项，基本就能接手当前可运行版本。需要理解长期系统设计时，再阅读 `architecture/` 和 `gameplay-design/`；需要扩展内容或调整战斗曲线时，再阅读 `balance-reference/` 和 `balance-design/`。
 
 ## 文档分层
 
@@ -31,6 +34,18 @@
 目录：`docs/gameplay-design/`
 
 这里描述核心玩法、章节路线、节点规则、武器、魔法、道具、怪物和经济设计。它是功能实现的需求来源，但不一定完全等于当前代码。
+
+### 数值参考文档
+
+目录：`docs/balance-reference/`
+
+这里按 Brotato Wiki 的属性、怪物、武器、道具、升级和难度页面提炼数值规律，作为 Puritato 后续设计的外部参考。
+
+### 数值设计文档
+
+目录：`docs/balance-design/`
+
+这里描述 Puritato 自己的数值系统、公式、内容设计参考表和 buff 系统方案。它是后续新增角色、武器、魔法、道具、怪物、Boss 和难度时的数值尺子。
 
 ### 架构设计文档
 
