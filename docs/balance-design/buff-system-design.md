@@ -218,6 +218,7 @@ control_duration_final =
 | `@entities/buffs/stun.md` | 眩晕 | 锁移动和攻击，默认 1 秒，受控制抗性影响 | 控制 |
 | `buff.poison` | 中毒 | 每秒毒伤，叠层刷新，20 层 | 感染学派 |
 | `buff.burning` | 燃烧 | 周期火伤，默认强者覆盖 | 爆破学派 |
+| `buff.fuse_lit` | 引线着了 | 炸弹果苗专用，每秒自伤 1 并提高 4 移速，15 层 | 爆破/怪物专用 |
 | `buff.frost` | 霜冻 | 移速 -25%，攻速 -15%，可叠 3 层 | 大气/控制 |
 | `buff.shield` | 护盾 | 吸收伤害，强者覆盖 | 炼药学派 |
 | `buff.regeneration` | 再生 | 每秒治疗 | 炼药学派 |

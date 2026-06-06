@@ -46,13 +46,17 @@ Player:
 Monsters and boss:
 - `assets/art/sprites/monsters/sprouting_potato.png`
 - `assets/art/sprites/monsters/mushroom_spore.png`
-- `assets/art/sprites/monsters/bomb_fruitling.png`
+- `assets/art/sprites/monsters/bomb_fruitling.png` (4x3 sleep/wake/run body sheet; ZZZ, fire wheels, and run dust are separate VFX)
 - `assets/art/sprites/bosses/demo_pollution_source.png`
 
 Weapon and VFX:
 - `assets/art/sprites/weapons/fries.png`
 - `assets/art/vfx/weapon_fries_slash.png`
 - `assets/art/vfx/comprehensive_development.png`
+- `assets/art/vfx/bomb_fruitling_explosion.png`
+- `assets/art/vfx/bomb_fruitling_fire_wheel.png`
+- `assets/art/vfx/bomb_fruitling_sleep_zzz.png`
+- `assets/art/vfx/bomb_fruitling_run_dust.png`
 
 Map nodes:
 - `assets/art/map/nodes/`

@@ -88,7 +88,7 @@ static func content_frame_refs(asset_catalog, entry: Dictionary) -> Array:
 		"monster.metamorph.mushroom_spore":
 			return sheet_frame_refs(sprite_path, 2, 2, 4)
 		"monster.metamorph.bomb_fruitling":
-			return sheet_frame_refs(sprite_path, 2, 2, 4)
+			return sheet_frame_refs(sprite_path, 4, 3, 12)
 		"boss.demo_pollution_source":
 			return sheet_frame_refs(sprite_path, 3, 3, 9)
 	return []

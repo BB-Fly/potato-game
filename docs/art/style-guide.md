@@ -32,7 +32,7 @@ This guide is the source of truth for runtime art direction after the hand-drawn
   - Potato hero: golden potato body, small green sprout, green scarf or bandana, dot eyes, tiny feet, friendly determined expression.
   - Sprouting potato monster: squat brown potato lump, angry face, green toxic sprouts or nubs, root feet.
   - Mushroom spore: teal cap, pale mint body, yellow-green spots, one sly glowing eye, root feet.
-  - Bomb fruitling: round red fruit-bomb body, angry face, dark curled fuse, tiny feet.
+  - Bomb fruitling: round red berry body, rear green stem as the tail/fuse, sleepy drooling idle, panicked crying run, tiny root feet.
   - Pollution boss: dark purple corrupted mass, green cracks or eye accents, tentacle-like edges.
 - Animation sheets should keep each frame centered, with stable scale and stable feet or bottom anchor.
 - Keep wide weapon trails, projectiles, impact bursts, and detached effects in VFX sheets rather than shrinking the body sprite to fit them.

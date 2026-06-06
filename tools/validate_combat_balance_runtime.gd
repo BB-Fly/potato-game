@@ -54,6 +54,7 @@ func _run() -> void:
 		_fail("Comprehensive Development buff did not modify player stats")
 		return
 
+	combat_scene.balance["spawning"]["fallback_mob_ids"] = ["monster.metamorph.sprouting_potato"]
 	combat_scene._spawn_mob()
 	if combat_scene.enemies.is_empty():
 		_fail("Combat scene did not spawn a configured mob")
@@ -67,6 +68,45 @@ func _run() -> void:
 		return
 	if not enemy_actor.buff_container.has_buff("buff.bruise"):
 		_fail("Weapon on-hit passive did not apply bruise")
+		return
+
+	run_context.floor = 1
+	var bomb_entry = registry.get_entry("monster", "monster.metamorph.bomb_fruitling")
+	var bomb_spawn = bomb_entry.get("spawn", {})
+	if int(bomb_spawn.get("first_floor", 99)) > 1:
+		_fail("Bomb Fruitling is not eligible for first-floor spawning")
+		return
+	combat_scene.balance["spawning"]["fallback_mob_ids"] = ["monster.metamorph.bomb_fruitling"]
+	combat_scene._spawn_mob()
+	var bomb: Dictionary = combat_scene.enemies[combat_scene.enemies.size() - 1]
+	if String(bomb.get("fuse_state", "")) != "asleep":
+		_fail("Bomb Fruitling did not spawn asleep")
+		return
+	bomb["pos"] = combat_scene.player_pos + Vector2(260, 0)
+	combat_scene._update_enemies(0.016)
+	var bomb_actor = bomb.get("actor", null)
+	if bomb_actor == null or not bomb_actor.buff_container.has_buff("buff.fuse_lit"):
+		_fail("Bomb Fruitling did not wake and receive fuse buff near the player")
+		return
+	if float(bomb.get("speed", 0.0)) < 64.0:
+		_fail("Bomb Fruitling fuse buff did not increase speed")
+		return
+	var hp_after_wake = float(bomb_actor.current_health)
+	combat_scene._update_enemies(1.05)
+	if float(bomb_actor.current_health) >= hp_after_wake:
+		_fail("Bomb Fruitling fuse buff did not deal periodic self-damage")
+		return
+	if float(bomb.get("speed", 0.0)) < 68.0:
+		_fail("Bomb Fruitling fuse buff did not stack speed over time")
+		return
+	var player_hp_before_bomb = combat_scene.player_hp
+	bomb["pos"] = combat_scene.player_pos + Vector2(4, 0)
+	combat_scene._update_enemies(0.016)
+	if combat_scene.enemies.has(bomb):
+		_fail("Bomb Fruitling did not explode on contact")
+		return
+	if combat_scene.player_hp > player_hp_before_bomb - 20.0:
+		_fail("Bomb Fruitling explosion did not deal configured damage to player")
 		return
 
 	print("Combat balance runtime validation passed.")

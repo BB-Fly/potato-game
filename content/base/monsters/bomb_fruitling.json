@@ -8,27 +8,71 @@
   "enabled": true,
   "stats": {
     "max_health": 22,
-    "attack": 8,
-    "move_speed": 115,
-    "knockback_resistance": 0.05,
-    "toughness": 8
+    "attack": 0,
+    "move_speed": 60,
+    "knockback_resistance": 0.02,
+    "toughness": 6
   },
   "growth": {
     "mode": "global_floor_multiplier"
   },
   "behavior": {
-    "movement": "move_toward_player",
-    "attack": "contact_damage",
-    "contact_damage_multiplier": 1.0
+    "movement": "sleep_then_chase_player",
+    "attack": "fuse_explosion",
+    "fuse_exploder": {
+      "starts_asleep": true,
+      "absolute_move_speed": true,
+      "wake_distance": 296,
+      "wake_animation_seconds": 0.35,
+      "asleep_frame_seconds": 0.30,
+      "waking_frame_seconds": 0.10,
+      "awake_frame_seconds": 0.075,
+      "fire_wheel_enabled": true,
+      "fire_wheel_vfx": "monster.bomb_fruitling.fire_wheel_vfx",
+      "fire_wheel_size": {"x": 42, "y": 42},
+      "fire_wheel_front_offset": {"x": -22, "y": 24},
+      "fire_wheel_back_offset": {"x": 12, "y": 25},
+      "fire_wheel_frame_seconds": 0.045,
+      "sleep_zzz_vfx": "monster.bomb_fruitling.sleep_zzz_vfx",
+      "sleep_zzz_size": {"x": 58, "y": 58},
+      "sleep_zzz_offset": {"x": -30, "y": -58},
+      "sleep_zzz_interval_seconds": 1.05,
+      "sleep_zzz_frame_seconds": 0.14,
+      "run_dust_vfx": "monster.bomb_fruitling.run_dust_vfx",
+      "run_dust_size": {"x": 56, "y": 56},
+      "run_dust_interval_seconds": 0.12,
+      "run_dust_frame_seconds": 0.07,
+      "run_dust_back_offset": 30,
+      "run_dust_down_offset": 34,
+      "fuse_buff_id": "buff.fuse_lit",
+      "max_move_speed": 120,
+      "explode_on_death": true,
+      "explode_on_player_contact": true,
+      "explode_on_enemy_bump": true,
+      "enemy_bump_radius": 28,
+      "explosion_damage": 20,
+      "explosion_radius": 96,
+      "explosion_vfx": "monster.bomb_fruitling.explosion_vfx",
+      "explosion_vfx_size": {"x": 160, "y": 160},
+      "explosion_frame_seconds": 0.055
+    }
+  },
+  "presentation": {
+    "sprite_size": {"x": 96, "y": 96}
   },
   "spawn": {
     "chapters": ["chapter_1", "chapter_2"],
     "weight": 0.55,
-    "first_floor": 3,
+    "first_floor": 1,
     "max_simultaneous": 4
   },
   "asset_refs": {
-    "sprite": "monster.bomb_fruitling.sprite"
+    "sprite": "monster.bomb_fruitling.sprite",
+    "icon": "monster.bomb_fruitling.icon",
+    "explosion_vfx": "monster.bomb_fruitling.explosion_vfx",
+    "fire_wheel_vfx": "monster.bomb_fruitling.fire_wheel_vfx",
+    "sleep_zzz_vfx": "monster.bomb_fruitling.sleep_zzz_vfx",
+    "run_dust_vfx": "monster.bomb_fruitling.run_dust_vfx"
   },
   "audio_refs": {
     "hit_sfx": "monster.bomb_fruitling.hit"

@@ -246,7 +246,7 @@ Boss 使用 `content/base/bosses/demo_pollution_source.json` 的基础属性，�
 
 - `sprouting_potato`
 - `mushroom_spore`
-- `bomb_fruitling`
+- `bomb_fruitling`：4x3 状态帧表，第一行 4 帧睡眠呼吸，第二行 4 帧点燃，第三行 4 帧奔跑哭泣。本体不再烘焙 ZZZ、尘土和复杂腿部；睡眠 ZZZ、奔跑尘土是独立 VFX，醒后奔跑使用前后两层风火轮 VFX 贴在身体下缘。
 
 Boss：
 
@@ -266,6 +266,8 @@ Boss：
 - 敌人触碰半径：`ENEMY_TOUCH_RADIUS`
 - Boss 子弹半径：projectile dictionary 中的 `radius`
 - 战斗区域：`COMBAT_ARENA_RECT`
+
+`monster.metamorph.bomb_fruitling` 使用同一套圆形距离判定，但醒后接触玩家或撞到其他敌方角色时不走普通接触伤害，而是触发 `monster.bomb_fruitling.explosion_vfx` 并造成范围伤害。睡眠时周期生成 `monster.bomb_fruitling.sleep_zzz_vfx`，奔跑时显示 `monster.bomb_fruitling.fire_wheel_vfx` 并在脚后生成 `monster.bomb_fruitling.run_dust_vfx`，这些独立 VFX 按自身时间线淡出。
 
 不要为了贴合贴图轮廓引入复杂碰撞。当前设计要求所有物品和角色碰撞箱都使用简单图形。
 

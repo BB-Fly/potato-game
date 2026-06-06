@@ -70,6 +70,10 @@ Current config: `content/base/monsters/sprouting_potato.json`, `content/base/bos
 | `monster.mushroom_spore.icon` | mob icon | `res://assets/art/icons/monster_mushroom_spore.png` | available for UI |
 | `monster.bomb_fruitling.sprite` | mob sprite | `res://assets/art/sprites/monsters/bomb_fruitling.png` | referenced by config and asset registry |
 | `monster.bomb_fruitling.icon` | mob icon | `res://assets/art/icons/monster_bomb_fruitling.png` | available for UI |
+| `monster.bomb_fruitling.explosion_vfx` | mob death/contact VFX | `res://assets/art/vfx/bomb_fruitling_explosion.png` | referenced by config and asset registry |
+| `monster.bomb_fruitling.fire_wheel_vfx` | mob run foot VFX | `res://assets/art/vfx/bomb_fruitling_fire_wheel.png` | independent layered fire-wheel run animation |
+| `monster.bomb_fruitling.sleep_zzz_vfx` | mob sleep VFX | `res://assets/art/vfx/bomb_fruitling_sleep_zzz.png` | independent sleep ZZZ pop animation |
+| `monster.bomb_fruitling.run_dust_vfx` | mob run VFX | `res://assets/art/vfx/bomb_fruitling_run_dust.png` | independent foot dust puff animation |
 | `boss.demo_pollution_source.sprite` | boss sprite | `res://assets/art/sprites/bosses/demo_pollution_source.png` | referenced by config and asset registry |
 | `boss.demo_pollution_source.icon` | map / boss warning icon | `res://assets/art/icons/boss_demo_pollution_source.png` | referenced by config and asset registry |
 | `boss.demo_pollution_source.warning_icon` | boss warning portrait | `res://assets/art/icons/boss_pollution_source_warning.png` | referenced by combat scene through asset registry |
@@ -103,6 +107,7 @@ Current config: `content/base/items/potato_enhancement.json`, `content/base/buff
 | `item.potato_enhancement.icon` | item/shop/reward icon | `res://assets/art/icons/item_potato_enhancement.png` | referenced by config and asset registry |
 | `buff.bruise.icon` | status icon | `res://assets/art/icons/buff_bruise.png` | needed for status UI |
 | `buff.stun.icon` | status icon | `res://assets/art/icons/buff_stun.png` | needed for status UI |
+| `buff.burning.icon` | status icon | `res://assets/art/icons/buff_burning.png` | reused by `buff.fuse_lit` |
 | `buff.comprehensive_development.icon` | status icon | `res://assets/art/icons/buff_comprehensive_development.png` | needed for status UI |
 | `buff.potato_enhancement.icon` | status icon | `res://assets/art/icons/buff_potato_enhancement.png` | needed for status UI |
 

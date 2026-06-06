@@ -162,7 +162,7 @@ Demo Boss 在小怪阶段结束后出现。
 - 玩家 walk：`assets/art/sprites/characters/potato_hero_walk.png`
 - 发芽土豆：`assets/art/sprites/monsters/sprouting_potato.png`
 - 蘑菇孢子：`assets/art/sprites/monsters/mushroom_spore.png`
-- 炸弹果苗：`assets/art/sprites/monsters/bomb_fruitling.png`
+- 炸弹果苗：`assets/art/sprites/monsters/bomb_fruitling.png`，奔跑时使用前后两层风火轮 VFX `assets/art/vfx/bomb_fruitling_fire_wheel.png`；爆炸 VFX `assets/art/vfx/bomb_fruitling_explosion.png`，睡眠 ZZZ VFX `assets/art/vfx/bomb_fruitling_sleep_zzz.png`，奔跑尘土 VFX `assets/art/vfx/bomb_fruitling_run_dust.png`
 - Boss：`assets/art/sprites/bosses/demo_pollution_source.png`
 
 角色和怪物动态优先使用换帧、上下伸缩和左右伸缩。不要用旋转来做 idle 动态，之前的旋转表现显得不稳定。

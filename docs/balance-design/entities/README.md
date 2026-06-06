@@ -44,6 +44,7 @@
 
 - [瘀伤](buffs/bruise.md)
 - [眩晕](buffs/stun.md)
+- [引线着了](buffs/fuse-lit.md)
 - [全面发展 Buff](buffs/comprehensive-development.md)
 - [土豆强化 Buff](buffs/potato-enhancement.md)
 

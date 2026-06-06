@@ -230,6 +230,10 @@ func _string_from(source: Dictionary, key: String, default_value: String) -> Str
 	return String(source.get(key, default_value))
 
 
+func _bool_from(source: Dictionary, key: String, default_value: bool) -> bool:
+	return bool(source.get(key, default_value))
+
+
 func _vector_from(source: Dictionary, key: String, default_value: Vector2) -> Vector2:
 	var value = source.get(key, {})
 	if typeof(value) != TYPE_DICTIONARY:
@@ -325,11 +329,13 @@ func _sync_enemy_resource_cache(enemy: Dictionary) -> void:
 	enemy["speed"] = actor.get_stat("move_speed")
 
 
-func _damage_player(raw_damage: float, source_actor, damage_type: String) -> Dictionary:
+func _damage_player(raw_damage: float, source_actor, damage_type: String, options: Dictionary = {}) -> Dictionary:
 	if player_actor == null:
 		player_hp = max(0.0, player_hp - raw_damage)
 		return {"amount": int(ceil(raw_damage)), "hp": player_hp}
-	var result = player_actor.take_damage(raw_damage, source_actor, {"damage_type": damage_type})
+	var damage_options = options.duplicate()
+	damage_options["damage_type"] = damage_type
+	var result = player_actor.take_damage(raw_damage, source_actor, damage_options)
 	_sync_player_resources_from_actor()
 	return result
 
@@ -529,6 +535,8 @@ func _perform_weapon_attack(weapon_entry: Dictionary) -> void:
 	_sync_enemy_resource_cache(target)
 	_float_damage_text(int(applied_damage.get("amount", 0)), target["pos"] + Vector2(0, -34))
 	_flash_attack(target["pos"], attack_vector)
+	if int(applied_damage.get("amount", 0)) > 0:
+		_wake_fuse_exploder(target, "damage")
 	_run_triggered_effects(
 		weapon_entry.get("passive_effects", []),
 		"on_hit",
@@ -616,6 +624,8 @@ func _try_cast_magic(slot_index: int, options: Dictionary = {}) -> bool:
 			_sync_enemy_resource_cache(enemy)
 			_float_damage_text(int(applied_damage.get("amount", 0)), enemy["pos"] + Vector2(0, -34))
 			_flash_magic(enemy["pos"])
+			if int(applied_damage.get("amount", 0)) > 0:
+				_wake_fuse_exploder(enemy, "damage")
 			if target_actor.is_dead():
 				_kill_enemy(enemy)
 	return true
@@ -677,14 +687,26 @@ func _spawn_mob() -> void:
 	var entry = registry.get_entry("monster", id)
 	var default_stats: Dictionary = _section("enemies").get("default_stats", {})
 	var stats: Dictionary = CombatFormula.scaled_stats(entry if not entry.is_empty() else {"stats": default_stats}, run_context.floor, _section("scaling"), "monster")
+	if _is_absolute_move_speed_entry(entry):
+		stats["move_speed"] = float(entry.get("stats", {}).get("move_speed", stats.get("move_speed", 60.0)))
 	var actor = _make_actor("monster", id, entry, stats)
-	var node = _make_frame_sprite(_first_frame_ref(entry), Vector2(58, 58))
+	var node = _make_frame_sprite(_first_frame_ref(entry), _monster_sprite_size(entry))
 	combat_layer.add_child(node)
 	var pos = _random_edge_position()
+	var fuse_cfg = _fuse_exploder_config_from_entry(entry)
+	var starts_asleep = not fuse_cfg.is_empty() and _bool_from(fuse_cfg, "starts_asleep", true)
+	var fire_wheels = _make_fuse_exploder_fire_wheels(fuse_cfg)
+	for wheel_key in ["back", "front"]:
+		var wheel = fire_wheels.get(wheel_key, null)
+		if wheel != null:
+			combat_layer.add_child(wheel)
 	var enemy = {
 		"id": id,
 		"actor": actor,
 		"node": node,
+		"fire_wheel_back": fire_wheels.get("back", null),
+		"fire_wheel_front": fire_wheels.get("front", null),
+		"fire_wheel_frames": fire_wheels.get("frames", []),
 		"pos": pos,
 		"hp": actor.current_health,
 		"max_hp": actor.max_health,
@@ -695,9 +717,19 @@ func _spawn_mob() -> void:
 		"frame_index": 0,
 		"frame_timer": 0.0,
 		"anim_time": 0.0,
+		"fire_wheel_frame_index": 0,
+		"fire_wheel_frame_timer": 0.0,
+		"run_vfx_timer": 0.0,
+		"sleep_vfx_timer": 0.0,
+		"fuse_exploder": fuse_cfg,
+		"fuse_state": "asleep" if starts_asleep else "awake",
+		"wake_timer": 0.0,
+		"exploding": false,
 		"is_boss": false,
 		"session_id": combat_session_id,
 	}
+	if not starts_asleep:
+		_wake_fuse_exploder(enemy, "spawn")
 	enemies.append(enemy)
 	_update_sprite_position(node, pos)
 
@@ -771,9 +803,13 @@ func _update_enemies(delta: float) -> void:
 	for enemy in enemies.duplicate():
 		if int(enemy.get("session_id", -1)) != combat_session_id:
 			_queue_free_if_valid(enemy.get("node", null))
+			_queue_free_if_valid(enemy.get("fire_wheel_back", null))
+			_queue_free_if_valid(enemy.get("fire_wheel_front", null))
 			enemies.erase(enemy)
 			continue
 		if not enemy.has("node") or not is_instance_valid(enemy["node"]):
+			_queue_free_if_valid(enemy.get("fire_wheel_back", null))
+			_queue_free_if_valid(enemy.get("fire_wheel_front", null))
 			enemies.erase(enemy)
 			continue
 		var actor = enemy.get("actor", null)
@@ -786,24 +822,391 @@ func _update_enemies(delta: float) -> void:
 				"source_id": String(enemy.get("id", "")),
 			})
 			_sync_enemy_resource_cache(enemy)
+			_clamp_fuse_exploder_speed(enemy)
 			if actor.is_dead():
 				_kill_enemy(enemy)
 				continue
 		var pos: Vector2 = enemy["pos"]
+		var previous_pos = pos
 		var direction = player_pos - pos
-		var distance = direction.length()
-		if distance > 8.0 and (actor == null or not actor.has_behavior_lock("movement")):
-			pos += direction.normalized() * float(enemy.get("speed", 60.0)) * delta
-		enemy["move_x"] = direction.x
+		var distance_before_move = direction.length()
+		_update_fuse_exploder_state(enemy, delta, distance_before_move)
+		_clamp_fuse_exploder_speed(enemy)
+		var can_move = distance_before_move > 8.0 \
+			and (actor == null or not actor.has_behavior_lock("movement")) \
+			and not _is_sleeping_fuse_exploder(enemy)
+		var move_dir = direction.normalized() if can_move and direction.length() > 0.01 else Vector2.ZERO
+		if can_move:
+			pos += move_dir * float(enemy.get("speed", 60.0)) * delta
+		enemy["move_x"] = direction.x if can_move else 0.0
 		enemy["pos"] = pos
 		_update_sprite_position(enemy["node"], pos)
+		_update_fuse_exploder_presentation(enemy, delta, can_move, move_dir, previous_pos)
 		_update_enemy_animation(enemy, delta)
 		enemy["touch_timer"] = max(0.0, float(enemy.get("touch_timer", 0.0)) - delta)
-		if distance <= enemy_touch_radius and float(enemy["touch_timer"]) <= 0.0 and (actor == null or not actor.has_behavior_lock("attack")):
+		var distance_after_move = player_pos.distance_to(pos)
+		if _is_fuse_exploder(enemy):
+			if _fuse_exploder_should_explode(enemy, distance_after_move):
+				_explode_enemy(enemy, "contact")
+				continue
+			continue
+		if distance_after_move <= enemy_touch_radius and float(enemy["touch_timer"]) <= 0.0 and (actor == null or not actor.has_behavior_lock("attack")):
 			var damage = float(enemy.get("attack", 3.0))
 			var applied_damage = _damage_player(damage, actor, "contact")
 			enemy["touch_timer"] = _float_from(_section("enemies"), "touch_cooldown_seconds", 0.85)
 			_float_text("-%d" % int(applied_damage.get("amount", 0)), player_pos + Vector2(0, -52), Color(1.0, 0.36, 0.28))
+
+
+func _monster_sprite_size(entry: Dictionary) -> Vector2:
+	var presentation = entry.get("presentation", {})
+	if typeof(presentation) != TYPE_DICTIONARY:
+		return Vector2(58, 58)
+	return _vector_from(presentation, "sprite_size", Vector2(58, 58))
+
+
+func _make_fuse_exploder_fire_wheels(fuse_cfg: Dictionary) -> Dictionary:
+	if fuse_cfg.is_empty() or not _bool_from(fuse_cfg, "fire_wheel_enabled", false):
+		return {}
+	var asset_id = _string_from(fuse_cfg, "fire_wheel_vfx", "monster.bomb_fruitling.fire_wheel_vfx")
+	var path = _resolve_asset_id(asset_id, "res://assets/art/vfx/bomb_fruitling_fire_wheel.png")
+	var frames = PlayableContentPresenter.sheet_frame_refs(path, 4, 1, 4)
+	if frames.is_empty():
+		return {}
+	var sprite_size = _vector_from(fuse_cfg, "fire_wheel_size", Vector2(42, 42))
+	var back = _make_frame_sprite(frames[0], sprite_size)
+	var front = _make_frame_sprite(frames[0], sprite_size)
+	back.visible = false
+	front.visible = false
+	back.modulate = Color(0.9, 0.82, 0.72, 0.86)
+	return {
+		"back": back,
+		"front": front,
+		"frames": frames,
+	}
+
+
+func _is_absolute_move_speed_entry(entry: Dictionary) -> bool:
+	var fuse_cfg = _fuse_exploder_config_from_entry(entry)
+	return not fuse_cfg.is_empty() and _bool_from(fuse_cfg, "absolute_move_speed", false)
+
+
+func _fuse_exploder_config_from_entry(entry: Dictionary) -> Dictionary:
+	var behavior = entry.get("behavior", {})
+	if typeof(behavior) != TYPE_DICTIONARY:
+		return {}
+	var fuse_cfg = behavior.get("fuse_exploder", {})
+	return fuse_cfg if typeof(fuse_cfg) == TYPE_DICTIONARY else {}
+
+
+func _is_fuse_exploder(enemy: Dictionary) -> bool:
+	var fuse_cfg = enemy.get("fuse_exploder", {})
+	return typeof(fuse_cfg) == TYPE_DICTIONARY and not fuse_cfg.is_empty()
+
+
+func _is_sleeping_fuse_exploder(enemy: Dictionary) -> bool:
+	return _is_fuse_exploder(enemy) and String(enemy.get("fuse_state", "")) == "asleep"
+
+
+func _wake_fuse_exploder(enemy: Dictionary, _reason: String = "") -> void:
+	if not _is_fuse_exploder(enemy) or not _is_sleeping_fuse_exploder(enemy):
+		return
+	var actor = enemy.get("actor", null)
+	var fuse_cfg: Dictionary = enemy.get("fuse_exploder", {})
+	enemy["fuse_state"] = "waking"
+	enemy["wake_timer"] = _float_from(fuse_cfg, "wake_animation_seconds", 0.35)
+	enemy["frame_index"] = 0
+	enemy["frame_timer"] = 0.0
+	var buff_id = _string_from(fuse_cfg, "fuse_buff_id", "")
+	if actor != null and not buff_id.is_empty():
+		actor.apply_buff(buff_id, String(enemy.get("id", "")), 1)
+		_sync_enemy_resource_cache(enemy)
+		_clamp_fuse_exploder_speed(enemy)
+
+
+func _update_fuse_exploder_state(enemy: Dictionary, delta: float, player_distance: float) -> void:
+	if not _is_fuse_exploder(enemy):
+		return
+	var fuse_cfg: Dictionary = enemy.get("fuse_exploder", {})
+	if _is_sleeping_fuse_exploder(enemy):
+		var wake_distance = _float_from(fuse_cfg, "wake_distance", 296.0)
+		if player_distance <= wake_distance:
+			_wake_fuse_exploder(enemy, "proximity")
+		return
+	if String(enemy.get("fuse_state", "")) == "waking":
+		enemy["wake_timer"] = max(0.0, float(enemy.get("wake_timer", 0.0)) - delta)
+		if float(enemy["wake_timer"]) <= 0.0:
+			enemy["fuse_state"] = "awake"
+			enemy["frame_index"] = 0
+			enemy["frame_timer"] = 0.0
+
+
+func _clamp_fuse_exploder_speed(enemy: Dictionary) -> void:
+	if not _is_fuse_exploder(enemy):
+		return
+	var fuse_cfg: Dictionary = enemy.get("fuse_exploder", {})
+	var max_speed = _float_from(fuse_cfg, "max_move_speed", 120.0)
+	if max_speed > 0.0:
+		enemy["speed"] = min(float(enemy.get("speed", 60.0)), max_speed)
+
+
+func _fuse_exploder_should_explode(enemy: Dictionary, player_distance: float) -> bool:
+	if not _is_fuse_exploder(enemy) or _is_sleeping_fuse_exploder(enemy):
+		return false
+	var actor = enemy.get("actor", null)
+	if actor != null and actor.has_behavior_lock("attack"):
+		return false
+	var fuse_cfg: Dictionary = enemy.get("fuse_exploder", {})
+	if _bool_from(fuse_cfg, "explode_on_player_contact", true) and player_distance <= enemy_touch_radius:
+		return true
+	return _bool_from(fuse_cfg, "explode_on_enemy_bump", true) and _fuse_exploder_bumped_enemy(enemy)
+
+
+func _fuse_exploder_bumped_enemy(enemy: Dictionary) -> bool:
+	var fuse_cfg: Dictionary = enemy.get("fuse_exploder", {})
+	var bump_radius = _float_from(fuse_cfg, "enemy_bump_radius", enemy_touch_radius)
+	var source_node = enemy.get("node", null)
+	var source_pos: Vector2 = enemy.get("pos", Vector2.ZERO)
+	for other in enemies:
+		if other.get("node", null) == source_node:
+			continue
+		var actor = other.get("actor", null)
+		if actor != null and actor.is_dead():
+			continue
+		if source_pos.distance_to(other.get("pos", Vector2.ZERO)) <= bump_radius:
+			return true
+	return false
+
+
+func _explode_enemy(enemy: Dictionary, _reason: String = "") -> void:
+	if not _is_combat_ready() or bool(enemy.get("exploding", false)):
+		return
+	enemy["exploding"] = true
+	var fuse_cfg: Dictionary = enemy.get("fuse_exploder", {})
+	var center: Vector2 = enemy.get("pos", Vector2.ZERO)
+	var source_actor = enemy.get("actor", null)
+	var damage = _float_from(fuse_cfg, "explosion_damage", 20.0)
+	var radius = _float_from(fuse_cfg, "explosion_radius", 96.0)
+	_play_explosion_vfx(center, fuse_cfg)
+
+	if player_pos.distance_to(center) <= radius + player_touch_radius:
+		var applied_damage = _damage_player(damage, source_actor, "explosion", {"ignore_defense": true})
+		_float_text("-%d" % int(applied_damage.get("amount", 0)), player_pos + Vector2(0, -52), Color(1.0, 0.36, 0.28))
+
+	for target in enemies.duplicate():
+		if target.get("node", null) == enemy.get("node", null):
+			continue
+		var target_actor = target.get("actor", null)
+		if target_actor == null or target_actor.is_dead():
+			continue
+		var target_pos: Vector2 = target.get("pos", Vector2.ZERO)
+		if target_pos.distance_to(center) > radius + enemy_touch_radius:
+			continue
+		var applied = target_actor.take_damage(damage, source_actor, {
+			"damage_type": "explosion",
+			"ignore_defense": true,
+		})
+		_sync_enemy_resource_cache(target)
+		_float_damage_text(int(applied.get("amount", 0)), target_pos + Vector2(0, -34))
+		if int(applied.get("amount", 0)) > 0:
+			_wake_fuse_exploder(target, "explosion")
+		if target_actor.is_dead():
+			_kill_enemy(target)
+
+	_remove_enemy(enemy)
+
+
+func _remove_enemy(enemy: Dictionary) -> void:
+	if enemy.has("node") and is_instance_valid(enemy["node"]):
+		_queue_free_if_valid(enemy["node"])
+	if enemy.has("fire_wheel_back") and is_instance_valid(enemy["fire_wheel_back"]):
+		_queue_free_if_valid(enemy["fire_wheel_back"])
+	if enemy.has("fire_wheel_front") and is_instance_valid(enemy["fire_wheel_front"]):
+		_queue_free_if_valid(enemy["fire_wheel_front"])
+	enemies.erase(enemy)
+
+
+func _play_explosion_vfx(center: Vector2, fuse_cfg: Dictionary) -> void:
+	if not _is_combat_fx_ready():
+		return
+	var asset_id = _string_from(fuse_cfg, "explosion_vfx", "monster.bomb_fruitling.explosion_vfx")
+	var path = _resolve_asset_id(asset_id, "res://assets/art/vfx/bomb_fruitling_explosion.png")
+	var frames = PlayableContentPresenter.sheet_frame_refs(path, 2, 2, 4)
+	var fx = _make_frame_sprite(frames[0], _vector_from(fuse_cfg, "explosion_vfx_size", Vector2(160, 160)))
+	combat_fx_layer.add_child(fx)
+	_update_sprite_position(fx, center)
+	_animate_fx_frames(fx, frames, 0, max(0.01, _float_from(fuse_cfg, "explosion_frame_seconds", 0.055)), combat_session_id)
+
+
+func _update_fuse_exploder_presentation(enemy: Dictionary, delta: float, can_move: bool, move_dir: Vector2, previous_pos: Vector2) -> void:
+	if not _is_fuse_exploder(enemy):
+		return
+	_update_fuse_exploder_fire_wheels(enemy, delta, can_move)
+	_update_fuse_exploder_vfx(enemy, delta, can_move, move_dir, previous_pos)
+
+
+func _update_fuse_exploder_fire_wheels(enemy: Dictionary, delta: float, can_move: bool) -> void:
+	var back = enemy.get("fire_wheel_back", null)
+	var front = enemy.get("fire_wheel_front", null)
+	if back == null or front == null or not is_instance_valid(back) or not is_instance_valid(front):
+		return
+	var fuse_cfg: Dictionary = enemy.get("fuse_exploder", {})
+	var is_running = can_move and String(enemy.get("fuse_state", "")) == "awake"
+	back.visible = is_running
+	front.visible = is_running
+	if not is_running:
+		return
+	var frames: Array = enemy.get("fire_wheel_frames", [])
+	if not frames.is_empty():
+		enemy["fire_wheel_frame_timer"] = float(enemy.get("fire_wheel_frame_timer", 0.0)) - delta
+		if float(enemy["fire_wheel_frame_timer"]) <= 0.0:
+			enemy["fire_wheel_frame_timer"] = max(0.01, _float_from(fuse_cfg, "fire_wheel_frame_seconds", 0.045))
+			enemy["fire_wheel_frame_index"] = (int(enemy.get("fire_wheel_frame_index", 0)) + 1) % frames.size()
+			var frame = frames[int(enemy["fire_wheel_frame_index"])]
+			back.texture = _frame_texture(frame)
+			front.texture = _frame_texture(frame)
+	var pos: Vector2 = enemy.get("pos", Vector2.ZERO)
+	var face_right = float(enemy.get("move_x", 0.0)) > 0.0
+	var front_offset = _vector_from(fuse_cfg, "fire_wheel_front_offset", Vector2(-22, 24))
+	var back_offset = _vector_from(fuse_cfg, "fire_wheel_back_offset", Vector2(12, 25))
+	if face_right:
+		front_offset.x *= -1.0
+		back_offset.x *= -1.0
+	front.flip_h = face_right
+	back.flip_h = face_right
+	_update_sprite_position(back, pos + back_offset)
+	_update_sprite_position(front, pos + front_offset)
+	var node = enemy.get("node", null)
+	if node != null and is_instance_valid(node):
+		back.z_index = node.z_index - 1
+		front.z_index = node.z_index + 1
+
+
+func _update_fuse_exploder_vfx(enemy: Dictionary, delta: float, can_move: bool, move_dir: Vector2, previous_pos: Vector2) -> void:
+	var fuse_cfg: Dictionary = enemy.get("fuse_exploder", {})
+	if _is_sleeping_fuse_exploder(enemy):
+		enemy["sleep_vfx_timer"] = float(enemy.get("sleep_vfx_timer", 0.0)) - delta
+		if float(enemy["sleep_vfx_timer"]) <= 0.0:
+			enemy["sleep_vfx_timer"] = _float_from(fuse_cfg, "sleep_zzz_interval_seconds", 1.05)
+			_play_sleep_zzz_vfx(enemy)
+		return
+	if String(enemy.get("fuse_state", "")) != "awake" or not can_move:
+		return
+	enemy["run_vfx_timer"] = float(enemy.get("run_vfx_timer", 0.0)) - delta
+	if float(enemy["run_vfx_timer"]) <= 0.0:
+		enemy["run_vfx_timer"] = _float_from(fuse_cfg, "run_dust_interval_seconds", 0.12)
+		_play_run_dust_vfx(enemy, previous_pos, move_dir)
+
+
+func _play_run_dust_vfx(enemy: Dictionary, previous_pos: Vector2, move_dir: Vector2) -> void:
+	if move_dir.length() <= 0.01:
+		return
+	var fuse_cfg: Dictionary = enemy.get("fuse_exploder", {})
+	var center = previous_pos \
+		- move_dir.normalized() * _float_from(fuse_cfg, "run_dust_back_offset", 30.0) \
+		+ Vector2(0, _float_from(fuse_cfg, "run_dust_down_offset", 34.0))
+	var fx = _play_sheet_vfx(
+		_string_from(fuse_cfg, "run_dust_vfx", "monster.bomb_fruitling.run_dust_vfx"),
+		"res://assets/art/vfx/bomb_fruitling_run_dust.png",
+		4,
+		1,
+		4,
+		_vector_from(fuse_cfg, "run_dust_size", Vector2(56, 56)),
+		center,
+		max(0.01, _float_from(fuse_cfg, "run_dust_frame_seconds", 0.07))
+	)
+	if fx == null:
+		return
+	fx.z_index = int(round(center.y)) - 2
+	fx.modulate.a = 0.92
+	var life = max(0.05, _float_from(fuse_cfg, "run_dust_frame_seconds", 0.07) * 4.0)
+	var tween = create_tween()
+	tween.bind_node(fx)
+	tween.tween_property(fx, "modulate:a", 0.0, life)
+
+
+func _play_sleep_zzz_vfx(enemy: Dictionary) -> void:
+	var fuse_cfg: Dictionary = enemy.get("fuse_exploder", {})
+	var center = enemy.get("pos", Vector2.ZERO) + _vector_from(fuse_cfg, "sleep_zzz_offset", Vector2(-30, -58))
+	var frame_seconds = max(0.01, _float_from(fuse_cfg, "sleep_zzz_frame_seconds", 0.14))
+	var fx = _play_sheet_vfx(
+		_string_from(fuse_cfg, "sleep_zzz_vfx", "monster.bomb_fruitling.sleep_zzz_vfx"),
+		"res://assets/art/vfx/bomb_fruitling_sleep_zzz.png",
+		4,
+		1,
+		4,
+		_vector_from(fuse_cfg, "sleep_zzz_size", Vector2(58, 58)),
+		center,
+		frame_seconds
+	)
+	if fx == null:
+		return
+	var node = enemy.get("node", null)
+	if node != null and is_instance_valid(node):
+		fx.z_index = node.z_index + 6
+	fx.scale = Vector2(0.72, 0.72)
+	fx.modulate.a = 0.96
+	var life = max(0.05, frame_seconds * 4.0)
+	var tween = create_tween()
+	tween.bind_node(fx)
+	tween.tween_property(fx, "position", fx.position + Vector2(0, -30), life)
+	tween.parallel().tween_property(fx, "scale", Vector2(1.28, 1.28), life)
+	tween.parallel().tween_property(fx, "modulate:a", 0.0, life)
+
+
+func _play_sheet_vfx(asset_id: String, fallback_path: String, columns: int, rows: int, frame_count: int, sprite_size: Vector2, center: Vector2, frame_seconds: float):
+	if not _is_combat_fx_ready():
+		return null
+	var path = _resolve_asset_id(asset_id, fallback_path)
+	var frames = PlayableContentPresenter.sheet_frame_refs(path, columns, rows, frame_count)
+	if frames.is_empty():
+		return null
+	var fx = _make_frame_sprite(frames[0], sprite_size)
+	combat_fx_layer.add_child(fx)
+	_update_sprite_position(fx, center)
+	_animate_fx_frames(fx, frames, 0, frame_seconds, combat_session_id)
+	return fx
+
+
+func _animate_fx_frames(fx: TextureRect, frames: Array, frame_index: int, frame_seconds: float, session_id: int) -> void:
+	if fx == null or not is_instance_valid(fx):
+		return
+	if not _is_current_combat_session(session_id):
+		_queue_free_if_valid(fx)
+		return
+	if frame_index >= frames.size():
+		_queue_free_if_valid(fx)
+		return
+	fx.texture = _frame_texture(frames[frame_index])
+	get_tree().create_timer(frame_seconds).timeout.connect(_animate_fx_frames.bind(fx, frames, frame_index + 1, frame_seconds, session_id))
+
+
+func _enemy_animation_frames(enemy: Dictionary) -> Array:
+	var frames: Array = enemy.get("frames", [])
+	if not _is_fuse_exploder(enemy) or frames.size() < 9:
+		return frames
+	var state_frame_count = 4 if frames.size() >= 12 else 3
+	match String(enemy.get("fuse_state", "awake")):
+		"asleep":
+			return frames.slice(0, state_frame_count)
+		"waking":
+			return frames.slice(state_frame_count, state_frame_count * 2)
+		_:
+			return frames.slice(state_frame_count * 2, min(state_frame_count * 3, frames.size()))
+
+
+func _enemy_frame_seconds(enemy: Dictionary, enemies_cfg: Dictionary) -> float:
+	if bool(enemy.get("is_boss", false)):
+		return _float_from(enemies_cfg, "boss_frame_seconds", 0.11)
+	if _is_fuse_exploder(enemy):
+		var fuse_cfg: Dictionary = enemy.get("fuse_exploder", {})
+		match String(enemy.get("fuse_state", "awake")):
+			"asleep":
+				return _float_from(fuse_cfg, "asleep_frame_seconds", 0.30)
+			"waking":
+				return _float_from(fuse_cfg, "waking_frame_seconds", 0.10)
+			_:
+				return _float_from(fuse_cfg, "awake_frame_seconds", 0.075)
+	return _float_from(enemies_cfg, "mob_frame_seconds", 0.16)
 
 
 func _update_enemy_animation(enemy: Dictionary, delta: float) -> void:
@@ -822,16 +1225,31 @@ func _update_enemy_animation(enemy: Dictionary, delta: float) -> void:
 			node.scale = Vector2(1.18 + cast_pulse * 0.08, 1.12 - cast_pulse * 0.04)
 			node.rotation_degrees = 0.0
 			return
-	var frames: Array = enemy.get("frames", [])
+	var frames: Array = _enemy_animation_frames(enemy)
 	if not frames.is_empty():
 		enemy["frame_timer"] = float(enemy.get("frame_timer", 0.0)) - delta
 		if float(enemy["frame_timer"]) <= 0.0:
 			var enemies_cfg = _section("enemies")
-			enemy["frame_timer"] = _float_from(enemies_cfg, "mob_frame_seconds", 0.16) if not bool(enemy.get("is_boss", false)) else _float_from(enemies_cfg, "boss_frame_seconds", 0.11)
+			enemy["frame_timer"] = _enemy_frame_seconds(enemy, enemies_cfg)
 			enemy["frame_index"] = (int(enemy.get("frame_index", 0)) + 1) % frames.size()
 			node.texture = _frame_texture(frames[int(enemy["frame_index"])])
-	var pulse = sin(float(enemy["anim_time"]) * (5.0 if not bool(enemy.get("is_boss", false)) else 3.0))
-	node.scale = Vector2(1.0 + pulse * 0.035, 1.0 - pulse * 0.025)
+	var pulse_rate = 5.0 if not bool(enemy.get("is_boss", false)) else 3.0
+	var pulse_x = 0.035
+	var pulse_y = 0.025
+	if _is_sleeping_fuse_exploder(enemy):
+		pulse_rate = 1.6
+		pulse_x = 0.006
+		pulse_y = 0.008
+	elif _is_fuse_exploder(enemy) and String(enemy.get("fuse_state", "")) == "waking":
+		pulse_rate = 11.0
+		pulse_x = 0.055
+		pulse_y = 0.038
+	elif _is_fuse_exploder(enemy):
+		pulse_rate = 10.0
+		pulse_x = 0.018
+		pulse_y = 0.014
+	var pulse = sin(float(enemy["anim_time"]) * pulse_rate)
+	node.scale = Vector2(1.0 + pulse * pulse_x, 1.0 - pulse * pulse_y)
 	node.rotation_degrees = 0.0
 
 
@@ -940,9 +1358,10 @@ func _nearest_enemy() -> Dictionary:
 
 
 func _kill_enemy(enemy: Dictionary) -> void:
-	if enemy.has("node") and is_instance_valid(enemy["node"]):
-		_queue_free_if_valid(enemy["node"])
-	enemies.erase(enemy)
+	if _is_fuse_exploder(enemy) and _bool_from(enemy.get("fuse_exploder", {}), "explode_on_death", true):
+		_explode_enemy(enemy, "death")
+		return
+	_remove_enemy(enemy)
 	if bool(enemy.get("is_boss", false)):
 		boss_enemy = {}
 		boss_spawned = false

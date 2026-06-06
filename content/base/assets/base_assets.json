@@ -478,6 +478,52 @@
       ]
     },
     {
+      "id": "monster.bomb_fruitling.explosion_vfx",
+      "kind": "vfx",
+      "path": "res://assets/art/vfx/bomb_fruitling_explosion.png",
+      "tags": [
+        "monster",
+        "bomb_fruitling",
+        "explosion",
+        "effect"
+      ]
+    },
+    {
+      "id": "monster.bomb_fruitling.sleep_zzz_vfx",
+      "kind": "vfx",
+      "path": "res://assets/art/vfx/bomb_fruitling_sleep_zzz.png",
+      "tags": [
+        "monster",
+        "bomb_fruitling",
+        "sleep",
+        "effect"
+      ]
+    },
+    {
+      "id": "monster.bomb_fruitling.fire_wheel_vfx",
+      "kind": "vfx",
+      "path": "res://assets/art/vfx/bomb_fruitling_fire_wheel.png",
+      "tags": [
+        "monster",
+        "bomb_fruitling",
+        "run",
+        "fire_wheel",
+        "effect"
+      ]
+    },
+    {
+      "id": "monster.bomb_fruitling.run_dust_vfx",
+      "kind": "vfx",
+      "path": "res://assets/art/vfx/bomb_fruitling_run_dust.png",
+      "tags": [
+        "monster",
+        "bomb_fruitling",
+        "run",
+        "dust",
+        "effect"
+      ]
+    },
+    {
       "id": "monster.mushroom_spore.icon",
       "kind": "icon",
       "path": "res://assets/art/icons/monster_mushroom_spore.png",

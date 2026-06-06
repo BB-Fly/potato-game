@@ -37,6 +37,27 @@
       "enabled": true
     },
     {
+      "id": "buff.fuse_lit",
+      "display_name_key": "buff.fuse_lit.name",
+      "target_types": ["monster"],
+      "tags": ["buff", "fire", "fuse", "self_damage"],
+      "stacking_mode": "permanent_stack",
+      "max_stacks": 15,
+      "duration_frames": -1,
+      "tick_interval_frames": 60,
+      "asset_refs": {
+        "icon": "buff.burning.icon"
+      },
+      "modifiers": [
+        {"stat": "move_speed", "operation": "add", "value_per_stack": 4}
+      ],
+      "periodic_effects": [
+        {"type": "deal_damage", "target": "self", "source": "self", "amount": 1, "damage_type": "fuse_burn", "ignore_defense": true},
+        {"type": "apply_buff", "target": "self", "buff_id": "buff.fuse_lit", "stacks": 1}
+      ],
+      "enabled": true
+    },
+    {
       "id": "buff.comprehensive_development",
       "display_name_key": "buff.comprehensive_development.name",
       "target_types": ["player"],
