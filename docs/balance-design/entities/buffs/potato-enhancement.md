@@ -101,4 +101,4 @@ defense +0.35/层
 
 ## 后续实现备注
 
-当前 `BuffInstance.initialize` 使用了 `stack_mode` 字段检查独立计时，而配置使用 `stacking_mode`。后续实现 `permanent_stack` 时需要统一字段名。
+运行时代码已统一读取 `stacking_mode`，并支持 `permanent_stack`。后续可继续补里程碑 DSL。

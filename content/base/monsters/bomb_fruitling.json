@@ -7,15 +7,14 @@
   "type": "mob",
   "enabled": true,
   "stats": {
-    "max_health": 40,
-    "attack": 5,
-    "move_speed": 65,
+    "max_health": 22,
+    "attack": 8,
+    "move_speed": 115,
     "knockback_resistance": 0.05,
-    "toughness": 6
+    "toughness": 8
   },
   "growth": {
-    "max_health_per_floor": 4,
-    "attack_per_floor": 1
+    "mode": "global_floor_multiplier"
   },
   "behavior": {
     "movement": "move_toward_player",
@@ -24,7 +23,9 @@
   },
   "spawn": {
     "chapters": ["chapter_1", "chapter_2"],
-    "weight": 1.0
+    "weight": 0.55,
+    "first_floor": 3,
+    "max_simultaneous": 4
   },
   "asset_refs": {
     "sprite": "monster.bomb_fruitling.sprite"

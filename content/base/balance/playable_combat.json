@@ -11,15 +11,74 @@
     "width": 1184,
     "height": 560
   },
+  "stat_rules": {
+    "max_health": {"default": 1, "min": 1},
+    "max_mana": {"default": 0, "min": 0},
+    "max_energy": {"default": 0, "min": 0},
+    "melee_attack": {"default": 0},
+    "ranged_attack": {"default": 0},
+    "spell_power": {"default": 0},
+    "defense": {"default": 0},
+    "attack": {"default": 0},
+    "attack_speed": {"default": 0},
+    "cooldown_reduction": {"default": 0, "min": 0},
+    "crit_chance": {"default": 0, "min": 0},
+    "crit_multiplier_bonus": {"default": 0},
+    "move_speed": {"default": 0, "min": 0},
+    "health_regen": {"default": 0},
+    "mana_regen": {"default": 0},
+    "luck": {"default": 0},
+    "global_damage_percent": {"default": 0},
+    "spell_effect_percent": {"default": 0},
+    "boss_damage_percent": {"default": 0},
+    "damage_taken_percent": {"default": 0},
+    "damage_taken_flat": {"default": 0},
+    "weapon_damage_taken_flat": {"default": 0},
+    "reward_rarity_percent": {"default": 0}
+  },
+  "operation_aliases": {
+    "flat_add": "add",
+    "additive_percent": "add_percent",
+    "percent_add": "add_percent",
+    "mult": "multiply"
+  },
+  "formulas": {
+    "default_weapon_damage": 1,
+    "default_magic_damage": 0,
+    "minimum_damage_before_modifiers": 1,
+    "minimum_final_damage": 1,
+    "default_attack_interval_frames": 60,
+    "weapon_min_interval_seconds": 0.25,
+    "attack_speed_multiplier_min": 0.35,
+    "attack_speed_multiplier_max": 3.0,
+    "default_cooldown_frames": 0,
+    "cooldown_reduction_cap": 0.5,
+    "default_crit_multiplier": 2.0,
+    "minimum_crit_multiplier": 1.5,
+    "crit_cap": 0.75,
+    "defense_scale": 6.0,
+    "negative_defense_damage_per_point": 0.04
+  },
+  "scaling": {
+    "floor_multipliers": {
+      "1": {"health": 1.00, "attack": 1.00, "speed": 1.00, "count": 1.00},
+      "2": {"health": 1.25, "attack": 1.10, "speed": 1.00, "count": 1.10},
+      "3": {"health": 1.55, "attack": 1.20, "speed": 1.02, "count": 1.20},
+      "4": {"health": 1.95, "attack": 1.35, "speed": 1.04, "count": 1.35},
+      "5": {"health": 2.45, "attack": 1.50, "speed": 1.06, "count": 1.50},
+      "6": {"health": 3.10, "attack": 1.70, "speed": 1.08, "count": 1.70}
+    },
+    "boss": {
+      "health_per_floor": 0.55
+    }
+  },
   "player": {
     "start_position": {"x": 640, "y": 410},
     "touch_radius": 24,
-    "max_health_per_item": 10,
-    "max_mana_per_magic": 25,
     "initial_attack_delay_seconds": 0.35
   },
   "weapon": {
-    "damage_per_extra_weapon": 10,
+    "damage_per_extra_weapon": 0,
     "sprite_size": {"x": 92, "y": 92},
     "layout_offsets": [
       {"x": 72, "y": 2},

@@ -54,7 +54,7 @@ Buff 系统承载 Puritato 的临时增益、永久增益、减益、持续伤�
 | `replace_if_stronger` | 强者覆盖弱者 | 护盾、光环 |
 | `unique_by_source` | 每个来源独立一份 | 多个光环或召唤物 |
 
-当前代码里 `BuffInstance.initialize` 检查的是 `stack_mode`，配置里写的是 `stacking_mode`。本次不改代码，但后续实现时要统一字段，否则独立计时类 buff 可能无法按预期初始化。
+运行时代码已统一读取 `stacking_mode`。新增 buff 不应再写旧字段 `stack_mode`。
 
 ## 持续时间
 

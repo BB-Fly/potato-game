@@ -7,15 +7,14 @@
   "type": "mob",
   "enabled": true,
   "stats": {
-    "max_health": 40,
+    "max_health": 28,
     "attack": 5,
-    "move_speed": 65,
-    "knockback_resistance": 0.1,
-    "toughness": 8
+    "move_speed": 75,
+    "knockback_resistance": 0.15,
+    "toughness": 14
   },
   "growth": {
-    "max_health_per_floor": 4,
-    "attack_per_floor": 1
+    "mode": "global_floor_multiplier"
   },
   "behavior": {
     "movement": "move_toward_player",
@@ -24,7 +23,8 @@
   },
   "spawn": {
     "chapters": ["chapter_1", "chapter_2"],
-    "weight": 1.0
+    "weight": 0.8,
+    "first_floor": 2
   },
   "asset_refs": {
     "sprite": "monster.mushroom_spore.sprite"

@@ -43,17 +43,18 @@
       "tags": ["buff", "stat"],
       "stacking_mode": "refresh_duration",
       "max_stacks": 1,
-      "duration_frames": 600,
+      "duration_frames": 480,
       "tick_interval_frames": 0,
       "asset_refs": {
         "icon": "buff.comprehensive_development.icon"
       },
       "modifiers": [
-        {"stat": "melee_attack", "operation": "add", "value": 10},
-        {"stat": "ranged_attack", "operation": "add", "value": 5},
-        {"stat": "health_regen", "operation": "add", "value": 5},
-        {"stat": "mana_regen", "operation": "add", "value": 3},
-        {"stat": "defense", "operation": "add", "value": 5}
+        {"stat": "melee_attack", "operation": "add", "value": 4},
+        {"stat": "ranged_attack", "operation": "add", "value": 4},
+        {"stat": "spell_power", "operation": "add", "value": 4},
+        {"stat": "defense", "operation": "add", "value": 2},
+        {"stat": "health_regen", "operation": "add", "value": 1},
+        {"stat": "mana_regen", "operation": "add", "value": 4}
       ],
       "enabled": true
     },
@@ -62,21 +63,21 @@
       "display_name_key": "buff.potato_enhancement.name",
       "target_types": ["player"],
       "tags": ["buff", "item", "stat"],
-      "stacking_mode": "independent_timers",
-      "max_stacks": 999,
+      "stacking_mode": "permanent_stack",
+      "max_stacks": 6,
       "duration_frames": -1,
       "tick_interval_frames": 0,
       "asset_refs": {
         "icon": "buff.potato_enhancement.icon"
       },
       "modifiers": [
-        {"stat": "melee_attack", "operation": "add", "value_per_stack": 2},
-        {"stat": "ranged_attack", "operation": "add", "value_per_stack": 1},
-        {"stat": "health_regen", "operation": "add", "value_per_stack": 2},
-        {"stat": "mana_regen", "operation": "add", "value_per_stack": 1},
-        {"stat": "defense", "operation": "add", "value_per_stack": 1},
         {"stat": "max_health", "operation": "add", "value_per_stack": 5},
-        {"stat": "max_mana", "operation": "add", "value_per_stack": 5}
+        {"stat": "max_mana", "operation": "add", "value_per_stack": 4},
+        {"stat": "melee_attack", "operation": "add", "value_per_stack": 1},
+        {"stat": "ranged_attack", "operation": "add", "value_per_stack": 1},
+        {"stat": "spell_power", "operation": "add", "value_per_stack": 1},
+        {"stat": "mana_regen", "operation": "add", "value_per_stack": 1},
+        {"stat": "defense", "operation": "add", "value_per_stack": 0.35}
       ],
       "enabled": true
     }

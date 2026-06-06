@@ -435,7 +435,7 @@ func _start_combat() -> void:
 	combat_scene = CombatScenePacked.instantiate()
 	combat_scene.connect("combat_finished", _on_combat_finished)
 	ui_root.add_child(combat_scene)
-	combat_scene.setup(registry, run_context, asset_catalog)
+	combat_scene.setup(registry, run_context, asset_catalog, effect_runner)
 
 
 func _on_combat_finished(result: Dictionary) -> void:

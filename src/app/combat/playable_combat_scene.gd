@@ -5,10 +5,14 @@ signal combat_finished(result: Dictionary)
 
 const PlayableUiFactory = preload("res://src/app/playable/playable_ui_factory.gd")
 const PlayableContentPresenter = preload("res://src/app/playable/playable_content_presenter.gd")
+const CombatActor = preload("res://src/domain/combat/combat_actor.gd")
+const CombatFormula = preload("res://src/domain/combat/combat_formula.gd")
+const EffectRunner = preload("res://src/domain/effect/effect_runner.gd")
 
 var registry
 var run_context
 var asset_catalog
+var effect_runner
 var balance: Dictionary = {}
 var arena_rect = Rect2(Vector2(48, 118), Vector2(1184, 560))
 var player_speed = 220.0
@@ -18,6 +22,8 @@ var mob_phase_seconds = 22.0
 var mob_spawn_seconds = 1.7
 var max_mobs = 14
 var current_weapon_entry: Dictionary = {}
+var equipped_weapon_entries: Array = []
+var weapon_attack_timers: Array = []
 var boss_entry: Dictionary = {}
 var boss_ability: Dictionary = {}
 
@@ -29,6 +35,7 @@ var combat_boss_sprite: TextureRect
 var combat_weapon_sprites: Array = []
 
 var player_pos = Vector2.ZERO
+var player_actor
 var player_hp = 100.0
 var player_max_hp = 100.0
 var player_mana = 0.0
@@ -50,14 +57,16 @@ var combat_elapsed = 0.0
 var combat_session_id = 0
 var magic_cooldowns: Array = []
 var magic_total_cooldowns: Array = []
+var magic_auto_cast_timers: Array = []
 var floating_texts: Array = []
 var is_finished = false
 
 
-func setup(p_registry, p_run_context, p_asset_catalog) -> void:
+func setup(p_registry, p_run_context, p_asset_catalog, p_effect_runner = null) -> void:
 	registry = p_registry
 	run_context = p_run_context
 	asset_catalog = p_asset_catalog
+	effect_runner = p_effect_runner if p_effect_runner != null else EffectRunner.new(registry)
 	balance = registry.get_entry("balance", "balance.playable_combat")
 	name = "PlayableCombatScene"
 	set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -105,16 +114,15 @@ func _start_combat() -> void:
 	add_child(combat_fx_layer)
 
 	var character = registry.get_entry("character", run_context.character_id)
-	var base_stats: Dictionary = character.get("base_stats", {})
 	var player_cfg = _section("player")
-	player_max_hp = float(base_stats.get("max_health", 110.0)) + run_context.inventory["items"].size() * _float_from(player_cfg, "max_health_per_item", 10.0)
-	player_hp = player_max_hp
-	player_max_mana = float(base_stats.get("max_mana", 80.0)) + run_context.inventory["magics"].size() * _float_from(player_cfg, "max_mana_per_magic", 25.0)
-	player_mana = player_max_mana
-	player_mana_regen = float(base_stats.get("mana_regen", 12.0))
-	player_speed = float(base_stats.get("move_speed", player_speed))
+	player_actor = _make_actor("player", run_context.character_id, character, character.get("base_stats", {}))
+	_apply_run_loadout_effects(player_actor)
+	_sync_player_resources_from_actor()
+	player_mana_regen = player_actor.get_stat("mana_regen")
+	player_speed = player_actor.get_stat("move_speed")
 	player_pos = _vector_from(player_cfg, "start_position", Vector2(640, 410))
 	player_attack_timer = _float_from(player_cfg, "initial_attack_delay_seconds", 0.35)
+	_reset_weapon_attack_timers(player_attack_timer)
 	mob_spawn_timer = _float_from(_section("spawning"), "initial_mob_spawn_seconds", 0.1)
 	combat_elapsed = 0.0
 	boss_spawned = false
@@ -127,6 +135,10 @@ func _start_combat() -> void:
 	magic_total_cooldowns.clear()
 	magic_total_cooldowns.resize(_int_from(_section("magic"), "slot_count", 4))
 	magic_total_cooldowns.fill(0.0)
+	magic_auto_cast_timers.clear()
+	magic_auto_cast_timers.resize(_int_from(_section("magic"), "slot_count", 4))
+	magic_auto_cast_timers.fill(0.0)
+	_reset_magic_auto_cast_timers()
 
 	combat_player_sprite = _make_sprite("res://assets/art/source/potato_hero_idle_handless/idle-1.png", Vector2(86, 86))
 	combat_layer.add_child(combat_player_sprite)
@@ -146,6 +158,9 @@ func _clear_local_state() -> void:
 	boss_projectiles.clear()
 	floating_texts.clear()
 	combat_weapon_sprites.clear()
+	equipped_weapon_entries.clear()
+	weapon_attack_timers.clear()
+	player_actor = null
 	combat_layer = null
 	combat_fx_layer = null
 	combat_player_sprite = null
@@ -181,9 +196,11 @@ func _load_runtime_balance() -> void:
 	enemy_touch_radius = _float_from(_section("enemies"), "touch_radius", 28.0)
 	var spawning = _section("spawning")
 	mob_phase_seconds = _float_from(spawning, "mob_phase_seconds", 22.0)
-	mob_spawn_seconds = _float_from(spawning, "mob_spawn_seconds", 1.7)
-	max_mobs = _int_from(spawning, "max_mobs", 14)
-	current_weapon_entry = _first_equipped_entry("weapon")
+	var count_multiplier = _floor_count_multiplier()
+	mob_spawn_seconds = max(0.1, _float_from(spawning, "mob_spawn_seconds", 1.7) / count_multiplier)
+	max_mobs = max(1, int(round(float(_int_from(spawning, "max_mobs", 14)) * count_multiplier)))
+	equipped_weapon_entries = _equipped_entries("weapon")
+	current_weapon_entry = equipped_weapon_entries[0] if not equipped_weapon_entries.is_empty() else {}
 	boss_entry = registry.get_entry("boss", _string_from(_section("boss"), "id", "boss.demo_pollution_source"))
 	boss_ability = _first_entry(boss_entry.get("abilities", []), "radial_projectiles")
 
@@ -219,6 +236,16 @@ func _color_from(source: Dictionary, key: String, default_value: Color) -> Color
 	return Color(float(value[0]), float(value[1]), float(value[2]), float(value[3]))
 
 
+func _floor_count_multiplier() -> float:
+	var floor_rules = _section("scaling").get("floor_multipliers", {})
+	if typeof(floor_rules) != TYPE_DICTIONARY:
+		return 1.0
+	var rule = floor_rules.get(str(run_context.floor), {})
+	if typeof(rule) != TYPE_DICTIONARY:
+		return 1.0
+	return max(0.1, float(rule.get("count", 1.0)))
+
+
 func _first_entry(entries: Array, id: String) -> Dictionary:
 	for entry in entries:
 		if typeof(entry) == TYPE_DICTIONARY and String(entry.get("id", "")) == id:
@@ -227,18 +254,101 @@ func _first_entry(entries: Array, id: String) -> Dictionary:
 
 
 func _first_equipped_entry(content_type: String) -> Dictionary:
+	var entries = _equipped_entries(content_type)
+	return entries[0] if not entries.is_empty() else {}
+
+
+func _equipped_entries(content_type: String) -> Array:
 	var slots: Array = []
 	if content_type == "weapon":
 		slots = run_context.equipped_weapons
 	elif content_type == "magic":
 		slots = run_context.equipped_magics
+	var entries: Array = []
 	for content_id in slots:
 		if content_id == null:
 			continue
 		var entry = registry.get_entry(content_type, String(content_id))
 		if not entry.is_empty():
-			return entry
-	return {}
+			entries.append(entry)
+	return entries
+
+
+func _runtime_rules() -> Dictionary:
+	return {
+		"stat_rules": _section("stat_rules"),
+		"operation_aliases": _section("operation_aliases"),
+		"formulas": _section("formulas"),
+	}
+
+
+func _make_actor(actor_type: String, content_id: String, definition: Dictionary, base_stats: Dictionary):
+	var actor = CombatActor.new()
+	actor.initialize(registry, actor_type, content_id, definition, base_stats, _runtime_rules())
+	return actor
+
+
+func _apply_run_loadout_effects(actor) -> void:
+	if actor == null:
+		return
+	for item_id in run_context.inventory["items"]:
+		var item = registry.get_entry("item", String(item_id))
+		_run_configured_effects(item.get("effects", []), actor, actor, String(item_id), {})
+
+
+func _sync_player_resources_from_actor() -> void:
+	if player_actor == null:
+		return
+	player_hp = player_actor.current_health
+	player_max_hp = player_actor.max_health
+	player_mana = player_actor.current_mana
+	player_max_mana = player_actor.max_mana
+	player_mana_regen = player_actor.get_stat("mana_regen")
+	player_speed = player_actor.get_stat("move_speed")
+
+
+func _sync_enemy_resource_cache(enemy: Dictionary) -> void:
+	var actor = enemy.get("actor", null)
+	if actor == null:
+		return
+	enemy["hp"] = actor.current_health
+	enemy["max_hp"] = actor.max_health
+	enemy["attack"] = actor.get_stat("attack")
+	enemy["speed"] = actor.get_stat("move_speed")
+
+
+func _damage_player(raw_damage: float, source_actor, damage_type: String) -> Dictionary:
+	if player_actor == null:
+		player_hp = max(0.0, player_hp - raw_damage)
+		return {"amount": int(ceil(raw_damage)), "hp": player_hp}
+	var result = player_actor.take_damage(raw_damage, source_actor, {"damage_type": damage_type})
+	_sync_player_resources_from_actor()
+	return result
+
+
+func _run_configured_effects(effects: Array, source_actor, target_actor, source_id: String, extra_context: Dictionary = {}) -> void:
+	if effect_runner == null:
+		return
+	var context = {
+		"self": source_actor,
+		"source": source_actor,
+		"target": target_actor,
+		"hit_target": target_actor,
+		"run_context": run_context,
+		"source_id": source_id,
+	}
+	for key in extra_context.keys():
+		context[key] = extra_context[key]
+	effect_runner.run_effects(effects, context)
+
+
+func _run_triggered_effects(effect_groups: Array, trigger: String, source_actor, target_actor, source_id: String, extra_context: Dictionary = {}) -> void:
+	for effect_group in effect_groups:
+		if typeof(effect_group) != TYPE_DICTIONARY:
+			continue
+		if String(effect_group.get("trigger", "")) != trigger:
+			continue
+		_run_configured_effects(effect_group.get("actions", []), source_actor, target_actor, source_id, extra_context)
 
 
 func _end_combat(victory: bool) -> void:
@@ -279,13 +389,22 @@ func _update_combat(delta: float) -> void:
 		return
 	combat_elapsed += delta
 	idle_time += delta
-	player_mana = min(player_max_mana, player_mana + player_mana_regen * delta)
+	if player_actor != null:
+		player_actor.tick(delta, effect_runner, {
+			"self": player_actor,
+			"source": player_actor,
+			"target": player_actor,
+			"run_context": run_context,
+			"source_id": player_actor.content_id,
+		})
+		_sync_player_resources_from_actor()
 	_update_player_movement(delta)
 	_update_player_attack(delta)
 	if is_finished:
 		return
 	_update_magic_input()
 	_update_magic_cooldowns(delta)
+	_update_magic_auto_cast(delta)
 	_update_spawning(delta)
 	_update_enemies(delta)
 	if is_finished:
@@ -296,12 +415,18 @@ func _update_combat(delta: float) -> void:
 		return
 	_update_player_visual()
 	_update_weapon_visuals()
+	_sync_player_resources_from_actor()
 	_update_combat_hud(delta)
-	if player_hp <= 0.0:
+	if player_actor != null and player_actor.is_dead():
 		_end_combat(false)
 
 
 func _update_player_movement(delta: float) -> void:
+	if player_actor != null:
+		player_speed = player_actor.get_stat("move_speed")
+		if player_actor.has_behavior_lock("movement"):
+			is_player_moving = false
+			return
 	var input_vector = Vector2.ZERO
 	input_vector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	input_vector.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
@@ -338,7 +463,8 @@ func _build_weapon_sprites() -> void:
 	var weapon_cfg = _section("weapon")
 	var sprite_size = _vector_from(weapon_cfg, "sprite_size", Vector2(92, 92))
 	for i in range(count):
-		var weapon = _make_sprite("res://assets/art/sprites/weapons/fries.png", sprite_size)
+		var weapon_entry = equipped_weapon_entries[i] if i < equipped_weapon_entries.size() else {}
+		var weapon = _make_sprite(_content_sprite_path(weapon_entry) if not weapon_entry.is_empty() else "res://assets/art/sprites/weapons/fries.png", sprite_size)
 		combat_layer.add_child(weapon)
 		combat_weapon_sprites.append(weapon)
 
@@ -367,40 +493,64 @@ func _weapon_layout_offsets(count: int) -> Array:
 
 
 func _update_player_attack(delta: float) -> void:
-	player_attack_timer -= delta
-	if player_attack_timer > 0.0:
+	if player_actor != null and player_actor.has_behavior_lock("attack"):
 		return
-	player_attack_timer = _weapon_attack_seconds()
+	if equipped_weapon_entries.is_empty():
+		return
+	while weapon_attack_timers.size() < equipped_weapon_entries.size():
+		weapon_attack_timers.append(_float_from(_section("player"), "initial_attack_delay_seconds", 0.35))
+	for i in range(equipped_weapon_entries.size()):
+		weapon_attack_timers[i] = float(weapon_attack_timers[i]) - delta
+		if float(weapon_attack_timers[i]) <= 0.0:
+			var weapon_entry: Dictionary = equipped_weapon_entries[i]
+			weapon_attack_timers[i] = _weapon_attack_seconds(weapon_entry)
+			_perform_weapon_attack(weapon_entry)
+
+
+func _perform_weapon_attack(weapon_entry: Dictionary) -> void:
 	var target = _nearest_enemy()
 	if target.is_empty():
 		return
 	var attack_vector: Vector2 = target["pos"] - player_pos
-	if attack_vector.length() > _weapon_range():
+	if attack_vector.length() > _weapon_range(weapon_entry):
 		return
-	var damage = _weapon_damage()
-	target["hp"] = float(target.get("hp", 1.0)) - damage
-	_float_damage_text(int(round(damage)), target["pos"] + Vector2(0, -34))
+	var target_actor = target.get("actor", null)
+	if target_actor == null:
+		return
+	var damage_result = _weapon_damage(target_actor, weapon_entry)
+	var applied_damage = target_actor.take_damage(float(damage_result.get("amount", 0.0)), player_actor, {"damage_type": "weapon"})
+	_sync_enemy_resource_cache(target)
+	_float_damage_text(int(applied_damage.get("amount", 0)), target["pos"] + Vector2(0, -34))
 	_flash_attack(target["pos"], attack_vector)
-	if float(target["hp"]) <= 0.0:
+	_run_triggered_effects(
+		weapon_entry.get("passive_effects", []),
+		"on_hit",
+		player_actor,
+		target_actor,
+		String(weapon_entry.get("id", "")),
+		{"damage_result": damage_result}
+	)
+	_sync_enemy_resource_cache(target)
+	if target_actor.is_dead():
 		_kill_enemy(target)
 
 
-func _weapon_attack_seconds() -> float:
-	var frames = int(current_weapon_entry.get("attack_interval_frames", 25))
-	return max(1.0, float(frames)) / 60.0
+func _reset_weapon_attack_timers(initial_delay: float) -> void:
+	weapon_attack_timers.clear()
+	for _entry in equipped_weapon_entries:
+		weapon_attack_timers.append(initial_delay)
 
 
-func _weapon_range() -> float:
-	return float(current_weapon_entry.get("range", _float_from(_section("weapon"), "default_range", 188.0)))
+func _weapon_attack_seconds(weapon_entry: Dictionary) -> float:
+	return CombatFormula.attack_interval_seconds(player_actor, weapon_entry, _section("formulas"))
 
 
-func _weapon_damage() -> float:
-	var damage_entry = current_weapon_entry.get("damage", {})
-	var base = 22.0
-	if typeof(damage_entry) == TYPE_DICTIONARY:
-		base = float(damage_entry.get("base", base))
-	var extra_weapon_bonus = _float_from(_section("weapon"), "damage_per_extra_weapon", 10.0)
-	return base + max(0, _equipped_weapon_count() - 1) * extra_weapon_bonus
+func _weapon_range(weapon_entry: Dictionary) -> float:
+	return float(weapon_entry.get("range", _float_from(_section("weapon"), "default_range", 188.0)))
+
+
+func _weapon_damage(target_actor, weapon_entry: Dictionary) -> Dictionary:
+	return CombatFormula.weapon_damage(player_actor, target_actor, weapon_entry, run_context.rng, _section("formulas"))
 
 
 func _update_magic_input() -> void:
@@ -409,45 +559,94 @@ func _update_magic_input() -> void:
 			_try_cast_magic(i)
 
 
-func _try_cast_magic(slot_index: int) -> void:
+func _try_cast_magic(slot_index: int, options: Dictionary = {}) -> bool:
 	if slot_index < 0 or slot_index >= run_context.equipped_magics.size():
-		return
+		return false
 	if slot_index >= magic_cooldowns.size():
-		return
+		return false
+	var is_auto = bool(options.get("auto", false))
+	var is_free = bool(options.get("free", false))
 	if run_context.equipped_magics[slot_index] == null:
-		_spell_popup(slot_index, false)
-		_show_toast("No magic in slot %d" % (slot_index + 1))
-		return
+		if not is_auto:
+			_spell_popup(slot_index, false)
+			_show_toast("No magic in slot %d" % (slot_index + 1))
+		return false
+	if player_actor == null or player_actor.has_behavior_lock("cast"):
+		if not is_auto:
+			_spell_popup(slot_index, false)
+		return false
 	if magic_cooldowns[slot_index] > 0.0:
-		_spell_popup(slot_index, false)
-		return
+		if not is_auto:
+			_spell_popup(slot_index, false)
+		return false
 	var magic_entry = registry.get_entry("magic", String(run_context.equipped_magics[slot_index]))
 	var effect: Dictionary = magic_entry.get("combat_effect", {})
 	var magic_cfg = _section("magic")
 	var cost = float(magic_entry.get("mana_cost", _float_from(magic_cfg, "default_mana_cost", 28.0)))
-	if player_mana < cost:
-		_spell_popup(slot_index, false)
-		_show_toast("Not enough mana")
-		return
-	player_mana -= cost
-	var cooldown = max(0.1, float(magic_entry.get("cooldown_frames", 300)) / 60.0)
+	var energy_cost = float(magic_entry.get("energy_cost", 0.0))
+	if not is_free and (player_actor.current_mana < cost or player_actor.current_energy < energy_cost):
+		if not is_auto:
+			_spell_popup(slot_index, false)
+			_show_toast("Not enough mana")
+		return false
+	if not is_free:
+		player_actor.spend_mana(cost)
+		player_actor.current_energy = max(0.0, player_actor.current_energy - energy_cost)
+	_sync_player_resources_from_actor()
+	var cooldown = max(0.1, CombatFormula.cooldown_seconds(player_actor, magic_entry, _section("formulas")))
 	magic_cooldowns[slot_index] = cooldown
 	magic_total_cooldowns[slot_index] = cooldown
 	_spell_popup(slot_index, true)
+	_run_configured_effects(magic_entry.get("effects", []), player_actor, player_actor, String(magic_entry.get("id", "")), {})
 	var range = _float_from(effect, "range", _float_from(magic_cfg, "default_range", 240.0))
-	var damage = _float_from(effect, "damage", _float_from(magic_cfg, "default_damage", 52.0))
 	for enemy in enemies.duplicate():
+		var target_actor = enemy.get("actor", null)
+		if target_actor == null:
+			continue
 		if player_pos.distance_to(enemy["pos"]) <= range:
-			enemy["hp"] = float(enemy.get("hp", 1.0)) - damage
-			_float_damage_text(int(round(damage)), enemy["pos"] + Vector2(0, -34))
+			var damage_result = CombatFormula.magic_damage(player_actor, target_actor, magic_entry, _section("formulas"))
+			var applied_damage = target_actor.take_damage(float(damage_result.get("amount", 0.0)), player_actor, {"damage_type": "spell"})
+			_sync_enemy_resource_cache(enemy)
+			_float_damage_text(int(applied_damage.get("amount", 0)), enemy["pos"] + Vector2(0, -34))
 			_flash_magic(enemy["pos"])
-			if float(enemy["hp"]) <= 0.0:
+			if target_actor.is_dead():
 				_kill_enemy(enemy)
+	return true
 
 
 func _update_magic_cooldowns(delta: float) -> void:
 	for i in range(magic_cooldowns.size()):
 		magic_cooldowns[i] = max(0.0, magic_cooldowns[i] - delta)
+
+
+func _reset_magic_auto_cast_timers() -> void:
+	for i in range(magic_auto_cast_timers.size()):
+		magic_auto_cast_timers[i] = _magic_auto_cast_interval_seconds(i)
+
+
+func _update_magic_auto_cast(delta: float) -> void:
+	for i in range(magic_auto_cast_timers.size()):
+		var interval = _magic_auto_cast_interval_seconds(i)
+		if interval <= 0.0:
+			continue
+		magic_auto_cast_timers[i] = max(0.0, float(magic_auto_cast_timers[i]) - delta)
+		if float(magic_auto_cast_timers[i]) <= 0.0:
+			magic_auto_cast_timers[i] = interval
+			var magic_entry = registry.get_entry("magic", String(run_context.equipped_magics[i]))
+			_try_cast_magic(i, {
+				"auto": true,
+				"free": bool(magic_entry.get("auto_cast_is_free", false)),
+			})
+
+
+func _magic_auto_cast_interval_seconds(slot_index: int) -> float:
+	if slot_index < 0 or slot_index >= run_context.equipped_magics.size():
+		return 0.0
+	if run_context.equipped_magics[slot_index] == null:
+		return 0.0
+	var magic_entry = registry.get_entry("magic", String(run_context.equipped_magics[slot_index]))
+	var frames = int(magic_entry.get("auto_cast_interval_frames", 0))
+	return max(0.0, float(frames) / 60.0)
 
 
 func _update_spawning(delta: float) -> void:
@@ -467,20 +666,23 @@ func _spawn_mob() -> void:
 	var ids: Array = _section("spawning").get("fallback_mob_ids", [])
 	if ids.is_empty():
 		ids = ["monster.metamorph.sprouting_potato", "monster.metamorph.mushroom_spore", "monster.metamorph.bomb_fruitling"]
-	var id = String(ids[randi_range(0, ids.size() - 1)])
+	var id = _pick_mob_id(ids)
 	var entry = registry.get_entry("monster", id)
 	var default_stats: Dictionary = _section("enemies").get("default_stats", {})
-	var stats: Dictionary = entry.get("stats", default_stats)
+	var stats: Dictionary = CombatFormula.scaled_stats(entry if not entry.is_empty() else {"stats": default_stats}, run_context.floor, _section("scaling"), "monster")
+	var actor = _make_actor("monster", id, entry, stats)
 	var node = _make_sprite(_content_sprite_path(entry), Vector2(58, 58))
 	combat_layer.add_child(node)
 	var pos = _random_edge_position()
 	var enemy = {
 		"id": id,
+		"actor": actor,
 		"node": node,
 		"pos": pos,
-		"hp": float(stats.get("max_health", 40)),
-		"attack": float(stats.get("attack", 5)),
-		"speed": float(stats.get("move_speed", 65)),
+		"hp": actor.current_health,
+		"max_hp": actor.max_health,
+		"attack": actor.get_stat("attack"),
+		"speed": actor.get_stat("move_speed"),
 		"touch_timer": 0.0,
 		"frames": _enemy_frame_paths(id),
 		"frame_index": 0,
@@ -493,22 +695,58 @@ func _spawn_mob() -> void:
 	_update_sprite_position(node, pos)
 
 
+func _pick_mob_id(ids: Array) -> String:
+	var candidates: Array = []
+	for raw_id in ids:
+		var id = String(raw_id)
+		var entry = registry.get_entry("monster", id)
+		if entry.is_empty():
+			continue
+		var spawn = entry.get("spawn", {})
+		if typeof(spawn) != TYPE_DICTIONARY:
+			spawn = {}
+		if run_context.floor < int(spawn.get("first_floor", 1)):
+			continue
+		var max_simultaneous = int(spawn.get("max_simultaneous", 0))
+		if max_simultaneous > 0 and _active_enemy_count(id) >= max_simultaneous:
+			continue
+		var candidate = entry.duplicate(true)
+		candidate["weight"] = float(spawn.get("weight", 1.0))
+		candidates.append(candidate)
+	if candidates.is_empty():
+		return String(ids[0]) if not ids.is_empty() else ""
+	var picked = run_context.rng.weighted_pick(candidates)
+	if picked == null:
+		return String(ids[0])
+	return String(picked.get("id", ids[0]))
+
+
+func _active_enemy_count(content_id: String) -> int:
+	var count = 0
+	for enemy in enemies:
+		if String(enemy.get("id", "")) == content_id:
+			count += 1
+	return count
+
+
 func _spawn_boss() -> void:
 	if not _is_combat_ready():
 		return
 	var entry = boss_entry if not boss_entry.is_empty() else registry.get_entry("boss", "boss.demo_pollution_source")
-	var stats: Dictionary = entry.get("stats", {})
+	var stats: Dictionary = CombatFormula.scaled_stats(entry, run_context.floor, _section("scaling"), "boss")
+	var actor = _make_actor("boss", String(entry.get("id", "boss.demo_pollution_source")), entry, stats)
 	var node = _make_sprite("res://assets/art/source/boss_pollution_source/boss_pollution_source-1.png", Vector2(132, 132))
 	combat_layer.add_child(node)
 	boss_spawned = true
 	boss_enemy = {
 		"id": String(entry.get("id", "boss.demo_pollution_source")),
+		"actor": actor,
 		"node": node,
 		"pos": _vector_from(_section("boss"), "spawn_position", Vector2(640, 176)),
-		"hp": float(stats.get("max_health", 300)),
-		"max_hp": float(stats.get("max_health", 300)),
-		"attack": float(stats.get("attack", 10)),
-		"speed": float(stats.get("move_speed", 80)),
+		"hp": actor.current_health,
+		"max_hp": actor.max_health,
+		"attack": actor.get_stat("attack"),
+		"speed": actor.get_stat("move_speed"),
 		"touch_timer": 0.0,
 		"frames": _enemy_frame_paths(String(entry.get("id", "boss.demo_pollution_source"))),
 		"frame_index": 0,
@@ -531,21 +769,34 @@ func _update_enemies(delta: float) -> void:
 		if not enemy.has("node") or not is_instance_valid(enemy["node"]):
 			enemies.erase(enemy)
 			continue
+		var actor = enemy.get("actor", null)
+		if actor != null:
+			actor.tick(delta, effect_runner, {
+				"self": actor,
+				"source": actor,
+				"target": actor,
+				"run_context": run_context,
+				"source_id": String(enemy.get("id", "")),
+			})
+			_sync_enemy_resource_cache(enemy)
+			if actor.is_dead():
+				_kill_enemy(enemy)
+				continue
 		var pos: Vector2 = enemy["pos"]
 		var direction = player_pos - pos
 		var distance = direction.length()
-		if distance > 8.0:
+		if distance > 8.0 and (actor == null or not actor.has_behavior_lock("movement")):
 			pos += direction.normalized() * float(enemy.get("speed", 60.0)) * delta
 		enemy["move_x"] = direction.x
 		enemy["pos"] = pos
 		_update_sprite_position(enemy["node"], pos)
 		_update_enemy_animation(enemy, delta)
 		enemy["touch_timer"] = max(0.0, float(enemy.get("touch_timer", 0.0)) - delta)
-		if distance <= enemy_touch_radius and float(enemy["touch_timer"]) <= 0.0:
+		if distance <= enemy_touch_radius and float(enemy["touch_timer"]) <= 0.0 and (actor == null or not actor.has_behavior_lock("attack")):
 			var damage = float(enemy.get("attack", 3.0))
-			player_hp -= damage
+			var applied_damage = _damage_player(damage, actor, "contact")
 			enemy["touch_timer"] = _float_from(_section("enemies"), "touch_cooldown_seconds", 0.85)
-			_float_text("-%d" % int(damage), player_pos + Vector2(0, -52), Color(1.0, 0.36, 0.28))
+			_float_text("-%d" % int(applied_damage.get("amount", 0)), player_pos + Vector2(0, -52), Color(1.0, 0.36, 0.28))
 
 
 func _update_enemy_animation(enemy: Dictionary, delta: float) -> void:
@@ -582,6 +833,9 @@ func _update_enemy_animation(enemy: Dictionary, delta: float) -> void:
 
 func _update_boss_ability(delta: float) -> void:
 	if not _is_combat_ready() or not boss_spawned or boss_enemy.is_empty():
+		return
+	var boss_actor = boss_enemy.get("actor", null)
+	if boss_actor != null and boss_actor.has_behavior_lock("attack"):
 		return
 	boss_ability_timer -= delta
 	boss_cast_timer = max(0.0, boss_cast_timer - delta)
@@ -657,8 +911,8 @@ func _update_boss_projectiles(delta: float) -> void:
 		_update_sprite_position(node, projectile["pos"])
 		var expired = float(projectile["life"]) <= 0.0 or not arena_rect.grow(96.0).has_point(projectile["pos"])
 		if not expired and player_pos.distance_to(projectile["pos"]) <= float(projectile["radius"]) + player_touch_radius:
-			player_hp -= float(projectile["damage"])
-			_float_text("-%d" % int(projectile["damage"]), player_pos + Vector2(0, -52), Color(1.0, 0.36, 0.28))
+			var applied_damage = _damage_player(float(projectile["damage"]), boss_enemy.get("actor", null), "projectile")
+			_float_text("-%d" % int(applied_damage.get("amount", 0)), player_pos + Vector2(0, -52), Color(1.0, 0.36, 0.28))
 			expired = true
 		if expired:
 			_queue_free_if_valid(node)
@@ -669,6 +923,9 @@ func _nearest_enemy() -> Dictionary:
 	var best: Dictionary = {}
 	var best_distance = INF
 	for enemy in enemies:
+		var actor = enemy.get("actor", null)
+		if actor != null and actor.is_dead():
+			continue
 		var distance = player_pos.distance_to(enemy["pos"])
 		if distance < best_distance:
 			best_distance = distance
@@ -689,6 +946,9 @@ func _kill_enemy(enemy: Dictionary) -> void:
 func _update_combat_hud(delta: float) -> void:
 	if combat_hud_layer == null or not is_instance_valid(combat_hud_layer) or not combat_hud_layer.has_method("update_state"):
 		return
+	_sync_player_resources_from_actor()
+	if not boss_enemy.is_empty():
+		_sync_enemy_resource_cache(boss_enemy)
 	combat_hud_layer.update_state(delta, {
 		"player_hp": player_hp,
 		"player_max_hp": player_max_hp,
@@ -755,17 +1015,24 @@ func _style_box(fill: Color, border: Color, border_width: int, corner_radius: in
 
 
 func _random_edge_position() -> Vector2:
-	var side = randi_range(0, 3)
+	var rng = run_context.rng if run_context != null and run_context.rng != null else null
+	var side = rng.randi_range(0, 3) if rng != null else randi_range(0, 3)
 	var rect = arena_rect
 	match side:
 		0:
-			return Vector2(randf_range(rect.position.x, rect.position.x + rect.size.x), rect.position.y)
+			return Vector2(_rng_float(rng, rect.position.x, rect.position.x + rect.size.x), rect.position.y)
 		1:
-			return Vector2(randf_range(rect.position.x, rect.position.x + rect.size.x), rect.position.y + rect.size.y)
+			return Vector2(_rng_float(rng, rect.position.x, rect.position.x + rect.size.x), rect.position.y + rect.size.y)
 		2:
-			return Vector2(rect.position.x, randf_range(rect.position.y, rect.position.y + rect.size.y))
+			return Vector2(rect.position.x, _rng_float(rng, rect.position.y, rect.position.y + rect.size.y))
 		_:
-			return Vector2(rect.position.x + rect.size.x, randf_range(rect.position.y, rect.position.y + rect.size.y))
+			return Vector2(rect.position.x + rect.size.x, _rng_float(rng, rect.position.y, rect.position.y + rect.size.y))
+
+
+func _rng_float(rng, min_value: float, max_value: float) -> float:
+	if rng != null and rng.has_method("randf_range"):
+		return rng.randf_range(min_value, max_value)
+	return randf_range(min_value, max_value)
 
 
 func _flash_attack(target_pos: Vector2, attack_vector: Vector2) -> void:
