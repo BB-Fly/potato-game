@@ -7,15 +7,14 @@
   "type": "mob",
   "enabled": true,
   "stats": {
-    "max_health": 10,
+    "max_health": 12,
     "attack": 4,
-    "move_speed": 100,
-    "knockback_resistance": 0.2,
-    "toughness": 10
+    "move_speed": 125,
+    "knockback_resistance": 0.1,
+    "toughness": 8
   },
   "growth": {
-    "max_health_per_floor": 5,
-    "attack_per_floor": 2
+    "mode": "global_floor_multiplier"
   },
   "behavior": {
     "movement": "move_toward_player",
@@ -24,7 +23,8 @@
   },
   "spawn": {
     "chapters": ["chapter_1", "chapter_2"],
-    "weight": 1.0
+    "weight": 1.4,
+    "first_floor": 1
   },
   "asset_refs": {
     "sprite": "monster.sprouting_potato.sprite"

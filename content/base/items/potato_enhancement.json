@@ -4,13 +4,14 @@
   "description_key": "item.potato_enhancement.desc",
   "school_ids": ["school.metamorph"],
   "primary_school_id": "school.metamorph",
-  "rarity": "legendary",
-  "acquire_limit": 0,
+  "rarity": "rare",
+  "acquire_limit": 6,
   "enabled": true,
   "tags": ["item", "passive", "stackable"],
   "stacking": {
     "stackable": true,
-    "mode": "additive"
+    "mode": "permanent_stack",
+    "max_stacks": 6
   },
   "effects": [
     {
@@ -24,4 +25,3 @@
     "icon": "item.potato_enhancement.icon"
   }
 }
-

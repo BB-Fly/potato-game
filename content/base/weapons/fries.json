@@ -11,7 +11,7 @@
   "slot_cost": 1,
   "weapon_type": "melee",
   "damage": {
-    "base": 22,
+    "base": 16,
     "scales": [
       {
         "stat": "melee_attack",
@@ -19,13 +19,13 @@
       }
     ]
   },
-  "attack_interval_frames": 25,
-  "range": 188,
-  "crit_chance": 0.0,
+  "attack_interval_frames": 36,
+  "range": 150,
+  "crit_chance": 0.03,
   "crit_multiplier": 2.0,
-  "toughness_damage": 4,
-  "execute_damage_multiplier": 2.0,
-  "knockback": 15,
+  "toughness_damage": 5,
+  "execute_damage_multiplier": 1.75,
+  "knockback": 12,
   "action_module": "staff_swing",
   "passive_effects": [
     {
@@ -49,7 +49,13 @@
     "effects": [
       {
         "type": "deal_damage",
-        "amount": 40
+        "base": 48,
+        "scales": [
+          {
+            "stat": "melee_attack",
+            "ratio": 1.5
+          }
+        ]
       },
       {
         "type": "apply_buff",

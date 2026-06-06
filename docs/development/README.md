@@ -83,6 +83,7 @@ docs/
 | --- | --- |
 | 启动、灰屏、界面切换 | `runtime-flow.md` |
 | 新增武器、道具、魔法、怪物配置 | `content-config.md` |
+| 修改属性公式、层数成长、buff 运行时 | `combat-balance-runtime.md` |
 | 修改地图路线或节点 | `map-reward-flow.md` |
 | 修改小怪、Boss、战斗输入、碰撞 | `combat-slice.md` |
 | 调整图片、图标、像素资源 | `assets-and-art.md` |

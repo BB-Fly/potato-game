@@ -28,10 +28,44 @@ Godot headless 启动：
 & 'C:\Program Files\Godot\Godot_v4.6.2-stable_mono_win64_console.exe' --headless --path 'C:\Users\LYZ\Desktop\work\potato-game' --quit
 ```
 
+战斗数值/buff 运行时验证：
+
+```powershell
+& 'C:\Program Files\Godot\Godot_v4.6.2-stable_mono_win64_console.exe' --headless --path 'C:\Users\LYZ\Desktop\work\potato-game' --script 'res://tools/validate_combat_balance_runtime.gd'
+```
+
 健康输出应包含：
 
 ```text
 Puritato playable slice ready.
+```
+
+## 本机 Godot 安装
+
+本机 Godot 目录已确认：
+
+```text
+C:\Program Files\Godot
+```
+
+当前目录结构：
+
+```text
+C:\Program Files\Godot\GodotSharp\
+C:\Program Files\Godot\Godot_v4.6.2-stable_mono_win64.exe
+C:\Program Files\Godot\Godot_v4.6.2-stable_mono_win64_console.exe
+```
+
+后续自动验证优先调用 console 版：
+
+```powershell
+& 'C:\Program Files\Godot\Godot_v4.6.2-stable_mono_win64_console.exe' --headless --path 'C:\Users\LYZ\Desktop\work\potato-game' --quit
+```
+
+需要打开可见编辑器/游戏窗口时调用 GUI 版：
+
+```powershell
+Start-Process -FilePath 'C:\Program Files\Godot\Godot_v4.6.2-stable_mono_win64.exe' -ArgumentList @('--path','C:\Users\LYZ\Desktop\work\potato-game') -WindowStyle Normal
 ```
 
 ## 启动可见窗口

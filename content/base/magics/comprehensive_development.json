@@ -10,21 +10,29 @@
   "tags": ["magic", "buff"],
   "occupies_magic_slot": true,
   "slot_type": "active",
-  "mana_cost": 28,
-  "energy_cost": 15,
-  "cooldown_frames": 300,
+  "mana_cost": 24,
+  "energy_cost": 0,
+  "cooldown_frames": 480,
   "combat_effect": {
-    "damage": 52,
-    "range": 240
+    "damage": {
+      "base": 34,
+      "scales": [
+        {
+          "stat": "spell_power",
+          "ratio": 0.8
+        }
+      ]
+    },
+    "range": 220
   },
-  "auto_cast_interval_frames": 900,
+  "auto_cast_interval_frames": 1080,
   "auto_cast_is_free": true,
   "effects": [
     {
       "type": "apply_buff",
       "buff_id": "buff.comprehensive_development",
       "target": "self",
-      "duration_frames": 600
+      "duration_frames": 480
     }
   ],
   "asset_refs": {

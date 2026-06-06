@@ -82,10 +82,23 @@ func _extract_entries(parsed) -> Array:
 
 
 func _normalize_entry(entry: Dictionary) -> void:
-	if entry.has("duration_seconds") and not entry.has("duration_frames"):
-		entry["duration_frames"] = int(round(float(entry["duration_seconds"]) * 60.0))
-	if entry.has("cooldown_seconds") and not entry.has("cooldown_frames"):
-		entry["cooldown_frames"] = int(round(float(entry["cooldown_seconds"]) * 60.0))
-	if entry.has("attack_interval_seconds") and not entry.has("attack_interval_frames"):
-		entry["attack_interval_frames"] = int(round(float(entry["attack_interval_seconds"]) * 60.0))
+	_normalize_timing_fields(entry)
 
+
+func _normalize_timing_fields(value) -> void:
+	if typeof(value) == TYPE_DICTIONARY:
+		if value.has("duration_seconds") and not value.has("duration_frames"):
+			value["duration_frames"] = int(round(float(value["duration_seconds"]) * 60.0))
+		if value.has("tick_seconds") and not value.has("tick_interval_frames"):
+			value["tick_interval_frames"] = int(round(float(value["tick_seconds"]) * 60.0))
+		if value.has("cooldown_seconds") and not value.has("cooldown_frames"):
+			value["cooldown_frames"] = int(round(float(value["cooldown_seconds"]) * 60.0))
+		if value.has("attack_interval_seconds") and not value.has("attack_interval_frames"):
+			value["attack_interval_frames"] = int(round(float(value["attack_interval_seconds"]) * 60.0))
+		if value.has("auto_cast_interval_seconds") and not value.has("auto_cast_interval_frames"):
+			value["auto_cast_interval_frames"] = int(round(float(value["auto_cast_interval_seconds"]) * 60.0))
+		for key in value.keys():
+			_normalize_timing_fields(value[key])
+	elif typeof(value) == TYPE_ARRAY:
+		for item in value:
+			_normalize_timing_fields(item)
