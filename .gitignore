@@ -1,11 +1,16 @@
+# Godot editor/runtime generated files
 .godot/
 .import/
 *.import
 export.cfg
 export_presets.cfg
 *.translation
+
+# Godot Mono/C# local build cache
 *.mono/
 .mono/
+bin/
+obj/
 
 # Local logs, test output, and temporary files
 *.log
@@ -15,9 +20,27 @@ coverage/
 tmp/
 temp/
 *.tmp
+*.temp
 *.bak
+*.cache
+*.pid
+*.lock
+*.swp
+*~
+*.autosave
 
 # Local build/export output
 build/
 dist/
 exports/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.vs/
+.idea/
+*.user
+*.userprefs
+*.suo
