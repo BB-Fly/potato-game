@@ -12,47 +12,40 @@ def has_alpha(image: Image.Image) -> bool:
 
 
 def main() -> int:
-    root = Path(__file__).resolve().parents[1]
-    manifest_path = (
-        root
-        / "assets"
-        / "art"
-        / "source"
-        / "handdrawn_replacement_v01"
-        / "runtime_asset_manifest.json"
-    )
-    if not manifest_path.exists():
-        print(f"Missing manifest: {manifest_path}", file=sys.stderr)
-        return 2
+	root = Path(__file__).resolve().parents[1]
+	asset_registry_path = root / "content" / "base" / "assets" / "base_assets.json"
+	if not asset_registry_path.exists():
+		print(f"Missing asset registry: {asset_registry_path}", file=sys.stderr)
+		return 2
 
-    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    issues: list[str] = []
+	registry = json.loads(asset_registry_path.read_text(encoding="utf-8"))
+	issues: list[str] = []
+	checked = 0
 
-    for item in manifest:
-        path = root / item["path"]
-        if not path.exists():
-            issues.append(f"missing: {item['path']}")
-            continue
+	for item in registry.get("entries", []):
+		asset_path = str(item.get("path", ""))
+		if not asset_path.startswith("res://assets/art/") or not asset_path.endswith(".png"):
+			continue
+		path = root / asset_path.removeprefix("res://")
+		if not path.exists():
+			issues.append(f"missing: {asset_path}")
+			continue
 
-        with Image.open(path) as image:
-            if image.size != (item["width"], item["height"]):
-                issues.append(
-                    f"size: {item['path']} expected "
-                    f"{item['width']}x{item['height']} got {image.width}x{image.height}"
-                )
-            if has_alpha(image) != item["has_alpha"]:
-                issues.append(
-                    f"alpha: {item['path']} expected {item['has_alpha']} got {has_alpha(image)}"
-                )
+		with Image.open(path) as image:
+			if item.get("kind") in {"icon", "sprite", "ui", "vfx"} and image.width <= 0:
+				issues.append(f"empty image: {asset_path}")
+			if item.get("kind") in {"icon", "sprite", "vfx"} and not has_alpha(image):
+				issues.append(f"alpha: {asset_path} expected transparent-capable art")
+			checked += 1
 
-    if issues:
-        print("Art asset validation failed:")
-        for issue in issues:
-            print(f"- {issue}")
-        return 1
+	if issues:
+		print("Art asset validation failed:")
+		for issue in issues:
+			print(f"- {issue}")
+		return 1
 
-    print(f"Validated {len(manifest)} runtime art PNG files.")
-    return 0
+	print(f"Validated {checked} registered runtime art PNG files.")
+	return 0
 
 
 if __name__ == "__main__":

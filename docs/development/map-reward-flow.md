@@ -1,6 +1,6 @@
 # Map, Routes, And Rewards
 
-This document describes the current full-run route map and reward flow. The older one-floor-per-screen route slices have been replaced by a single scrollable map for the whole run.
+This document describes the current route map and reward flow for the playable demo.
 
 ## Data Sources
 
@@ -22,88 +22,32 @@ src/app/main.gd
 Runtime art:
 
 ```text
-assets/art/map/backgrounds/full_run_route_background_v03_clean.png
-assets/art/map/backgrounds/full_run_route_atmosphere_v03_clean.png
-assets/art/map/backgrounds/full_run_route_foreground_v03_clean.png
-assets/art/map/effects/
-assets/art/map/previews/full_run_route_preview_v03_clean.png
-assets/art/source/full_run_route_map_v03_clean/
+assets/art/map/backgrounds/chapter_1_route_background.png
+assets/art/map/backgrounds/chapter_2_route_background.png
+assets/art/map/nodes/
 ```
 
-`scenes/route_map_scene.tscn` is still the Godot scene entry point, but route data now comes from `demo_map.json`. The old `AreaDefinitions` nodes are kept as editor context/fallback scaffolding and should not be treated as the source of truth.
+`scenes/route_map_scene.tscn` remains the Godot scene entry point. Route data comes from `demo_map.json`; the scene can fall back to chapter band backgrounds when no custom art layer is configured.
 
 ## Map Structure
 
-The demo map uses:
+The demo map uses a scrollable chapter-band layout:
 
 ```json
-"layout_style": "full_run_scroll_route_map",
-"canvas": {"width": 1280, "floor_height": 720, "height": 6480}
+"layout_style": "chapter_band_scroll_route_map",
+"canvas": {"width": 1280, "floor_height": 720}
 ```
 
-Floor bands are stacked bottom to top:
+Floors are stacked as bands. Floors 1-3 use `chapter_1`; floors 4-6 use `chapter_2`; later floor data may exist for balancing, but the current runtime art set only keeps the chapter backgrounds above.
 
-- floor 1 at the bottom of the 6480 px canvas
-- floor 9 at the top
-- floors 1-3: `chapter_1`
-- floors 4-6: `chapter_2`
-- floors 7-9: `chapter_3`
+## Reward Flow
 
-The map scene renders these layers:
-
-1. full-run clean foundation background
-2. subtle pollution atmosphere
-3. past/current/future state underlays and textures
-4. route hotspots, reward/combat node buttons, and node socket glow
-5. future pollution fog
-6. foreground edge haze with a slight parallax scroll factor
-
-The foundation background contains only terrain, roads, empty socket pads, and flat ground detail. Runtime reward icons, random rewards, buildings, props, locks, markers, and interaction states stay outside the baked image.
-
-## Reward Slot Realization
-
-Reward positions are fixed in each node with `position_hint`. Reward type and payload can be randomized with `reward_options`.
-
-`MapFlow.start_map()` duplicates the map entry and resolves every `reward_options` list once with the deterministic run RNG. After this step, runtime nodes have concrete `type`, `gold`, `shop_id`, `reward_table_id`, or `encounter_pool_id` fields.
-
-Example:
-
-```json
-{
-  "id": "floor_8_right_inner_upper",
-  "side": "inner",
-  "position_hint": {"x": 0.76, "y": 0.24},
-  "reward_options": [
-    {"type": "magic_master", "shop_id": "shop.magic_master.default", "weight": 3},
-    {"type": "coin", "gold": 705, "weight": 2},
-    {"type": "random_item", "reward_table_id": "reward.random_item.chapter_3", "weight": 1}
-  ]
-}
-```
-
-## Selection Rules
-
-`selection_mode: collect_all`
-
-- Used by floor 1.
-- Both start reward nodes can be claimed.
-- Combat unlocks after all start rewards are claimed.
-
-`selection_mode: choose_one_route`
-
-- Used by floors 2-9.
-- The player first chooses `left` or `right`.
-- Only rewards on the selected route can be claimed.
-- Combat unlocks after all rewards on the selected route are claimed.
-
-Claimed nodes are recorded in `run_context.reward_history` so passed floors remain readable as darkened history after the route controller resets for the next floor.
-
-## Controls
-
-- Mouse wheel: scroll the whole run map.
-- Middle mouse drag: pan.
-- Gamepad right stick Y: scroll.
-- PageUp/PageDown: snap between floor bands.
+1. `MapFlow.start_map("map.demo")` duplicates the map config and realizes each node's `reward_options` with the run RNG.
+2. `RouteMapScene.setup(...)` renders route bands, node buttons, route hotspots, and basic state overlays.
+3. Only current-floor reward nodes are interactive.
+4. Floor 1 uses `selection_mode: collect_all`, so both start reward nodes are active.
+5. Later floors use `selection_mode: choose_one_route`, so clicking a lane locks the other lane.
+6. Claimed rewards are stored in `run_context.reward_history`.
 
 ## Validation
 

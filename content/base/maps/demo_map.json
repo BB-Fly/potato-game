@@ -3,39 +3,15 @@
   "display_name_key": "map.demo.name",
   "enabled": true,
   "presentation": {
-    "layout_style": "full_run_scroll_route_map",
-    "area_viewport": "scrollable_full_run",
+    "layout_style": "chapter_band_scroll_route_map",
+    "area_viewport": "scrollable_chapter_bands",
     "progression_direction": "bottom_to_top",
     "canvas": {
       "width": 1280,
       "floor_height": 720,
       "height": 6480
     },
-    "art_layers": {
-      "background_path": "res://assets/art/map/backgrounds/full_run_route_background_v03_clean.png",
-      "foreground_path": "res://assets/art/map/backgrounds/full_run_route_foreground_v03_clean.png",
-      "foreground_scroll_factor": 1.018,
-      "layers": [
-        {
-          "id": "ground_v03_clean",
-          "path": "res://assets/art/map/backgrounds/full_run_route_background_v03_clean.png",
-          "render_layer": "background",
-          "scroll_factor": 1.0
-        },
-        {
-          "id": "pollution_atmosphere_v03_clean",
-          "path": "res://assets/art/map/backgrounds/full_run_route_atmosphere_v03_clean.png",
-          "render_layer": "back_effect",
-          "scroll_factor": 0.992
-        },
-        {
-          "id": "foreground_edge_haze_v03_clean",
-          "path": "res://assets/art/map/backgrounds/full_run_route_foreground_v03_clean.png",
-          "render_layer": "foreground",
-          "scroll_factor": 1.018
-        }
-      ]
-    },
+    "art_layers": {},
     "navigation": {
       "mouse_wheel": "scroll_entire_run_map",
       "mouse_middle_drag": "pan_entire_run_map",
@@ -59,16 +35,11 @@
         "y": 0.11
       }
     },
-    "state_effects": {
-      "past_texture_path": "res://assets/art/map/effects/past_shadow_vignette_v03_clean.png",
-      "current_texture_path": "res://assets/art/map/effects/current_floor_spotlight_v03_clean.png",
-      "future_texture_path": "res://assets/art/map/effects/future_pollution_fog_v03_clean.png"
-    },
+    "state_effects": {},
     "node_visual": {
       "hit_size": 96,
       "icon_size": 64,
-      "combat_hit_size": 112,
-      "socket_glow_path": "res://assets/art/map/effects/node_socket_glow_v03_clean.png"
+      "combat_hit_size": 112
     }
   },
   "areas": [

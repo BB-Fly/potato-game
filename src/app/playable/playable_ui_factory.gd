@@ -50,6 +50,16 @@ static func make_sprite(texture_path: String, sprite_size: Vector2) -> TextureRe
 	return sprite
 
 
+static func make_sprite_from_texture(texture: Texture2D, sprite_size: Vector2) -> TextureRect:
+	var sprite = TextureRect.new()
+	sprite.size = sprite_size
+	sprite.pivot_offset = sprite_size * 0.5
+	sprite.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	sprite.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	sprite.texture = texture
+	return sprite
+
+
 static func update_sprite_position(sprite: Control, world_pos: Vector2) -> void:
 	if sprite == null or not is_instance_valid(sprite):
 		return
@@ -76,3 +86,32 @@ static func load_texture(path: String) -> Texture2D:
 	if texture is Texture2D:
 		return texture
 	return null
+
+
+static func load_frame_texture(frame_ref) -> Texture2D:
+	if typeof(frame_ref) != TYPE_DICTIONARY:
+		return load_texture(String(frame_ref))
+	var path = String(frame_ref.get("path", ""))
+	var columns = int(frame_ref.get("columns", 1))
+	var rows = int(frame_ref.get("rows", 1))
+	var frame_index = int(frame_ref.get("frame_index", 0))
+	return load_atlas_texture(path, columns, rows, frame_index)
+
+
+static func load_atlas_texture(path: String, columns: int, rows: int, frame_index: int) -> Texture2D:
+	var sheet = load_texture(path)
+	if sheet == null or columns <= 0 or rows <= 0:
+		return sheet
+	var frame_count = columns * rows
+	var clamped_index = int(clamp(frame_index, 0, frame_count - 1))
+	var frame_width = float(sheet.get_width()) / float(columns)
+	var frame_height = float(sheet.get_height()) / float(rows)
+	var column = clamped_index % columns
+	var row = int(floor(float(clamped_index) / float(columns)))
+	var atlas = AtlasTexture.new()
+	atlas.atlas = sheet
+	atlas.region = Rect2(
+		Vector2(float(column) * frame_width, float(row) * frame_height),
+		Vector2(frame_width, frame_height)
+	)
+	return atlas

@@ -68,7 +68,7 @@ This guide is the source of truth for runtime art direction after the hand-drawn
 
 - Keep runtime file paths and configured asset IDs stable unless a feature explicitly requires a registry migration.
 - Preserve the original runtime image dimensions when replacing an existing asset.
-- For generated source material, store raw sheets, prompts, processed frames, metadata, and review images under `assets/art/source/`.
+- Keep generated source material, prompts, metadata, review images, and discarded variants outside the runtime art tree; only promote final demo-ready PNGs into `assets/art/` and register them in `content/base/assets/base_assets.json`.
 - Before committing an art pass, run:
 
 ```powershell

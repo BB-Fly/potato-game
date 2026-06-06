@@ -3,9 +3,9 @@
   "entries": [
     {
       "scene_id": "screen.main_menu",
-      "background_asset_id": "screen.main_menu.background",
-      "background_path": "res://assets/art/screens/main_menu_background.png",
-      "recommended_use": "Full-screen main menu background behind title and primary navigation.",
+      "background_asset_id": "map.chapter_1_route.background",
+      "background_path": "res://assets/art/map/backgrounds/chapter_1_route_background.png",
+      "recommended_use": "Temporary demo fallback for the main menu until a dedicated screen background is promoted.",
       "recommended_size": {
         "width": 1920,
         "height": 1080
@@ -14,9 +14,9 @@
     },
     {
       "scene_id": "screen.settings",
-      "background_asset_id": "screen.settings.background",
-      "background_path": "res://assets/art/screens/settings_background.png",
-      "recommended_use": "Full-screen settings/options background behind panel controls.",
+      "background_asset_id": "map.chapter_2_route.background",
+      "background_path": "res://assets/art/map/backgrounds/chapter_2_route_background.png",
+      "recommended_use": "Temporary demo fallback for settings/options until a dedicated screen background is promoted.",
       "recommended_size": {
         "width": 1920,
         "height": 1080
@@ -47,9 +47,9 @@
     },
     {
       "scene_id": "arena.chapter_1",
-      "background_asset_id": "arena.chapter_1.background",
-      "background_path": "res://assets/art/map/arenas/chapter_1_arena.png",
-      "recommended_use": "Chapter 1 combat arena floor/background for top-down survivor encounters.",
+      "background_asset_id": "map.chapter_1_route.background",
+      "background_path": "res://assets/art/map/backgrounds/chapter_1_route_background.png",
+      "recommended_use": "Temporary demo fallback for chapter 1 combat until a dedicated arena background is promoted.",
       "recommended_size": {
         "width": 2048,
         "height": 2048
@@ -58,9 +58,9 @@
     },
     {
       "scene_id": "arena.chapter_2",
-      "background_asset_id": "arena.chapter_2.background",
-      "background_path": "res://assets/art/map/arenas/chapter_2_arena.png",
-      "recommended_use": "Chapter 2 combat arena floor/background for top-down survivor encounters.",
+      "background_asset_id": "map.chapter_2_route.background",
+      "background_path": "res://assets/art/map/backgrounds/chapter_2_route_background.png",
+      "recommended_use": "Temporary demo fallback for chapter 2 combat until a dedicated arena background is promoted.",
       "recommended_size": {
         "width": 2048,
         "height": 2048

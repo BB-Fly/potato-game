@@ -144,8 +144,8 @@ Demo Boss 在小怪阶段结束后出现。
 - 子弹数量：16 个。
 - 形态：圆形扩散弹幕。
 - 子弹伤害：等于 Boss 接触伤害。
-- 子弹资源：`res://assets/art/source/magic_vfx/magic_vfx-2.png`。
-- 施法预警资源：`res://assets/art/source/enemy_pack_01/boss_pollution_source_warning/boss_pollution_source_warning-1.png`。
+- 子弹资源：`res://assets/art/vfx/comprehensive_development.png` 中的 spritesheet 帧。
+- 施法预警资源：`res://assets/art/icons/boss_pollution_source_warning.png`。
 
 相关函数：
 
@@ -158,12 +158,12 @@ Demo Boss 在小怪阶段结束后出现。
 
 当前运行时直接使用已有帧目录：
 
-- 玩家 idle：`assets/art/source/potato_hero_idle_handless/`
-- 玩家 walk：`assets/art/source/potato_hero_walk_handless/`
-- 发芽土豆：`assets/art/source/sprouting_potato/`
-- 蘑菇孢子：`assets/art/source/enemy_pack_01/mushroom_spore/`
-- 炸弹果苗：`assets/art/source/enemy_pack_01/bomb_fruitling/`
-- Boss：`assets/art/source/boss_pollution_source/`
+- 玩家 idle：`assets/art/sprites/characters/potato_hero.png`
+- 玩家 walk：`assets/art/sprites/characters/potato_hero_walk.png`
+- 发芽土豆：`assets/art/sprites/monsters/sprouting_potato.png`
+- 蘑菇孢子：`assets/art/sprites/monsters/mushroom_spore.png`
+- 炸弹果苗：`assets/art/sprites/monsters/bomb_fruitling.png`
+- Boss：`assets/art/sprites/bosses/demo_pollution_source.png`
 
 角色和怪物动态优先使用换帧、上下伸缩和左右伸缩。不要用旋转来做 idle 动态，之前的旋转表现显得不稳定。
 
@@ -174,13 +174,7 @@ Demo Boss 在小怪阶段结束后出现。
 - `res://assets/art/map/backgrounds/chapter_1_route_background.png`
 - `res://assets/art/map/backgrounds/chapter_2_route_background.png`
 
-部分规划中的界面资源目前缺失：
-
-- `assets/art/screens/main_menu_background.png`
-- `assets/art/map/arenas/chapter_1_arena.png`
-- `assets/art/map/arenas/chapter_2_arena.png`
-
-不要默认认为这些缺失资源一定会导致启动失败。恢复后的原型已经避免在启动阶段强依赖它们。
+部分规划中的界面和战斗背景资源目前未进入运行时素材集。不要默认认为这些未来资源一定会存在；恢复后的原型已经使用现有章节路线背景作为启动阶段兜底。
 
 ## 内容加载
 
@@ -233,7 +227,7 @@ rg -n "playable slice ready|_show_starter_screen|LOGICAL_VIEWPORT_SIZE" src\app\
 
 ### 缺背景导致疑似灰屏
 
-缺失规划中的屏幕背景时，应优先使用已有路线背景兜底。除非对应文件已经提交，不要重新引入对 `assets/art/screens/main_menu_background.png` 的硬依赖。
+缺失规划中的屏幕背景时，应优先使用已有路线背景兜底。除非对应文件已经提交并登记到资源表，不要重新引入对未来屏幕背景的硬依赖。
 
 ## 验证清单
 

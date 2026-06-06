@@ -9,7 +9,7 @@ Scope for this pass:
 
 Current implementation note:
 - this pass generated and installed the Demo-critical hand-drawn runtime art for the player, monsters, Demo Boss, fries weapon, comprehensive development magic VFX, item/buff/reward icons, map nodes, route backgrounds, shop/UI icons, music-state icons, and basic UI skin pieces;
-- source sheets, processed frames, GIF previews, prompts, and QC metadata are kept under `assets/art/source/`;
+- temporary source sheets, processed frames, GIF previews, prompts, QC metadata, style previews, and production candidates have been removed from the repo;
 - runtime-ready PNGs are mapped through `content/base/assets/base_assets.json`.
 
 ## Style Constraints
@@ -58,7 +58,6 @@ Current config: `content/base/characters/potato_hero.json`
 | `character.potato_hero.icon` | character select / HUD icon | `res://assets/art/icons/character_potato_hero.png` | needed, not yet referenced in config |
 | `character.potato_hero.sprite` | combat body idle sheet | `res://assets/art/sprites/characters/potato_hero.png` | runtime 2x2 handless potato body idle sheet; combat body should not need weapon attack frames |
 | `character.potato_hero.walk_sprite` | combat walk sprite | `res://assets/art/sprites/characters/potato_hero_walk.png` | runtime 4x4 handless potato body walk sheet |
-| `concept.character.potato_hero.attack_fries` | concept/reference body attack sheet | `res://assets/art/sprites/characters/potato_hero_attack_fries.png` | legacy concept reference only; do not use for runtime weapon attacks |
 
 ### Monster And Boss
 
@@ -67,13 +66,13 @@ Current config: `content/base/monsters/sprouting_potato.json`, `content/base/bos
 | Asset ID | Type | Suggested path | Status |
 | --- | --- | --- | --- |
 | `monster.sprouting_potato.sprite` | mob sprite | `res://assets/art/sprites/monsters/sprouting_potato.png` | referenced by config and asset registry |
-| `monster.mushroom_spore.sprite` | mob sprite | `res://assets/art/sprites/monsters/mushroom_spore.png` | generated in `enemy_pack_01`, not yet referenced in config |
-| `monster.mushroom_spore.icon` | mob icon | `res://assets/art/icons/monster_mushroom_spore.png` | generated in `enemy_pack_01`, not yet referenced in config |
-| `monster.bomb_fruitling.sprite` | mob sprite | `res://assets/art/sprites/monsters/bomb_fruitling.png` | generated in `enemy_pack_01`, not yet referenced in config |
-| `monster.bomb_fruitling.icon` | mob icon | `res://assets/art/icons/monster_bomb_fruitling.png` | generated in `enemy_pack_01`, not yet referenced in config |
-| `boss.demo_pollution_source.sprite` | boss sprite | `res://assets/art/sprites/bosses/demo_pollution_source.png` | needed, not yet referenced in config |
-| `boss.demo_pollution_source.icon` | map / boss warning icon | `res://assets/art/icons/boss_demo_pollution_source.png` | needed, not yet referenced in config |
-| `boss.pollution_source.warning_icon` | boss warning portrait | `res://assets/art/icons/boss_pollution_source_warning.png` | generated in `enemy_pack_01`, not yet referenced in config |
+| `monster.mushroom_spore.sprite` | mob sprite | `res://assets/art/sprites/monsters/mushroom_spore.png` | referenced by config and asset registry |
+| `monster.mushroom_spore.icon` | mob icon | `res://assets/art/icons/monster_mushroom_spore.png` | available for UI |
+| `monster.bomb_fruitling.sprite` | mob sprite | `res://assets/art/sprites/monsters/bomb_fruitling.png` | referenced by config and asset registry |
+| `monster.bomb_fruitling.icon` | mob icon | `res://assets/art/icons/monster_bomb_fruitling.png` | available for UI |
+| `boss.demo_pollution_source.sprite` | boss sprite | `res://assets/art/sprites/bosses/demo_pollution_source.png` | referenced by config and asset registry |
+| `boss.demo_pollution_source.icon` | map / boss warning icon | `res://assets/art/icons/boss_demo_pollution_source.png` | referenced by config and asset registry |
+| `boss.demo_pollution_source.warning_icon` | boss warning portrait | `res://assets/art/icons/boss_pollution_source_warning.png` | referenced by combat scene through asset registry |
 
 ### Weapon
 
@@ -130,10 +129,7 @@ Map progression seed data still exists in `content/base/maps/demo_map.json`, but
 
 Current target config: `content/base/scene_art/screen_scene_art.json`
 
-| Asset ID | Type | Suggested path | Status |
-| --- | --- | --- | --- |
-| `screen.main_menu.background` | main menu full-screen backdrop | `res://assets/art/screens/main_menu_background.png` | planned for this art pass; image file not generated here |
-| `screen.settings.background` | settings/options full-screen backdrop | `res://assets/art/screens/settings_background.png` | planned for this art pass; image file not generated here |
+Dedicated screen backgrounds are not registered in the current runtime set. The demo config temporarily falls back to the chapter route backgrounds until final screen art is promoted.
 
 ### Map Scene Backgrounds
 
@@ -143,8 +139,8 @@ Current target config: `content/base/scene_art/screen_scene_art.json`
 | --- | --- | --- | --- |
 | `map.chapter_1_route.background` | chapter 1 vertical route-select backdrop | `res://assets/art/map/backgrounds/chapter_1_route_background.png` | runtime backdrop; should show bottom entrance, two lanes, side reward pads, shared combat gate |
 | `map.chapter_2_route.background` | chapter 2 vertical route-select backdrop | `res://assets/art/map/backgrounds/chapter_2_route_background.png` | runtime backdrop; same layout language with chapter 2 biome variation |
-| `arena.chapter_1.background` | chapter 1 combat arena backdrop | `res://assets/art/map/arenas/chapter_1_arena.png` | planned for this art pass; image file not generated here |
-| `arena.chapter_2.background` | chapter 2 combat arena backdrop | `res://assets/art/map/arenas/chapter_2_arena.png` | planned for this art pass; image file not generated here |
+
+Dedicated combat arena backgrounds are not registered in the current runtime set. The demo config temporarily falls back to the matching chapter route background.
 
 ### Shops And UI
 
@@ -194,7 +190,6 @@ Current config: weapon, magic, monster files under `content/base`.
 
 ## Later Asset Work
 
-- Add explicit `asset_refs` for character and boss configs once the presentation resolver contract is finalized.
 - Add a reusable combat hand/socket sprite or shader-tintable primitive if the first playable combat scene needs visible round hands. Keep it separate from the potato body sprite so weapon counts and positions can scale independently.
 - Add encounter art when `encounter_pool.default` receives concrete encounter entries.
 - Add background arena art per chapter and floor once combat scene sizing is known.
@@ -202,37 +197,7 @@ Current config: weapon, magic, monster files under `content/base`.
 - Add rarity frames and card backgrounds after UI wireframes settle.
 - Add animation breakdowns only after the runtime decides between spritesheets, atlases, or skeletal animation.
 
-## UI Node Pack 01
-
-Source pack: `assets/art/source/ui_node_pack_01/`
-
-Generated as an original 3x4 clean pixel UI pack with built-in image generation, then processed with `generate2dsprite.py process`.
-
-Runtime exports:
-
-| Asset | Path |
-| --- | --- |
-| `node_elite_combat` | `assets/art/map/nodes/node_elite_combat.png` |
-| `node_boss` | `assets/art/map/nodes/node_boss.png` |
-| `node_rest` | `assets/art/map/nodes/node_rest.png` |
-| `node_locked` | `assets/art/map/nodes/node_locked.png` |
-| `node_selected_marker` | `assets/art/map/nodes/node_selected_marker.png` |
-| `node_route_arrow` | `assets/art/map/nodes/node_route_arrow.png` |
-| `card_common_frame` | `assets/art/ui/card_common_frame.png`, `assets/art/icons/ui_card_common_frame.png` |
-| `card_rare_frame` | `assets/art/ui/card_rare_frame.png`, `assets/art/icons/ui_card_rare_frame.png` |
-| `card_legendary_frame` | `assets/art/ui/card_legendary_frame.png`, `assets/art/icons/ui_card_legendary_frame.png` |
-| `panel_wood_small` | `assets/art/ui/panel_wood_small.png`, `assets/art/icons/ui_panel_wood_small.png` |
-| `panel_wood_wide` | `assets/art/ui/panel_wood_wide.png`, `assets/art/icons/ui_panel_wood_wide.png` |
-| `cursor_select` | `assets/art/ui/cursor_select.png`, `assets/art/icons/ui_cursor_select.png` |
-
-QC: final processed source uses `component_mode=largest`, `threshold=180`, `edge_threshold=220`, `fit_scale=0.88`, `shared_scale=true`; `edge_touch_frames` is empty in `assets/art/source/ui_node_pack_01/pipeline-meta/pipeline-meta.json`.
-
 ## Potato Hero Combat Body Redesign
-
-Runtime source folders:
-
-- `assets/art/source/potato_hero_idle_handless/`
-- `assets/art/source/potato_hero_walk_handless/`
 
 The combat runtime potato body is handless. It keeps the readable potato shape, green sprout, green scarf/sash, determined face, and small feet, while weapon handling is delegated to floating hand/socket presentation. Runtime exports:
 
@@ -242,8 +207,6 @@ The combat runtime potato body is handless. It keeps the readable potato shape, 
 | `character.potato_hero.walk_sprite` | `assets/art/sprites/characters/potato_hero_walk.png` | 384 px 4x4 directional walk sheet |
 
 ## Reward Icon Pack 01
-
-Generated source: `assets/art/source/reward_icon_pack_01/`
 
 Runtime icon outputs:
 
@@ -266,11 +229,7 @@ Runtime icon outputs:
 | `reward.reroll.icon` | `res://assets/art/icons/reward_reroll.png` | also copied to `assets/art/ui/reward_reroll.png` |
 | `reward.luck_clover.icon` | `res://assets/art/icons/reward_luck_clover.png` | also copied to `assets/art/ui/reward_luck_clover.png` |
 
-QC: processed through `generate2dsprite.py process` from built-in `image_gen` raw art. Script metadata reports source-cell `edge_touch_frames` at `[1,1]`, `[1,2]`, `[1,3]`, `[2,3]`, `[3,2]`, and `[3,3]` using a 2 px source margin. Final 64 px transparent icon files have no non-transparent edge pixels and remain usable for item, buff, and reward UI.
-
 ## Fries Staff Redesign
-
-Source folder: `assets/art/source/fries_staff/`
 
 The fries weapon is a staff/cudgel weapon with the silhouette of a single oversized french fry, closer in combat role to a magical monkey-king staff than to a blade or bundle of fries. Runtime exports:
 

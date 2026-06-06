@@ -57,55 +57,40 @@ static func content_icon_path(asset_catalog, entry: Dictionary) -> String:
 
 
 static func content_sprite_path(asset_catalog, entry: Dictionary) -> String:
-	var content_id = String(entry.get("id", ""))
-	match content_id:
-		"monster.metamorph.sprouting_potato":
-			return "res://assets/art/source/sprouting_potato/sprouting_potato-1.png"
-		"monster.metamorph.mushroom_spore":
-			return "res://assets/art/source/enemy_pack_01/mushroom_spore/mushroom_spore-1.png"
-		"monster.metamorph.bomb_fruitling":
-			return "res://assets/art/source/enemy_pack_01/bomb_fruitling/bomb_fruitling-1.png"
 	var refs = entry.get("asset_refs", {})
 	if typeof(refs) == TYPE_DICTIONARY and refs.has("sprite"):
 		return asset_catalog.resolve_asset_path(String(refs["sprite"]), "res://icon.svg")
 	return "res://icon.svg"
 
 
-static func enemy_frame_paths(content_id: String) -> Array:
+static func sheet_frame_ref(path: String, columns: int, rows: int, frame_index: int) -> Dictionary:
+	return {
+		"path": path,
+		"columns": columns,
+		"rows": rows,
+		"frame_index": frame_index,
+	}
+
+
+static func sheet_frame_refs(path: String, columns: int, rows: int, frame_count: int, start_index: int = 0) -> Array:
+	var frames: Array = []
+	for i in range(frame_count):
+		frames.append(sheet_frame_ref(path, columns, rows, start_index + i))
+	return frames
+
+
+static func content_frame_refs(asset_catalog, entry: Dictionary) -> Array:
+	var content_id = String(entry.get("id", ""))
+	var sprite_path = content_sprite_path(asset_catalog, entry)
 	match content_id:
 		"monster.metamorph.sprouting_potato":
-			return [
-				"res://assets/art/source/sprouting_potato/sprouting_potato-1.png",
-				"res://assets/art/source/sprouting_potato/sprouting_potato-2.png",
-				"res://assets/art/source/sprouting_potato/sprouting_potato-3.png",
-				"res://assets/art/source/sprouting_potato/sprouting_potato-4.png",
-			]
+			return sheet_frame_refs(sprite_path, 2, 2, 4)
 		"monster.metamorph.mushroom_spore":
-			return [
-				"res://assets/art/source/enemy_pack_01/mushroom_spore/mushroom_spore-1.png",
-				"res://assets/art/source/enemy_pack_01/mushroom_spore/mushroom_spore-2.png",
-				"res://assets/art/source/enemy_pack_01/mushroom_spore/mushroom_spore-3.png",
-				"res://assets/art/source/enemy_pack_01/mushroom_spore/mushroom_spore-4.png",
-			]
+			return sheet_frame_refs(sprite_path, 2, 2, 4)
 		"monster.metamorph.bomb_fruitling":
-			return [
-				"res://assets/art/source/enemy_pack_01/bomb_fruitling/bomb_fruitling-1.png",
-				"res://assets/art/source/enemy_pack_01/bomb_fruitling/bomb_fruitling-2.png",
-				"res://assets/art/source/enemy_pack_01/bomb_fruitling/bomb_fruitling-3.png",
-				"res://assets/art/source/enemy_pack_01/bomb_fruitling/bomb_fruitling-4.png",
-			]
+			return sheet_frame_refs(sprite_path, 2, 2, 4)
 		"boss.demo_pollution_source":
-			return [
-				"res://assets/art/source/boss_pollution_source/boss_pollution_source-1.png",
-				"res://assets/art/source/boss_pollution_source/boss_pollution_source-2.png",
-				"res://assets/art/source/boss_pollution_source/boss_pollution_source-3.png",
-				"res://assets/art/source/boss_pollution_source/boss_pollution_source-4.png",
-				"res://assets/art/source/boss_pollution_source/boss_pollution_source-5.png",
-				"res://assets/art/source/boss_pollution_source/boss_pollution_source-6.png",
-				"res://assets/art/source/boss_pollution_source/boss_pollution_source-7.png",
-				"res://assets/art/source/boss_pollution_source/boss_pollution_source-8.png",
-				"res://assets/art/source/boss_pollution_source/boss_pollution_source-9.png",
-			]
+			return sheet_frame_refs(sprite_path, 3, 3, 9)
 	return []
 
 

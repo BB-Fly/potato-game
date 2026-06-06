@@ -9,6 +9,14 @@ const CombatActor = preload("res://src/domain/combat/combat_actor.gd")
 const CombatFormula = preload("res://src/domain/combat/combat_formula.gd")
 const EffectRunner = preload("res://src/domain/effect/effect_runner.gd")
 
+const PLAYER_IDLE_SHEET_COLUMNS = 2
+const PLAYER_IDLE_SHEET_ROWS = 2
+const PLAYER_WALK_SHEET_COLUMNS = 4
+const PLAYER_WALK_SHEET_ROWS = 4
+const PLAYER_WALK_RIGHT_START_FRAME = 8
+const VFX_SHEET_COLUMNS = 2
+const VFX_SHEET_ROWS = 2
+
 var registry
 var run_context
 var asset_catalog
@@ -140,7 +148,7 @@ func _start_combat() -> void:
 	magic_auto_cast_timers.fill(0.0)
 	_reset_magic_auto_cast_timers()
 
-	combat_player_sprite = _make_sprite("res://assets/art/source/potato_hero_idle_handless/idle-1.png", Vector2(86, 86))
+	combat_player_sprite = _make_frame_sprite(_player_frame_ref(false, 0), Vector2(86, 86))
 	combat_layer.add_child(combat_player_sprite)
 	_update_sprite_position(combat_player_sprite, player_pos)
 	_build_weapon_sprites()
@@ -443,9 +451,8 @@ func _update_player_movement(delta: float) -> void:
 func _update_player_visual() -> void:
 	if combat_player_sprite == null:
 		return
-	var frame = int(floor(idle_time * (9.0 if is_player_moving else 5.0))) % 4 + 1
-	var path = "res://assets/art/source/potato_hero_walk_handless/right-%d.png" % frame if is_player_moving else "res://assets/art/source/potato_hero_idle_handless/idle-%d.png" % frame
-	combat_player_sprite.texture = _load_texture(path)
+	var frame = int(floor(idle_time * (9.0 if is_player_moving else 5.0))) % 4
+	combat_player_sprite.texture = _frame_texture(_player_frame_ref(is_player_moving, frame))
 	combat_player_sprite.flip_h = facing_direction > 0
 	var pulse = sin(idle_time * (11.0 if is_player_moving else 5.0))
 	combat_player_sprite.scale = Vector2(1.0 + pulse * 0.035, 1.0 - pulse * 0.03)
@@ -671,7 +678,7 @@ func _spawn_mob() -> void:
 	var default_stats: Dictionary = _section("enemies").get("default_stats", {})
 	var stats: Dictionary = CombatFormula.scaled_stats(entry if not entry.is_empty() else {"stats": default_stats}, run_context.floor, _section("scaling"), "monster")
 	var actor = _make_actor("monster", id, entry, stats)
-	var node = _make_sprite(_content_sprite_path(entry), Vector2(58, 58))
+	var node = _make_frame_sprite(_first_frame_ref(entry), Vector2(58, 58))
 	combat_layer.add_child(node)
 	var pos = _random_edge_position()
 	var enemy = {
@@ -684,7 +691,7 @@ func _spawn_mob() -> void:
 		"attack": actor.get_stat("attack"),
 		"speed": actor.get_stat("move_speed"),
 		"touch_timer": 0.0,
-		"frames": _enemy_frame_paths(id),
+		"frames": _content_frame_refs(entry),
 		"frame_index": 0,
 		"frame_timer": 0.0,
 		"anim_time": 0.0,
@@ -735,7 +742,7 @@ func _spawn_boss() -> void:
 	var entry = boss_entry if not boss_entry.is_empty() else registry.get_entry("boss", "boss.demo_pollution_source")
 	var stats: Dictionary = CombatFormula.scaled_stats(entry, run_context.floor, _section("scaling"), "boss")
 	var actor = _make_actor("boss", String(entry.get("id", "boss.demo_pollution_source")), entry, stats)
-	var node = _make_sprite("res://assets/art/source/boss_pollution_source/boss_pollution_source-1.png", Vector2(132, 132))
+	var node = _make_frame_sprite(_first_frame_ref(entry), Vector2(132, 132))
 	combat_layer.add_child(node)
 	boss_spawned = true
 	boss_enemy = {
@@ -748,7 +755,7 @@ func _spawn_boss() -> void:
 		"attack": actor.get_stat("attack"),
 		"speed": actor.get_stat("move_speed"),
 		"touch_timer": 0.0,
-		"frames": _enemy_frame_paths(String(entry.get("id", "boss.demo_pollution_source"))),
+		"frames": _content_frame_refs(entry),
 		"frame_index": 0,
 		"frame_timer": 0.0,
 		"anim_time": 0.0,
@@ -808,16 +815,13 @@ func _update_enemy_animation(enemy: Dictionary, delta: float) -> void:
 		node.flip_h = move_x > 0.0
 	enemy["anim_time"] = float(enemy.get("anim_time", 0.0)) + delta
 	if bool(enemy.get("is_boss", false)) and boss_cast_timer > 0.0:
-		var cast_frames = [
-			"res://assets/art/source/boss_pollution_source/boss_pollution_source-7.png",
-			"res://assets/art/source/boss_pollution_source/boss_pollution_source-8.png",
-			"res://assets/art/source/boss_pollution_source/boss_pollution_source-9.png",
-		]
-		node.texture = _load_texture(cast_frames[int(floor(float(enemy["anim_time"]) * 12.0)) % cast_frames.size()])
-		var cast_pulse = sin(float(enemy["anim_time"]) * 18.0)
-		node.scale = Vector2(1.18 + cast_pulse * 0.08, 1.12 - cast_pulse * 0.04)
-		node.rotation_degrees = 0.0
-		return
+		var cast_frames: Array = _boss_cast_frames(enemy)
+		if not cast_frames.is_empty():
+			node.texture = _frame_texture(cast_frames[int(floor(float(enemy["anim_time"]) * 12.0)) % cast_frames.size()])
+			var cast_pulse = sin(float(enemy["anim_time"]) * 18.0)
+			node.scale = Vector2(1.18 + cast_pulse * 0.08, 1.12 - cast_pulse * 0.04)
+			node.rotation_degrees = 0.0
+			return
 	var frames: Array = enemy.get("frames", [])
 	if not frames.is_empty():
 		enemy["frame_timer"] = float(enemy.get("frame_timer", 0.0)) - delta
@@ -825,7 +829,7 @@ func _update_enemy_animation(enemy: Dictionary, delta: float) -> void:
 			var enemies_cfg = _section("enemies")
 			enemy["frame_timer"] = _float_from(enemies_cfg, "mob_frame_seconds", 0.16) if not bool(enemy.get("is_boss", false)) else _float_from(enemies_cfg, "boss_frame_seconds", 0.11)
 			enemy["frame_index"] = (int(enemy.get("frame_index", 0)) + 1) % frames.size()
-			node.texture = _load_texture(String(frames[int(enemy["frame_index"])]))
+			node.texture = _frame_texture(frames[int(enemy["frame_index"])])
 	var pulse = sin(float(enemy["anim_time"]) * (5.0 if not bool(enemy.get("is_boss", false)) else 3.0))
 	node.scale = Vector2(1.0 + pulse * 0.035, 1.0 - pulse * 0.025)
 	node.rotation_degrees = 0.0
@@ -849,9 +853,11 @@ func _update_boss_ability(delta: float) -> void:
 func _play_boss_cast_motion() -> void:
 	if combat_boss_sprite == null or not is_instance_valid(combat_boss_sprite) or not _is_combat_fx_ready():
 		return
-	combat_boss_sprite.texture = _load_texture("res://assets/art/source/boss_pollution_source/boss_pollution_source-7.png")
+	var cast_frames: Array = _boss_cast_frames(boss_enemy)
+	if not cast_frames.is_empty():
+		combat_boss_sprite.texture = _frame_texture(cast_frames[0])
 	var vfx_cfg = _section("vfx")
-	var warning = _make_sprite("res://assets/art/source/enemy_pack_01/boss_pollution_source_warning/boss_pollution_source_warning-1.png", _vector_from(vfx_cfg, "boss_warning_size", Vector2(96, 96)))
+	var warning = _make_sprite(_resolve_asset_id("boss.demo_pollution_source.warning_icon", "res://assets/art/icons/boss_pollution_source_warning.png"), _vector_from(vfx_cfg, "boss_warning_size", Vector2(96, 96)))
 	_update_sprite_position(warning, boss_enemy.get("pos", Vector2.ZERO) + _vector_from(vfx_cfg, "boss_warning_offset", Vector2(0, -88)))
 	combat_fx_layer.add_child(warning)
 	var tween = create_tween()
@@ -876,7 +882,7 @@ func _spawn_boss_radial_projectiles(session_id: int) -> void:
 	for i in range(projectile_count):
 		var angle = TAU * float(i) / float(projectile_count)
 		var direction = Vector2(cos(angle), sin(angle))
-		var node = _make_sprite("res://assets/art/source/magic_vfx/magic_vfx-2.png", _vector_from(vfx_cfg, "boss_projectile_size", Vector2(34, 34)))
+		var node = _make_frame_sprite(_magic_frame_ref(1), _vector_from(vfx_cfg, "boss_projectile_size", Vector2(34, 34)))
 		node.modulate = _color_from(vfx_cfg, "boss_projectile_color", Color(0.85, 0.58, 1.0, 0.95))
 		_update_sprite_position(node, center + direction * projectile_offset)
 		combat_layer.add_child(node)
@@ -1004,6 +1010,14 @@ func _make_sprite(texture_path: String, sprite_size: Vector2) -> TextureRect:
 	return PlayableUiFactory.make_sprite(texture_path, sprite_size)
 
 
+func _make_frame_sprite(frame_ref, sprite_size: Vector2) -> TextureRect:
+	return PlayableUiFactory.make_sprite_from_texture(_frame_texture(frame_ref), sprite_size)
+
+
+func _frame_texture(frame_ref) -> Texture2D:
+	return PlayableUiFactory.load_frame_texture(frame_ref)
+
+
 func _update_sprite_position(sprite: Control, world_pos: Vector2) -> void:
 	PlayableUiFactory.update_sprite_position(sprite, world_pos)
 	if sprite != null and is_instance_valid(sprite):
@@ -1039,7 +1053,7 @@ func _flash_attack(target_pos: Vector2, attack_vector: Vector2) -> void:
 	if not _is_combat_fx_ready():
 		return
 	var vfx_cfg = _section("vfx")
-	var fx = _make_sprite("res://assets/art/source/fries_slash/fries_slash-1.png", _vector_from(vfx_cfg, "slash_size", Vector2(132, 132)))
+	var fx = _make_frame_sprite(_weapon_slash_frame_ref(0), _vector_from(vfx_cfg, "slash_size", Vector2(132, 132)))
 	fx.position = target_pos - fx.size * 0.5
 	if attack_vector.length() > 0.01:
 		fx.rotation = attack_vector.angle() + PI
@@ -1055,7 +1069,7 @@ func _flash_magic(target_pos: Vector2) -> void:
 		return
 	var vfx_cfg = _section("vfx")
 	var fade_seconds = _float_from(vfx_cfg, "magic_fade_seconds", 0.22)
-	var fx = _make_sprite("res://assets/art/source/magic_vfx/magic_vfx-1.png", _vector_from(vfx_cfg, "magic_size", Vector2(96, 96)))
+	var fx = _make_frame_sprite(_magic_frame_ref(0), _vector_from(vfx_cfg, "magic_size", Vector2(96, 96)))
 	fx.position = target_pos - fx.size * 0.5
 	combat_fx_layer.add_child(fx)
 	var tween = create_tween()
@@ -1152,12 +1166,64 @@ func _content_sprite_path(entry: Dictionary) -> String:
 	return PlayableContentPresenter.content_sprite_path(asset_catalog, entry)
 
 
+func _content_frame_refs(entry: Dictionary) -> Array:
+	return PlayableContentPresenter.content_frame_refs(asset_catalog, entry)
+
+
 func _content_icon_path(entry: Dictionary) -> String:
 	return PlayableContentPresenter.content_icon_path(asset_catalog, entry)
 
 
-func _enemy_frame_paths(content_id: String) -> Array:
-	return PlayableContentPresenter.enemy_frame_paths(content_id)
+func _first_frame_ref(entry: Dictionary):
+	var frames = _content_frame_refs(entry)
+	if frames.is_empty():
+		return _content_sprite_path(entry)
+	return frames[0]
+
+
+func _boss_cast_frames(enemy: Dictionary) -> Array:
+	var frames: Array = enemy.get("frames", [])
+	if frames.size() < 9:
+		return frames
+	return frames.slice(6, 9)
+
+
+func _player_frame_ref(is_moving: bool, frame_index: int) -> Dictionary:
+	var character = registry.get_entry("character", run_context.character_id)
+	var refs = character.get("asset_refs", {})
+	var asset_id = ""
+	var fallback = "res://assets/art/sprites/characters/potato_hero.png"
+	var columns = PLAYER_IDLE_SHEET_COLUMNS
+	var rows = PLAYER_IDLE_SHEET_ROWS
+	var index = frame_index
+	if is_moving:
+		asset_id = String(refs.get("walk_sprite", ""))
+		fallback = "res://assets/art/sprites/characters/potato_hero_walk.png"
+		columns = PLAYER_WALK_SHEET_COLUMNS
+		rows = PLAYER_WALK_SHEET_ROWS
+		index = PLAYER_WALK_RIGHT_START_FRAME + frame_index
+	else:
+		asset_id = String(refs.get("sprite", ""))
+	var path = _resolve_asset_id(asset_id, fallback)
+	return PlayableContentPresenter.sheet_frame_ref(path, columns, rows, index)
+
+
+func _weapon_slash_frame_ref(frame_index: int) -> Dictionary:
+	var refs = current_weapon_entry.get("asset_refs", {})
+	var asset_id = String(refs.get("slash_vfx", "weapon.fries.slash_vfx")) if typeof(refs) == TYPE_DICTIONARY else "weapon.fries.slash_vfx"
+	var path = _resolve_asset_id(asset_id, "res://assets/art/vfx/weapon_fries_slash.png")
+	return PlayableContentPresenter.sheet_frame_ref(path, VFX_SHEET_COLUMNS, VFX_SHEET_ROWS, frame_index)
+
+
+func _magic_frame_ref(frame_index: int) -> Dictionary:
+	var path = _resolve_asset_id("magic.comprehensive_development.vfx", "res://assets/art/vfx/comprehensive_development.png")
+	return PlayableContentPresenter.sheet_frame_ref(path, VFX_SHEET_COLUMNS, VFX_SHEET_ROWS, frame_index)
+
+
+func _resolve_asset_id(asset_id: String, default_path: String) -> String:
+	if asset_catalog == null or asset_id.is_empty():
+		return default_path
+	return asset_catalog.resolve_asset_path(asset_id, default_path)
 
 
 func _load_texture(path: String) -> Texture2D:
